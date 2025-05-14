@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HANSEL - E-Texts</title>
+    <link href="{{ url_for('static', filename='web/style.css') }}" rel="stylesheet" type="text/css">
+</head>
+<body>
+<div id="content">
+    <div class="sidenav">
+        <a href="#introduction">Introduction</a>
+        <a href="#e-texts">E-Texts</a>
+        <a href="#cumulative-download">Cumulative Download</a>
+        <a href="#license">License</a>
+        <a href="#technical">Technical</a>
+        <a href="#contact">Contact</a>
+    </div>
+
+    <div id="top" class="header">
+        <img src="{{ url_for('static', filename='web/logo.png') }}" alt="Muktabodha Logo">
+    </div>
+
+    <div class="main">
+        <h1>HANSEL E-Text Library</h1>
+
+        <div id="introduction">
+            <h2>Introduction</h2>
+            <p>
+                This is a new collection of Sanskrit e-texts of all sorts. Get in touch to contribute!
+            </p>
+        </div>
+
+        <div id="e-texts">
+            <h2>E-Texts</h2>
+            <ul>
+                {% for file in file_data %}
+                <li class="file-item">
+                    <div class="link-and-caret">
+                        <a href="{{ static_files_path }}/text_data/xml/{{ file.filename }}" class="main-link" target="_blank">
+                            {{ file.title }} - {{ file.author }} - {{ file.catalog_number }}
+                        </a>
+                        <details class="caret-details">
+                            <summary class="toggle-caret"></summary>
+                        </details>
+                    </div>
+                    <ul class="extra-links">
+                        <li>
+                            <a href="{{ static_files_path }}/text_data/xml/{{ file.filename }}" target="_blank">Metadata</a>
+                        </li>
+                    </ul>
+                </li>
+                {% endfor %}
+            </ul>
+        </div>
+
+        <div id="cumulative-download">
+            <h2>Cumulative Download</h2>
+            <ul>
+                <li class="file-item">
+                    <div class="link-and-caret">
+                        <a href="{{ static_files_path }}/text_data/cumulative_txt.zip">All e-texts as .txt</a>
+                        <details class="caret-details">
+                            <summary class="toggle-caret"></summary>
+                        </details>
+                    </div>
+                    <ul class="extra-links">
+                        <li>
+                            All e-texts as:
+                            <a href="{{ static_files_path }}/text_data/cumulative_xml.zip" target="_blank">.xml</a>
+                            <a href="{{ static_files_path }}/text_data/cumulative_html.zip" target="_blank">.html</a>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+
+        <div id="license">
+            <h2>License</h2>
+            <p>
+                Use of this e-text material and the code that runs the website is covered by <a href="https://creativecommons.org/licenses/by-nc/4.0">Creative Commons license BY-NC 4.0</a>. Please share and share alike!
+            </p>
+        </div>
+
+        <div id="technical">
+            <h2>Technical</h2>
+            <p>Web app: v{{ app_version }}</p>
+            <p>Data updated: {{ data_version }}</p>
+        </div>
+
+        <div id="contact">
+            <h2>Contact</h2>
+            <p>
+                For inquiries or contributions, please <a href="https://www.tylerneill.info">get in touch with the author</a>.
+            </p>
+        </div>
+
+    </div>
+</div>
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        document.querySelectorAll(".toggle-caret").forEach(caret => {
+            caret.addEventListener("click", function(event) {
+                event.preventDefault(); // Prevent default summary behavior
+                let li = this.closest(".file-item"); // Find the parent <li>
+                li.classList.toggle("open"); // Toggle the 'open' class
+            });
+        });
+    });
+</script>
+</body>
+</html>
