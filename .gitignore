@@ -53,3 +53,6 @@ venv*/
 
 # macOS
 .DS_Store
+
+# data repo integration
+static/data
