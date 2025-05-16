@@ -75,6 +75,17 @@ def index():
     )
 
 
+@app.route("/index_tabular")
+def index_tabular():
+    return render_template(
+        "index_tabular.html",
+        static_files_path=STATIC_FILES_PATH,
+        file_data=CUSTOM_METADATA,
+        app_version=APP_VERSION,
+        data_version=DATA_VERSION,
+    )
+
+
 @app.route("/about")
 def about():
     return render_template("about.html")
