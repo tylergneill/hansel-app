@@ -21,7 +21,7 @@ def find_app_version():
 
 
 def find_data_version():
-    data_version_filepath = './static/data/text_data/VERSION'
+    data_version_filepath = './static/data/VERSION'
     with open(data_version_filepath, 'r', encoding='utf8') as file:
         # Assuming the __version__ line is the first line
         return file.readline().strip().split('=')[1].strip().replace("'", "").replace('"', '')
@@ -71,21 +71,26 @@ def log_download(filename, ip, country, region, city, file_size, processing_time
         logging.error(f"Error logging download: {e}")
 
 
-def load_metadata(file_path="static/data/text_data/metadata.json") -> Dict:
+def load_metadata(file_path="static/data/metadata.json") -> Dict:
     with open(file_path, "r", encoding="utf-8") as f:
         metadata = json.load(f)
     ordered_metadata = collections.OrderedDict(sorted(metadata.items()))
     return ordered_metadata
 
 
-def get_author(record):
-    if 'Author' in record:
-        return record['Author']
-    elif 'Commentator' in record:
-        return record['Commentator']
-    else:
-        return "anonymous"
+def get_filename_info(record):
+    if 'XML Filename' in record:
+        return record['XML Filename']
+    elif 'Draft Filename' in record:
+        return record['Draft Filename']
 
+def get_author_info(record):
+    if 'Author(s)' not in record:
+        return None
+    elif len(record['Author(s)']) == 1:
+        return record['Author(s)'][0]
+    else:
+        return ', '.join(record['Author(s)'])
 
 def get_custom_metadata_subset(full_metadata: Dict[str, Dict]) -> List[Dict]:
     """
@@ -94,20 +99,15 @@ def get_custom_metadata_subset(full_metadata: Dict[str, Dict]) -> List[Dict]:
     """
     metadata_subset = []
     for (key, record) in full_metadata.items():
-        cat_num = record['Catalog number']
-        if cat_num[0] == 'I':
-            continue
-        title = record['Uniform title']
-        author = get_author(record)
-        filename = record['content_filename']
-        normalized_filename = unicodedata.normalize('NFD', filename)
-        url_ready_filename = quote(normalized_filename)
+        control_num = record['Control number']
+        filename = get_filename_info(record)
+        work_title = record['Work Title']
+        author_info = get_author_info(record)
         metadata_subset.append({
-            'filename': url_ready_filename,
-            'title': title,
-            'author': author,
-            'catalog_number': cat_num,
-            'ksts_vols': record['KSTS vols'] if 'KSTS vols' in record else None,
+            'control_number': control_num,
+            'filename': filename,
+            'title': work_title,
+            'author': author_info,
         })
     sorted_metadata_subset = sorted(metadata_subset, key=lambda x: custom_sort_key(x['title']))
     return sorted_metadata_subset
