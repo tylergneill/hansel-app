@@ -1,6 +1,7 @@
 {
     "00001": {
         "Control number": "00001",
+        "Draft": false,
         "XML Filename": "xml/zukasaptati.xml",
         "Work Title": "Śukasaptati",
         "File Source": "GRETIL",
@@ -16,6 +17,7 @@
     },
     "00002": {
         "Control number": "00002",
+        "Draft": true,
         "Draft Filename": "txt_draft/bANa_kAdambarI.txt",
         "Work Title": "Kādambarī",
         "Work ID": 109562,
@@ -41,6 +43,7 @@
     },
     "00003": {
         "Control number": "00002",
+        "Draft": true,
         "Draft Filename": "txt_draft/kumArilabhaTTa_zlokavArtika.txt",
         "Work Title": "Ślokavārtika",
         "Work ID": 88597,
