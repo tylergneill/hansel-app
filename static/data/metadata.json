@@ -1,0 +1,66 @@
+{
+    "00001": {
+        "Control number": "00001",
+        "XML Filename": "xml/zukasaptati.xml",
+        "Work Title": "Śukasaptati",
+        "File Source": "GRETIL",
+        "Edition(s)": [
+          "Ramakant Tripathi, Vārāṇasī, 1966"
+        ],
+        "Genre(s)": [
+            "kathā"
+        ],
+        "Extent": "complete",
+        "Structural Notes": "70 stories marked with <div>. Frame story introduction and conclusion are included in first and last of these, respectively.",
+        "File Size (kb)": 199.0
+    },
+    "00002": {
+        "Control number": "00002",
+        "Draft Filename": "txt_draft/bANa_kAdambarI.txt",
+        "Work Title": "Kādambarī",
+        "Work ID": 109562,
+        "Author(s)": [
+            "Bāṇa",
+            "Bhūṣaṇabhaṭṭa"
+        ],
+        "Author ID(s)": [
+            108814,
+            109559
+        ],
+        "File Source": "SARIT",
+        "Edition(s)": [
+          "Peter Peterson, 1883"
+        ],
+        "Genre(s)": [
+            "kāvya",
+            "gadyakāvya"
+        ],
+        "Extent": "complete",
+        "Structural Notes": "The text has no inherent structure other than the widely recognized distinction of Pūrvabhāga (attributed to Bāṇa himself) and Uttarabhāga (completed by Bāṇa's son, Bhūṣaṇabhaṭṭa, after Bāṇa's death). Paragraphs created by Peterson are marked by starting page and line number.",
+        "File Size (kb)": 692.0
+    },
+    "00003": {
+        "Control number": "00002",
+        "Draft Filename": "txt_draft/kumArilabhaTTa_zlokavArtika.txt",
+        "Work Title": "Ślokavārtika",
+        "Work ID": 88597,
+        "Author(s)": [
+            "Kumārilabhaṭṭa"
+        ],
+        "Author ID(s)": [
+            85206
+        ],
+        "File Source": "Offline",
+        "File Source Note": "Helmut Krasser",
+        "Edition(s)": [
+          "Dvārikādāsa Śāstrī, Vārāṇasī 1978"
+        ],
+        "Genre(s)": [
+            "pramāṇaśāstra",
+            "mīmāṃsā"
+        ],
+        "Extent": "complete",
+        "Structural Notes": "The following overview, with {corresponding pages for Jhā's translation}, was supplied in Krasser's source file. I have added an artificial numbering of sections and subsections (I was not sure whether the Vṛttikāragrantha consists of two parts or not) and the column of (Dvārikādāsa Śāstrī edition page numbers).\\n\\n1 pratijñāsūtra (PJS)\t\t\t\t\t(3)\t\t{1}\\n2 codanāsūtra (CDS) \t\t\t\t\t(34)\t{21}\\n3 nimittasūtra (NMS)\t\t\t\t\t(96)\t{67}\\n4 pratyakṣasūtra (PAS)\t\t\t\t\t(97)\t{68}\\n5 autpattikasūtra \t\t\\n\t5.1 vṛttikāragrantha (VKG)\t\t\t(149)\t{113}\\n\t\t(\"5.2\" = vv. 17-26)\t\t\t\t(152)\t{116}\\n\t5.3 nirālambanavāda (NAV)\t\t\t(155)\t{119}\\n\t5.4 śunyavāda (SNV)\t\t\t\t\t(191)\t{148}\\n\t5.5 anumānapariccheda (AMP)\t\t\t(246)\t{182}\\n\t5.6 śabdapariccheda (SBP)\t\t\t(287)\t{207}\\n\t5.7 upamānapariccheda (UMP)\t\t\t(307)\t{222}\\n\t5.8 arthāpattipariccheda (AAP)\t\t(320)\t{230}\\n\t5.9 abhāvapariccheda (ABH)\t\t\t(335)\t{243}\\n\t5.10 citrākṣepavāda (CAV)\t\t\t(349)\t{253}\\n\t5.11 sambandhākṣepavāda (SAV)\t\t(353)\t{254}\\n\t5.12 sphoṭavāda (SPH)\t\t\t\t(361)\t{261}\\n\t5.13 ākṛtivāda (AKV)\t\t\t\t(385)\t{281}\\n\t5.14 apohavāda (APV)\t\t\t\t(400)\t{295}\\n\t5.15 vanavāda (VAV)\t\t\t\t\t(435)\t{329}\\n\t5.16 sambandhākṣepaparihāra (SAP)\t(453)\t{347}\\n\t5.17 citrākṣepaparihāra (CAP)\t\t(483)\t{375}\\n\t5.18 ātmavāda (ATV)\t\t\t\t\t(488)\t{382}\\n6 śabdanityatādhikaraṇa (SNA)\t\t\t(515)\t{409}\\n7 vākyādhikaraṇa (VAA)\t\t\t\t\t(598)\t{486}\\n8 vedapauruṣeyatādhikaraṇa (VPA)\t\t(669)\t{553}",
+        "File Size (kb)": 457.0
+    }
+}
