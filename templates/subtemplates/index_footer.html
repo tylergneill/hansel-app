@@ -1,0 +1,67 @@
+        <div id="cumulative-data">
+            <h1>Cumulative Data</h1>
+            <ul>
+                <li class="file-item">
+                    <div class="link-and-caret">
+                        <a href="{{ static_files_path }}/cumulative_txt.zip">Download all e-texts (as .txt)</a>
+                        <details class="caret-details">
+                            <summary class="toggle-caret"></summary>
+                        </details>
+                    </div>
+                    <ul class="extra-links">
+                        <li>
+                            <a href="{{ static_files_path }}/cumulative_xml.zip" target="_blank">As .xml</a>
+                            <a href="{{ static_files_path }}/cumulative_html.zip" target="_blank">As .html</a>
+                        </li>
+                    </ul>
+                </li>
+                <li class="file-item">
+                    <div class="link-and-caret">
+                        <a href="{{ static_files_path }}/metadata.txt">Download all metadata (as .txt)</a>
+                        <details class="caret-details">
+                            <summary class="toggle-caret"></summary>
+                        </details>
+                    </div>
+                    <ul class="extra-links">
+                        <li>
+                            <a href="{{ static_files_path }}/metadata.json" target="_blank">As .json</a>
+                            <a href="{{ static_files_path }}/metadata.xml" target="_blank">As .xml</a>
+                            <a href="{{ static_files_path }}/metadata_dublin_core.txt" target="_blank">As Dublin Core</a>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+
+        <div id="more-info">
+            <h1>More Info</h1>
+
+            <h3 id="contributing">Contributing</h3>
+            <p>
+                If you have material you'd like to add,
+                whatever its current form (e.g., Word doc, plain text, XML, or just PDF),
+                get in touch.
+                Of course, modifying existing material in the collection is also encouraged.
+            </p>
+            <p>
+                If you have the technical skills to help work through the <a href="backlog" target="_blank">contribution backlog</a>,
+                get in touch about joining the <a href="team" target="_blank">technical team</a>.
+            </p>
+
+            <h3 id="contact">Contact</h3>
+            <p>
+                For inquiries or contributions, please email tyler.g.neill (Gmail).
+            </p>
+
+            <h3 id="technical">Technical</h3>
+            <p>Web app version: v{{ app_version }}</p>
+            <p>Data last updated: {{ data_version }}</p>
+            <p>
+                Use of this e-text material (<a href="https://github.com/tylergneill/hansel-data">on GitHub</a>) and the code that runs the website (also <a href="https://github.com/tylergneill/hansel-app">on GitHub</a>) is covered by <a href="https://creativecommons.org/licenses/by-nc/4.0">Creative Commons license BY-NC 4.0</a>. Please share and share alike.
+            </p>
+
+            <h3 id="even-more-info">Even more info</h3>
+            <p>
+                See the <a href="about">About</a> and <a href="how">How It Works</a> pages.
+            </p>
+        </div>

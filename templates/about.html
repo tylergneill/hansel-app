@@ -1,19 +1,12 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>HANSEL - E-Texts</title>
-    <link href="{{ url_for('static', filename='web/style.css') }}" rel="stylesheet" type="text/css">
+    {% include 'subtemplates/head_shared.html' %}
+    <title>HANSEL - About</title>
 </head>
 <body>
 <div id="content">
-    <div class="sidenav">
-        <img src="{{ url_for('static', filename='web/logo.png') }}" class="sidebar-logo" alt="Swan Logo">
-        <h1 class="sidebar-title">HANSEL</h1>
-        <p class="sidebar-subtitle">Human-Accessible and<br>NLP-ready Sanskrit<br>E-Text Library</p>
-        <a href="/">Back Home</a>
-    </div>
+    {% include 'subtemplates/sidenav_smallest.html' %}
 
     <div class="main">
 
