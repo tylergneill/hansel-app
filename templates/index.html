@@ -20,11 +20,11 @@
         <div id="e-texts">
             <h1>E-Texts</h1>
             <ul>
-                {% for file in file_data %}
+                {% for item in metadata %}
                 <li class="file-item">
                     <div class="link-and-caret">
-                        <a href="{{ static_files_path }}/{{ file.filename }}" class="main-link" target="_blank">
-                            {{ file.title }} - {{ file.author }}
+                        <a href="{{ static_files_path }}/{{ item['Filename'] }}" class="main-link" target="_blank">
+                            {{ item['Title'] ~ (' - ' ~ item['Author(s)'] if item['Author(s)'] else '') }}
                         </a>
                         <details class="caret-details">
                             <summary class="toggle-caret"></summary>
@@ -32,7 +32,7 @@
                     </div>
                     <ul class="extra-links">
                         <li>
-                            <a href="{{ static_files_path }}/{{ file.filename }}" target="_blank">Metadata...</a>
+                            <a href="{{ static_files_path }}/{{ item['Filename'] }}" target="_blank">Metadata...</a>
                         </li>
                     </ul>
                 </li>

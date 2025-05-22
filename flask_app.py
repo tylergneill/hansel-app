@@ -12,8 +12,12 @@ from utils import (
 )
 
 STATIC_FILES_PATH = './static/data'
-FULL_METADATA: Dict = load_metadata()
-CUSTOM_METADATA = get_custom_metadata_subset(FULL_METADATA)
+RAW_METADATA: Dict = load_metadata()
+CUSTOM_METADATA = process_metadata(RAW_METADATA)
+DISPLAY_FIELDS = ['Title', 'Author(s)', 'Genre(s)', 'Size (kb)', 'Draft?']
+NUM_ITEMS = len(CUSTOM_METADATA)
+TOTAL_SIZE_MB = get_collection_size(CUSTOM_METADATA)
+
 APP_VERSION = find_app_version()
 DATA_VERSION = find_data_version()
 
@@ -69,9 +73,11 @@ def index():
     return render_template(
         "index.html",
         static_files_path=STATIC_FILES_PATH,
-        file_data=CUSTOM_METADATA,
+        metadata=CUSTOM_METADATA,
         app_version=APP_VERSION,
         data_version=DATA_VERSION,
+        num_items=NUM_ITEMS,
+        total_size_mb=TOTAL_SIZE_MB,
     )
 
 
