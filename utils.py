@@ -5,7 +5,6 @@ import os
 import time
 from typing import Dict, List
 import unicodedata
-from urllib.parse import quote
 
 import requests
 from skrutable.transliteration import Transliterator
@@ -86,31 +85,38 @@ def get_filename_info(record):
 
 def get_author_info(record):
     if 'Author(s)' not in record:
-        return None
+        return ''
     elif len(record['Author(s)']) == 1:
         return record['Author(s)'][0]
     else:
         return ', '.join(record['Author(s)'])
 
-def get_custom_metadata_subset(full_metadata: Dict[str, Dict]) -> List[Dict]:
+def process_metadata(raw_metadata: Dict[str, Dict]) -> List[Dict]:
     """
-    :param full_metadata: mapping with unique id (mostly = catalog num) to full record (~18 fields)
-    :return: flattened list of dicts with 4 fields
+    :param raw_metadata: mapping with unique id (mostly = catalog num) to full record (~18 fields)
+    :return: flattened list of dicts with error-checked values
     """
     metadata_subset = []
-    for (key, record) in full_metadata.items():
-        control_num = record['Control number']
-        filename = get_filename_info(record)
-        work_title = record['Work Title']
-        author_info = get_author_info(record)
+    for (key, record) in raw_metadata.items():
         metadata_subset.append({
-            'control_number': control_num,
-            'filename': filename,
-            'title': work_title,
-            'author': author_info,
+            'Ctrl #': record['Control number'],
+            'Draft?': 'DRAFT' if record['Draft'] else '',
+            'Filename': get_filename_info(record),
+            'Title': record['Work Title'],
+            'Author(s)': get_author_info(record),
+            'Source': record['File Source'],
+            'Edition(s)': '; '.join(record['Edition(s)']),
+            'Genre(s)': ', '.join(record['Genre(s)']),
+            'Size (kb)': record['File Size (kb)'],
+            'Extent': record['Extent'],
+            'Structure': record['Structural Notes']
         })
-    sorted_metadata_subset = sorted(metadata_subset, key=lambda x: custom_sort_key(x['title']))
+    sorted_metadata_subset = sorted(metadata_subset, key=lambda x: custom_sort_key(x['Title']))
     return sorted_metadata_subset
+
+
+def get_collection_size(custom_metadata):
+    return round(sum([item['Size (kb)'] for item in custom_metadata]) / 1024, 1)
 
 
 sanskrit_alphabet = [
