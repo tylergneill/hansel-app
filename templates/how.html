@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {% include 'subtemplates/head_shared.html' %}
+    <title>HANSEL - How It works</title>
+</head>
+<body>
+<div id="content">
+    {% include 'subtemplates/sidenav_small.html' %}
+
+    <div class="main">
+
+        <div id="about">
+            <h1>How It Works</h1>
+            <p>
+                HANSEL's central data format is TEI-XML,
+                but users and material contributors need not interact with it.
+                Instead, users can access plain-text and HTML transforms, also as cumulative downloads,
+                and material contributors can simply email in whatever format they have.
+                Plain-text is the main processing format,
+                and a simple <a href="">plain-text markup scheme</a> helps guide work on ensuring
+                both essential structural elements and machine-actionability.
+            </p>
+            <p>
+                The below design diagram shows HANSEL's multiple community entry points, data formats, and use of automation.
+            </p>
+            <img src="/static/web/overall_design_diagram.png"/>
+            <p>
+                In addition to automated checks on the body of draft material,
+                there are also automated checks on metadata.
+                Items must pass all validations in order to move from draft status to full publication,
+                but acceptably structured draft material is also presented on the website, marked as such.
+                These checks, part of the code base,
+                are run locally by <a href="team">technical team</a> members
+                and also automatically on GitHub.
+            </p>
+            <p>
+                Finally, the website is dynamically served by a web application,
+                which also takes care of metadata search
+                and basic transliteration options.
+            </p>
+        </div>
+
+    </div>
+</div>
+</body>
+</html>

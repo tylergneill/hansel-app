@@ -8,7 +8,7 @@ from flask import Flask, request, send_file, render_template, abort
 from utils import (
     find_app_version, find_data_version,
     get_geolocation, log_download,
-    load_metadata, get_custom_metadata_subset, get_normalized_filename,
+    load_metadata, process_metadata, get_collection_size, get_normalized_filename,
 )
 
 STATIC_FILES_PATH = './static/data'
@@ -96,6 +96,17 @@ def index_tabular():
 def about():
     return render_template("about.html")
 
+@app.route("/how")
+def how():
+    return render_template("how.html")
+
+@app.route("/team")
+def team():
+    return render_template("team.html")
+
+@app.route("/backlog")
+def backlog():
+    return render_template("backlog.html")
 
 if __name__ == "__main__":
     # Enable debug mode for local development
