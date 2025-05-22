@@ -81,14 +81,17 @@ def index():
     )
 
 
-@app.route("/index_tabular")
-def index_tabular():
+@app.route("/table")
+def index_table():
     return render_template(
-        "index_tabular.html",
+        "table.html",
         static_files_path=STATIC_FILES_PATH,
-        file_data=CUSTOM_METADATA,
+        rows=CUSTOM_METADATA,
+        display_fields=DISPLAY_FIELDS,
         app_version=APP_VERSION,
         data_version=DATA_VERSION,
+        num_items=NUM_ITEMS,
+        total_size_mb=TOTAL_SIZE_MB,
     )
 
 

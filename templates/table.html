@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {% include 'subtemplates/head_shared.html' %}
+    <title>HANSEL - E-Texts (Table)</title>
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.8/css/jquery.dataTables.min.css">
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <script src="https://cdn.datatables.net/1.13.8/js/jquery.dataTables.min.js"></script>
+    <script src="{{ url_for('static', filename='web/js/sort.js') }}"></script>
+</head>
+<body>
+<div id="content">
+    {% include 'subtemplates/sidenav_full.html' %}
+
+    <div class="main">
+        <div id="introduction">
+            <h1>Introduction</h1>
+            <p>
+                HANSEL is an open collection of Sanskrit e-texts of all sorts.
+                The current collection size is {{ num_items }} items ({{ total_size_mb }} mb in total).
+            </p>
+            <p>
+                Below is a tabular presentation of the collection which you can search and sort.
+                There's also a <a href="/">simple list view</a>.
+            </p>
+            <p>Want to contribute? <a href="#contributing">See below!</a></p>
+        </div>
+
+        <div id="e-texts">
+            <h1>E-Texts Table View</h1>
+            <table id="text_table" class="display" style="width:100%">
+              <thead>
+                <tr>
+                  {% for field in display_fields %}
+                    <th>{{ field }}</th>
+                  {% endfor %}
+                </tr>
+              </thead>
+              <tbody>
+              </tbody>
+            </table>
+
+        </div>
+
+        {% include 'subtemplates/index_footer.html' %}
+
+    </div>
+</div>
+<script>
+document.addEventListener("DOMContentLoaded", function() {
+    document.querySelectorAll(".toggle-caret").forEach(caret => {
+        caret.addEventListener("click", function(event) {
+            event.preventDefault(); // Prevent default summary behavior
+            let li = this.closest(".file-item"); // Find the parent <li>
+            li.classList.toggle("open"); // Toggle the 'open' class
+        });
+    });
+});
+
+$.fn.dataTable.ext.type.order['sanskrit-pre'] = d => {
+  const txt = (d || '').replace(/<[^>]*>/g,'').toLowerCase().normalize('NFC');
+  if (txt.trim() === '') return -Infinity; // blank cells get smallest possible key
+  return saKey(txt);
+};
+$.fn.dataTable.ext.type.order['sanskrit-asc']  = (a, b) => a < b ? -1 : a > b ? 1 : 0;
+$.fn.dataTable.ext.type.order['sanskrit-desc'] = (a, b) => a < b ?  1 : a > b ? -1 : 0;
+
+const staticFilesPath = "{{ static_files_path }}";
+const tableData = {{ rows | tojson | safe }};   // full list of dicts
+console.log(tableData)
+
+$('#text_table').DataTable({
+  data: tableData,
+  columns: [
+    {
+      data: 'Title',
+      type: 'sanskrit',  // custom sort
+      render: (data, type, row) => {
+        if (type !== 'display') return data;   // keep raw text for sort/filter
+        return `<a href="${staticFilesPath}/${row.Filename}">${data}</a>`;
+      }
+    },
+    { data: 'Author(s)', type: 'sanskrit' },
+    { data: 'Genre(s)', type: 'sanskrit' },
+    { data: 'Size (kb)', className: 'text-end' },
+    { data: 'Draft?' }
+  ],
+  pageLength: 25
+});
+
+</script>
+</body>
+</html>
