@@ -12,33 +12,46 @@
 
         <div id="about">
             <h1>How It Works</h1>
+
+            <p>HANSEL consists of a two interconnected systems: contribution and presentation.</p>
+
+            <h2>Contribution</h2>
             <p>
-                HANSEL's central data format is TEI-XML,
-                but users and material contributors need not interact with it.
-                Instead, users can access plain-text and HTML transforms, also as cumulative downloads,
-                and material contributors can simply email in whatever format they have.
-                Plain-text is the main processing format,
-                and a simple <a href="">plain-text markup scheme</a> helps guide work on ensuring
-                both essential structural elements and machine-actionability.
+                HANSEL's contribution system has three stages, with correspondingly different file formats:
             </p>
+            <ol>
+                <li><strong>Pre-Draft</strong> — any file format (<code>.doc</code>, <code>.pdf</code>, etc.), for email correspondence and preliminary local processing</li>
+                <li><strong>Draft</strong> — plain-text (<code>.txt</code>, with <a href="txt_markup">custom markup</a>), for provisional display while progressing toward publication</li>
+                <li><strong>Publication</strong> — XML (<code>.xml</code>, with <a href="xml_markup">minimal TEI markup</a>), for web display and scholarly citation</li>
+            </ol>
+            <p>
+                Pre-Draft material is moved manually toward Draft format.
+                Once the material passes a set of automated checks —
+                run locally by <a href="team">technical team</a> members and also automatically on GitHub —
+                it is suited for Draft presentation.
+                Such mature Draft material (<code>.txt</code>)
+                can then be automatically transformed into Publication material (<code>.xml</code>), and vice versa.
+                This allows for continued improvement of material without the need to work in XML.
+            </p>
+
+            <h2>Presentation</h2>
+
+            <p>
+                The website you are reading dynamically serves both Draft and Publication material alike,
+                with Drafts marked as such.
+                Publication material is rendered by default on the website with <code>.html</code> transforms,
+                but users can also opt for a <code>.txt</code> transform or the underlying <code>.xml</code>.
+                Cumulative downloads, both of the entire collection, or of filtered search sets, are also always at the ready.
+                The server also takes care of metadata search and basic transliteration.
+            </p>
+
+            <h2>Diagram</h2>
+
             <p>
                 The below design diagram shows HANSEL's multiple community entry points, data formats, and use of automation.
             </p>
             <img src="/static/web/overall_design_diagram.png"/>
-            <p>
-                In addition to automated checks on the body of draft material,
-                there are also automated checks on metadata.
-                Items must pass all validations in order to move from draft status to full publication,
-                but acceptably structured draft material is also presented on the website, marked as such.
-                These checks, part of the code base,
-                are run locally by <a href="team">technical team</a> members
-                and also automatically on GitHub.
-            </p>
-            <p>
-                Finally, the website is dynamically served by a web application,
-                which also takes care of metadata search
-                and basic transliteration options.
-            </p>
+
         </div>
 
     </div>
