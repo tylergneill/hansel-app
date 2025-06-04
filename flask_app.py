@@ -111,6 +111,10 @@ def team():
 def backlog():
     return render_template("backlog.html")
 
+@app.route("/txt_markup")
+def txt_markup():
+    return render_template("txt_markup.html")
+
 if __name__ == "__main__":
     # Enable debug mode for local development
     app.run(debug=True, host="0.0.0.0", port=5030)
