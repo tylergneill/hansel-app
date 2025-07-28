@@ -3,6 +3,7 @@ import json
 import logging
 import os
 import time
+from pathlib import Path
 from typing import Dict, List
 import unicodedata
 
@@ -70,8 +71,9 @@ def log_download(filename, ip, country, region, city, file_size, processing_time
         logging.error(f"Error logging download: {e}")
 
 
-def load_metadata(file_path="static/data/metadata.json") -> Dict:
-    with open(file_path, "r", encoding="utf-8") as f:
+def load_metadata(metadata_path=Path("static/data/metadata")) -> Dict:
+    metadata_file = metadata_path / '_metadata.json'
+    with open(metadata_file, encoding="utf-8") as f:
         metadata = json.load(f)
     ordered_metadata = collections.OrderedDict(sorted(metadata.items()))
     return ordered_metadata

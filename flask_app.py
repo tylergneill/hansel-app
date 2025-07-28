@@ -1,6 +1,7 @@
 import logging
 import os
 import time
+from pathlib import Path
 from typing import Dict
 
 from flask import Flask, request, send_file, render_template, abort
@@ -11,8 +12,10 @@ from utils import (
     load_metadata, process_metadata, get_collection_size, get_normalized_filename,
 )
 
-STATIC_FILES_PATH = './static/data'
-RAW_METADATA: Dict = load_metadata()
+STATIC_FILES_PATH = Path('./static')
+DATA_PATH = Path(os.getenv('DATA_PATH')) or STATIC_FILES_PATH / 'data'
+METADATA_PATH = DATA_PATH / 'metadata'
+RAW_METADATA: Dict = load_metadata(METADATA_PATH)
 CUSTOM_METADATA = process_metadata(RAW_METADATA)
 DISPLAY_FIELDS = ['Title', 'Author(s)', 'Genre(s)', 'Size (kb)', 'Draft?']
 NUM_ITEMS = len(CUSTOM_METADATA)
