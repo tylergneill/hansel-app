@@ -13,7 +13,7 @@ from utils import (
 )
 
 STATIC_FILES_PATH = Path('./static')
-DATA_PATH = Path(os.getenv('DATA_PATH')) or STATIC_FILES_PATH / 'data'
+DATA_PATH = Path(os.getenv('DATA_PATH', str(STATIC_FILES_PATH / 'data')))
 METADATA_PATH = DATA_PATH / 'metadata'
 RAW_METADATA: Dict = load_metadata(METADATA_PATH)
 CUSTOM_METADATA = process_metadata(RAW_METADATA)
