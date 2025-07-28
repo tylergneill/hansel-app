@@ -105,7 +105,7 @@ $('#text_table').DataTable({
       data: 'Filename Base',
       render: function(data, type, row) {
         if (type !== 'display') return data;
-        const href = `${staticFilesPath}/data/metadata/transforms/${row['Filename Base']}.html`;
+        const href = `${staticFilesPath}/data/metadata/transforms/html/${row['Filename Base']}.html`;
         imgSrc = `${staticFilesPath}/web/imgs/info.png`;
         return (
           `<a href="${href}" title="metadata">` +

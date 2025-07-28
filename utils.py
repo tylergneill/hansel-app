@@ -72,7 +72,7 @@ def log_download(filename, ip, country, region, city, file_size, processing_time
 
 
 def load_metadata(metadata_path=Path("static/data/metadata")) -> Dict:
-    metadata_file = metadata_path / '_metadata.json'
+    metadata_file = metadata_path / 'metadata.json'
     with open(metadata_file, encoding="utf-8") as f:
         metadata = json.load(f)
     ordered_metadata = collections.OrderedDict(sorted(metadata.items()))
