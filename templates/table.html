@@ -91,6 +91,7 @@ $('#text_table').DataTable({
       "orderable": false // Disable sorting
     }
   ],
+  order: [[ 2, "asc" ]], // Sort by the 3th column (Title) in descending Sanskrit alphabetical order
   columns: [
     {
       data: 'Highest Medallion',
@@ -157,7 +158,7 @@ $('#text_table').DataTable({
       },
     }
   ],
-  pageLength: 25
+  pageLength: 10
 });
 
 </script>
