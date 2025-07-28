@@ -85,6 +85,12 @@ function getFilenameWithExtension(medallion, row) {
 
 $('#text_table').DataTable({
   data: tableData,
+  columnDefs: [
+    {
+      "targets": [1],  // Metadata column
+      "orderable": false // Disable sorting
+    }
+  ],
   columns: [
     {
       data: 'Highest Medallion',
@@ -96,6 +102,22 @@ $('#text_table').DataTable({
         }
     },
     {
+      data: 'Filename Base',
+      render: function(data, type, row) {
+        if (type !== 'display') return data;
+        const href = `${staticFilesPath}/data/metadata/transforms/${row['Filename Base']}.html`;
+        imgSrc = `${staticFilesPath}/web/imgs/info.png`;
+        return (
+          `<a href="${href}" title="metadata">` +
+              `<img src="${imgSrc}" alt="metadata" style="height: 20px; margin-right: 2px;">` +
+          `</a>`
+        )
+      },
+      createdCell: function(td) {
+        td.style.textAlign = 'center';
+      }
+    },
+    {
       data: 'Title',
       type: 'sanskrit',  // custom sort
       render: (data, type, row) => {
@@ -103,7 +125,7 @@ $('#text_table').DataTable({
         const highest_medallion = row['Highest Medallion']?.toLowerCase();
         const full_filename = getFilenameWithExtension(highest_medallion, row);
         const medallion_path = medallionPathMap[highest_medallion] || '1_bronze';
-        return `<a href="${staticFilesPath}/data/texts/{medallion_path}/${full_filename}">${data}</a>`;
+        return `<a href="${staticFilesPath}/data/texts/${medallion_path}/${full_filename}">${data}</a>`;
       }
     },
     { data: 'Author', type: 'sanskrit' },
@@ -133,7 +155,6 @@ $('#text_table').DataTable({
           })
           .join('');
       },
-      className: 'text-center'
     }
   ],
   pageLength: 25
