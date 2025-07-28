@@ -86,12 +86,14 @@ def get_filename_info(record):
         return record['Draft Filename']
 
 def get_author_info(record):
-    if 'Author(s)' not in record:
+    if not('Author' in record or 'Authors' in record):
         return ''
-    elif len(record['Author(s)']) == 1:
-        return record['Author(s)'][0]
-    else:
-        return ', '.join(record['Author(s)'])
+    elif 'Author' in record and 'Authors' in record:
+        raise(f"record {record} has both Author and Authors")
+    elif 'Author' in record:
+        return record['Author']
+    elif 'Authors' in record:
+        return ', '.join(record['Authors'])
 
 def process_metadata(raw_metadata: Dict[str, Dict]) -> List[Dict]:
     """
@@ -101,8 +103,6 @@ def process_metadata(raw_metadata: Dict[str, Dict]) -> List[Dict]:
     metadata_subset = []
     for (key, record) in raw_metadata.items():
         metadata_subset.append({
-            'Ctrl #': record['Control number'],
-            'Draft?': 'DRAFT' if record['Draft'] else '',
             'Filename': get_filename_info(record),
             'Title': record['Work Title'],
             'Author(s)': get_author_info(record),
