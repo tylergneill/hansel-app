@@ -28,7 +28,7 @@
                 <li class="file-item">
                     <div class="link-and-caret">
                         <a href="{{ static_files_path }}/{{ item['Filename'] }}" class="main-link" target="_blank">
-                            {{ item['Title'] ~ (' - ' ~ item['Author(s)'] if item['Author(s)'] else '') }}
+                            {{ item['Title'] ~ (' - ' ~ item['Author'] if item['Author'] else '') }}
                         </a>
                         <details class="caret-details">
                             <summary class="toggle-caret"></summary>

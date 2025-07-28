@@ -80,10 +80,11 @@ def load_metadata(metadata_path=Path("static/data/metadata")) -> Dict:
 
 
 def get_filename_info(record):
-    if 'XML Filename' in record:
-        return record['XML Filename']
-    elif 'Draft Filename' in record:
-        return record['Draft Filename']
+    if 'Filename' not in record:
+        raise(f"Filename missing for {record}")
+    filename_base = record['Filename']
+    bronze_filename_extension = record['Bronze Filetype']
+    return filename_base, bronze_filename_extension
 
 def get_author_info(record):
     if not('Author' in record or 'Authors' in record):
@@ -95,6 +96,15 @@ def get_author_info(record):
     elif 'Authors' in record:
         return ', '.join(record['Authors'])
 
+def get_medallion_info(record):
+    highest = record['Digitization Level']
+    if highest == 'Bronze':
+        return highest, None
+    elif highest == 'Silver':
+        return highest, 'Bronze'  # TODO: add Silver when offering multiple filetypes
+    elif highest == 'Gold':
+        return highest, 'Silver, Bronze'  # TODO: add Gold when offering multiple filetypes
+
 def process_metadata(raw_metadata: Dict[str, Dict]) -> List[Dict]:
     """
     :param raw_metadata: mapping with unique id (mostly = catalog num) to full record (~18 fields)
@@ -102,16 +112,25 @@ def process_metadata(raw_metadata: Dict[str, Dict]) -> List[Dict]:
     """
     metadata_subset = []
     for (key, record) in raw_metadata.items():
+        highest_medallion, other_medallions = get_medallion_info(record)
+        filename_base, bronze_filename_extension = get_filename_info(record)
         metadata_subset.append({
-            'Filename': get_filename_info(record),
-            'Title': record['Work Title'],
-            'Author(s)': get_author_info(record),
-            'Source': record['File Source'],
-            'Edition(s)': '; '.join(record['Edition(s)']),
-            'Genre(s)': ', '.join(record['Genre(s)']),
-            'Size (kb)': record['File Size (kb)'],
+            'Filename Base': filename_base,
+            'Bronze Filename Extension': bronze_filename_extension,
+            'Title': record['Title'],
+            'Author': get_author_info(record),
+            'Source': record['Source File'],
+            'Edition': record['Edition'],
+            'PDFs': '; '.join(record['PDFs']),
+            'Highest Medallion': highest_medallion,
+            'Other Versions': other_medallions,
+            'Digitization Notes': record['Digitization Notes'],
             'Extent': record['Extent'],
-            'Structure': record['Structural Notes']
+            'Size (kb)': record['File Size (KB)'],
+            'Genre': ', '.join(record['Genres']),
+            'Structure': record['Structure'],
+            'Translations': record.get('Translations', None),
+            'Additional Notes': record['Additional Notes'],
         })
     sorted_metadata_subset = sorted(metadata_subset, key=lambda x: custom_sort_key(x['Title']))
     return sorted_metadata_subset

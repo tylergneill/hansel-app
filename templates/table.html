@@ -69,21 +69,73 @@ const staticFilesPath = "{{ static_files_path }}";
 const tableData = {{ rows | tojson | safe }};   // full list of dicts
 console.log(tableData)
 
+const medallionPathMap = {
+  'bronze': '1_bronze',
+  'silver': '2_silver',
+  'gold': '3_gold'
+};
+
+function getFilenameWithExtension(medallion, row) {
+  const base = row['Filename Base'];
+  const ext = medallion.toLowerCase() === 'bronze'
+    ? row['Bronze Filename Extension'] || '.txt'
+    : '.txt'; // default for silver/gold, can be expanded later
+
+  return `${base}${ext}`;
+}
+
 $('#text_table').DataTable({
   data: tableData,
   columns: [
+    {
+      data: 'Highest Medallion',
+      render: function(data, type, row) {
+        if (type !== 'display') return data;
+        const medallion = data.toLowerCase();
+        const imgSrc = `${staticFilesPath}/web/imgs/medallion_icons/${medallion}.png`;
+        return `<img src="${imgSrc}" alt="${data}" title="${data}" style="height: 20px;">`;
+        }
+    },
     {
       data: 'Title',
       type: 'sanskrit',  // custom sort
       render: (data, type, row) => {
         if (type !== 'display') return data;   // keep raw text for sort/filter
-        return `<a href="${staticFilesPath}/${row.Filename}">${data}</a>`;
+        const highest_medallion = row['Highest Medallion']?.toLowerCase();
+        const full_filename = getFilenameWithExtension(highest_medallion, row);
+        const medallion_path = medallionPathMap[highest_medallion] || '1_bronze';
+        return `<a href="${staticFilesPath}/data/texts/{medallion_path}/${full_filename}">${data}</a>`;
       }
     },
-    { data: 'Author(s)', type: 'sanskrit' },
-    { data: 'Genre(s)', type: 'sanskrit' },
+    { data: 'Author', type: 'sanskrit' },
+    { data: 'Genre', type: 'sanskrit' },
     { data: 'Size (kb)', className: 'text-end' },
-    { data: 'Draft?' }
+    {
+      data: 'Other Versions',
+      render: function(data, type, row) {
+        if (type !== 'display') return data;
+        if (!data) return '';
+
+        return data
+          .split(',')
+          .map(medallion => {
+            const highest_medallion_trimmed = medallion.trim();
+            const highest_medallion_lower = highest_medallion_trimmed.toLowerCase();
+            const medallion_path = medallionPathMap[highest_medallion_lower];
+            const imgSrc = `${staticFilesPath}/web/imgs/medallion_icons/${highest_medallion_lower}.png`;
+            const full_filename = getFilenameWithExtension(highest_medallion_lower, row);
+            const href = `${staticFilesPath}/data/texts/${medallion_path}/${full_filename}`;
+
+            return (
+              `<a href="${href}" title="${highest_medallion_trimmed}">` +
+                `<img src="${imgSrc}" alt="${highest_medallion_trimmed}" style="height: 20px; margin-right: 2px;">` +
+              `</a>`
+            );
+          })
+          .join('');
+      },
+      className: 'text-center'
+    }
   ],
   pageLength: 25
 });
