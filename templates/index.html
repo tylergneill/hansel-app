@@ -27,7 +27,11 @@
                 {% for item in metadata %}
                 <li class="file-item">
                     <div class="link-and-caret">
-                        <a href="{{ static_files_path }}/{{ item['Filename'] }}" class="main-link" target="_blank">
+                        {% set highest_medallion = item['Highest Medallion'] | lower %}
+                        {% set medallion_path = '1_bronze' if highest_medallion == 'bronze' else ('2_silver' if highest_medallion == 'silver' else '3_gold') %}
+                        {% set filename = item['Filename Base'] ~ (item['Bronze Filename Extension'] if highest_medallion == 'bronze' else '.txt') %}
+                        <a href="{{ static_files_path }}/data/texts/{{ medallion_path }}/{{ filename }}" class="main-link" target="_blank">
+                            <img src="{{ static_files_path }}/web/imgs/medallion_icons/{{ highest_medallion }}.png" alt="{{ highest_medallion }}" title="{{ highest_medallion }}" style="height: 20px; margin-right: 5px;">
                             {{ item['Title'] ~ (' - ' ~ item['Author'] if item['Author'] else '') }}
                         </a>
                         <details class="caret-details">
@@ -36,8 +40,24 @@
                     </div>
                     <ul class="extra-links">
                         <li>
-                            <a href="{{ static_files_path }}/{{ item['Filename'] }}" target="_blank">Metadata...</a>
+                            <a href="{{ static_files_path }}/data/metadata/transforms/{{ item['Filename Base'] }}.html" target="_blank">
+                                <img src="{{ static_files_path }}/web/imgs/info.png" alt="metadata" style="height: 20px; margin-right: 2px;">
+                                Metadata
+                            </a>
                         </li>
+                        {% if item['Other Versions'] %}
+                        <li>
+                            Other Versions:
+                            {% for medallion in item['Other Versions'].split(',') %}
+                                {% set medallion_lower = medallion.strip() | lower %}
+                                {% set medallion_path = '1_bronze' if medallion_lower == 'bronze' else ('2_silver' if medallion_lower == 'silver' else '3_gold') %}
+                                {% set filename = item['Filename Base'] ~ (item['Bronze Filename Extension'] if medallion_lower == 'bronze' else '.txt') %}
+                                <a href="{{ static_files_path }}/data/texts/{{ medallion_path }}/{{ filename }}" title="{{ medallion.strip() }}">
+                                    <img src="{{ static_files_path }}/web/imgs/medallion_icons/{{ medallion_lower }}.png" alt="{{ medallion.strip() }}" style="height: 20px; margin-right: 2px;">
+                                </a>
+                            {% endfor %}
+                        </li>
+                        {% endif %}
                     </ul>
                 </li>
                 {% endfor %}
