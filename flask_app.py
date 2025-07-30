@@ -100,7 +100,10 @@ def index_table():
 
 @app.route("/about")
 def about():
-    return render_template("about.html")
+    return render_template(
+        "about.html",
+        static_files_path=STATIC_FILES_PATH
+    )
 
 @app.route("/how")
 def how():
