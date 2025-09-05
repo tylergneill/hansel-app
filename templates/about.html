@@ -36,33 +36,102 @@
 
             <h2>Principles</h2>
 
-            <p>Accept material contributions by email.</p>
-            <p>Always have metadata clearly indicates sources and contributions.</p>
+            <p>Keep submission as easy as sending an email, with material in whatever format.</p>
+            <p>Make sure metadata always clearly indicates sources and contributions.</p>
             <p>
-                Maintain multiple versions of files,
-                using a <a href="https://github.com/tylergneill/hansel-data/tree/main/...">medallion system</a>,
-                to indicate progression toward an explicit data standard:
+                Honor different goals by maintaining multiple versions of files,
+                using a three-tier system to indicate progression toward an explicit data standard:
                 <ul>
                     <li>
-                        <img src="{{ static_files_path }}/web/imgs/medallion_icons/bronze.png" alt="bronze medallion" title="bronze medallion" style="height: 20px; margin-right: 5px;">
-                        Bronze: Whichever initial version the contributor chooses
+                        <strong>Tier I</strong>: Whichever initial version the contributor chooses
                     </li>
                     <li>
-                        <img src="{{ static_files_path }}/web/imgs/medallion_icons/silver.png" alt="silver medallion" title="silver medallion" style="height: 20px; margin-right: 5px;">
-                        Silver: Passing automatic structural validation
+                        <strong>Tier II</strong>: Passing automatic validation for HANSEL's structural data model
                     </li>
                     <li>
-                        <img src="{{ static_files_path }}/web/imgs/medallion_icons/gold.png" alt="gold medallion" title="gold medallion" style="height: 20px; margin-right: 5px;">
-                        Gold: Further improved in diplomatic transcription and NLP-readiness
+                        <strong>Tier III</strong>: High-fidelity diplomatic correspondence to source edition
                     </li>
                 </ul>
             </p>
             <p>
-                Let the <a href="/team">solo creator</a> get some momentum for the project,
-                then hand control over to a skilled team.
+                A <a href="/team">solo creator</a> working open-source is best to get things moving,
+                and if the project works, control can be passed on to a rotating committee at a later date.
             </p>
 
-            <p style="text-align: right">Tyler Neill<br>tyler.g.neill (Gmail)<br>Brooklyn, NY<br>June 2025</p>
+            <h1>How It Works</h1>
+
+            <p>
+                HANSEL consists of two coordinated Git repositories:
+                one for data and basic hosting with GitHub Pages,
+                and one for the primary web app with extra features.
+                Using Git takes care of fine-grained versioning.
+                The public GitHub platform enables open-source access to everything,
+                including PR-based change history.
+            </p>
+
+            <p>
+                The web app is written in Python and Javascript
+                and runs on a Digital Ocean server
+                which holds an up-to-date clone of the data repo.
+            </p>
+
+            <p>Data is progressed through the system in the following manner:</p>
+
+            <ol>
+                <li>
+                    Users submit material by email.
+                    agree to share it under the CC BY-NC-SA 4.0 license,
+                    and communicate what remains to be done and how involved they'd like to be in processing.
+                </li>
+                <li>Metadata template is filled out.</li>
+                <li>New text and metadata are uploaded and published on the site immediately.</li>
+                <li>Work begins on a Tier II version.</li>
+                <li>Tier II version and updated metadata are published.</li>
+                <li>Time permitting, a Tier III version is also prepared and published.</li>
+            </ol>
+
+            <p>
+
+
+            </p>
+
+            <h2>Contribution</h2>
+            <p>
+                HANSEL's contribution system has three stages, with correspondingly different file formats:
+            </p>
+            <ol>
+                <li><strong>Pre-Draft</strong> — any file format (<code>.doc</code>, <code>.pdf</code>, etc.), for email correspondence and preliminary local processing</li>
+                <li><strong>Draft</strong> — plain-text (<code>.txt</code>, with <a href="txt_markup">custom markup</a>), for provisional display while progressing toward publication</li>
+                <li><strong>Publication</strong> — XML (<code>.xml</code>, with <a href="xml_markup">minimal TEI markup</a>), for web display and scholarly citation</li>
+            </ol>
+            <p>
+                Pre-Draft material is moved manually toward Draft format.
+                Once the material passes a set of automated checks —
+                run locally by <a href="team">technical team</a> members and also automatically on GitHub —
+                it is suited for Draft presentation.
+                Such mature Draft material (<code>.txt</code>)
+                can then be automatically transformed into Publication material (<code>.xml</code>), and vice versa.
+                This allows for continued improvement of material without the need to work in XML.
+            </p>
+
+            <h2>Presentation</h2>
+
+            <p>
+                The website you are reading dynamically serves both Draft and Publication material alike,
+                with Drafts marked as such.
+                Publication material is rendered by default on the website with <code>.html</code> transforms,
+                but users can also opt for a <code>.txt</code> transform or the underlying <code>.xml</code>.
+                Cumulative downloads, both of the entire collection, or of filtered search sets, are also always at the ready.
+                The server also takes care of metadata search and basic transliteration.
+            </p>
+
+            <h2>Diagram</h2>
+
+            <p>
+                The below design diagram shows HANSEL's multiple community entry points, data formats, and use of automation.
+            </p>
+            <img src="/static/web/imgs/overall_design_diagram.png"/>
+
         </div>
 
     </div>

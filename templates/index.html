@@ -10,19 +10,17 @@
 
     <div class="main">
         <div id="introduction">
-            <h1>Introduction</h1>
+            <h1>HANSEL</h1>
             <p>
-                HANSEL is an open collection of Sanskrit e-texts of all sorts.
-                The current collection size is {{ num_items }} items ({{ total_size_mb }} mb in total).
-            </p>
-            <p>
-                Below is a simple alphabetical listing by work title. Click the arrows beside items for more info.
-                There's also a <a href="table">table view</a>.
+                An open collection of high-quality Sanskrit e-texts of all sorts.
+                Current collection size is {{ num_items }} items ({{ total_size_mb }} MB in total).
+                See also <a href="table">table view</a>.
             </p>
         </div>
 
         <div id="e-texts">
             <h1>E-Texts</h1>
+            <p>Click arrows beside items for more info.</p>
             <ul>
                 {% for item in metadata %}
                 <li class="file-item">
