@@ -65,17 +65,11 @@ const staticFilesPath = "{{ static_files_path }}";
 const tableData = {{ rows | tojson | safe }};   // full list of dicts
 console.log(tableData)
 
-const medallionPathMap = {
-  'bronze': '1_bronze',
-  'silver': '2_silver',
-  'gold': '3_gold'
-};
-
-function getFilenameWithExtension(medallion, row) {
+function getFilenameWithExtension(tier, row) {
   const base = row['Filename Base'];
-  const ext = medallion.toLowerCase() === 'bronze'
-    ? row['Bronze Filename Extension'] || '.txt'
-    : '.txt'; // default for silver/gold, can be expanded later
+  const ext = tier.toLowerCase() === 'i'
+    ? row['Tier I Filename Extension'] || '.txt'
+    : '.txt'; // default for II/III, can be expanded later
 
   return `${base}${ext}`;
 }
@@ -91,11 +85,11 @@ $('#text_table').DataTable({
   order: [[ 2, "asc" ]], // Sort by the 3th column (Title) in descending Sanskrit alphabetical order
   columns: [
     {
-      data: 'Highest Medallion',
+      data: 'Highest Tier',
       render: function(data, type, row) {
         if (type !== 'display') return data;
-        const medallion = data.toLowerCase();
-        const imgSrc = `${staticFilesPath}/web/imgs/medallion_icons/${medallion}.png`;
+        const tier = data.toLowerCase();
+        const imgSrc = `${staticFilesPath}/web/imgs/tier_icons/${tier}.png`;
         return `<img src="${imgSrc}" alt="${data}" title="${data}" style="height: 20px;">`;
         }
     },
@@ -120,34 +114,34 @@ $('#text_table').DataTable({
       type: 'sanskrit',  // custom sort
       render: (data, type, row) => {
         if (type !== 'display') return data;   // keep raw text for sort/filter
-        const highest_medallion = row['Highest Medallion']?.toLowerCase();
-        const full_filename = getFilenameWithExtension(highest_medallion, row);
-        const medallion_path = medallionPathMap[highest_medallion] || '1_bronze';
-        return `<a href="${staticFilesPath}/data/texts/${medallion_path}/${full_filename}">${data}</a>`;
+        const highest_tier = row['Highest Tier']?.toLowerCase();
+        const full_filename = getFilenameWithExtension(highest_tier, row);
+        const tier_path = highest_tier || 'I';
+        return `<a href="${staticFilesPath}/data/texts/${tier_path}/${full_filename}">${data}</a>`;
       }
     },
     { data: 'Author', type: 'sanskrit' },
     { data: 'Genre', type: 'sanskrit' },
     { data: 'Size (kb)', className: 'text-end' },
     {
-      data: 'Other Versions',
+      data: 'Other Tiers',
       render: function(data, type, row) {
         if (type !== 'display') return data;
         if (!data) return '';
 
         return data
           .split(',')
-          .map(medallion => {
-            const highest_medallion_trimmed = medallion.trim();
-            const highest_medallion_lower = highest_medallion_trimmed.toLowerCase();
-            const medallion_path = medallionPathMap[highest_medallion_lower];
-            const imgSrc = `${staticFilesPath}/web/imgs/medallion_icons/${highest_medallion_lower}.png`;
-            const full_filename = getFilenameWithExtension(highest_medallion_lower, row);
-            const href = `${staticFilesPath}/data/texts/${medallion_path}/${full_filename}`;
+          .map(tier => {
+            const highest_tier_trimmed = tier.trim();
+            const highest_tier_lower = highest_tier_trimmed.toLowerCase();
+            const tier_path = highest_tier_lower;
+            const imgSrc = `${staticFilesPath}/web/imgs/tier_icons/${highest_tier_lower}.png`;
+            const full_filename = getFilenameWithExtension(highest_tier_lower, row);
+            const href = `${staticFilesPath}/data/texts/${tier_path}/${full_filename}`;
 
             return (
-              `<a href="${href}" title="${highest_medallion_trimmed}">` +
-                `<img src="${imgSrc}" alt="${highest_medallion_trimmed}" style="height: 20px; margin-right: 2px;">` +
+              `<a href="${href}" title="${highest_tier_trimmed}">` +
+                `<img src="${imgSrc}" alt="${highest_tier_trimmed}" style="height: 20px; margin-right: 2px;">` +
               `</a>`
             );
           })
