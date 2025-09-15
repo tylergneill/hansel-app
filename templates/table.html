@@ -117,7 +117,7 @@ $('#text_table').DataTable({
         const highest_tier = row['Highest Tier']?.toLowerCase();
         const full_filename = getFilenameWithExtension(highest_tier, row);
         const tier_path = highest_tier || 'I';
-        return `<a href="${staticFilesPath}/data/texts/${tier_path}/${full_filename}">${data}</a>`;
+        return `<a href="${staticFilesPath}/data/texts/Tier_${tier_path}/${full_filename}">${data}</a>`;
       }
     },
     { data: 'Author', type: 'sanskrit' },
@@ -137,7 +137,7 @@ $('#text_table').DataTable({
             const tier_path = highest_tier_lower;
             const imgSrc = `${staticFilesPath}/web/imgs/tier_icons/${highest_tier_lower}.png`;
             const full_filename = getFilenameWithExtension(highest_tier_lower, row);
-            const href = `${staticFilesPath}/data/texts/${tier_path}/${full_filename}`;
+            const href = `${staticFilesPath}/data/texts/Tier_${tier}/${full_filename}`;
 
             return (
               `<a href="${href}" title="${highest_tier_trimmed}">` +
