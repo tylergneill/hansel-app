@@ -25,7 +25,7 @@
                 {% for item in metadata %}
                 <li class="file-item">
                     <div class="link-and-caret">
-                        {% set highest_tier = item['Highest Tier'] %}
+                        {% set highest_tier = item['Highest Tier'] | lower %}
                         {% set tier_path = highest_tier %}
                         {% set filename = item['Filename Base'] ~ (item['Tier I Filename Extension'] if highest_tier == 'I' else '.txt') %}
                         <a href="{{ static_files_path }}/data/texts/tier_{{ tier_path }}/{{ filename }}" class="main-link" target="_blank">

@@ -116,7 +116,7 @@ $('#text_table').DataTable({
         if (type !== 'display') return data;   // keep raw text for sort/filter
         const highest_tier = row['Highest Tier']?.toLowerCase();
         const full_filename = getFilenameWithExtension(highest_tier, row);
-        const tier_path = highest_tier || 'I';
+        const tier_path = highest_tier || 'i';
         return `<a href="${staticFilesPath}/data/texts/tier_${tier_path}/${full_filename}">${data}</a>`;
       }
     },
@@ -137,7 +137,7 @@ $('#text_table').DataTable({
             const tier_path = highest_tier_lower;
             const imgSrc = `${staticFilesPath}/web/imgs/tier_icons/${highest_tier_lower}.png`;
             const full_filename = getFilenameWithExtension(highest_tier_lower, row);
-            const href = `${staticFilesPath}/data/texts/tier_${tier}/${full_filename}`;
+            const href = `${staticFilesPath}/data/texts/tier_${tier_path}/${full_filename}`;
 
             return (
               `<a href="${href}" title="${highest_tier_trimmed}">` +
