@@ -97,7 +97,7 @@ def get_author_info(record):
         return ', '.join(record['Authors'])
 
 def get_tier_info(record):
-    highest = record['Highest Tier']
+    highest = record['Tier']
     if highest == 'I':
         return highest, None
     elif highest == 'II':
@@ -122,7 +122,7 @@ def process_metadata(raw_metadata: Dict[str, Dict]) -> List[Dict]:
             'Source': record['Source File'],
             'Edition': record['Edition'],
             'PDFs': '; '.join(record['PDFs']),
-            'Highest Tier': highest_tier,
+            'Tier': highest_tier,
             'Other Tiers': other_tiers,
             'Digitization Notes': record['Digitization Notes'],
             'Extent': record['Extent'],

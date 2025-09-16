@@ -85,7 +85,7 @@ $('#text_table').DataTable({
   order: [[ 2, "asc" ]], // Sort by the 3th column (Title) in descending Sanskrit alphabetical order
   columns: [
     {
-      data: 'Highest Tier',
+      data: 'Tier',
       render: function(data, type, row) {
         if (type !== 'display') return data;
         const tier = data.toLowerCase();
@@ -114,7 +114,7 @@ $('#text_table').DataTable({
       type: 'sanskrit',  // custom sort
       render: (data, type, row) => {
         if (type !== 'display') return data;   // keep raw text for sort/filter
-        const highest_tier = row['Highest Tier']?.toLowerCase();
+        const highest_tier = row['Tier']?.toLowerCase();
         const full_filename = getFilenameWithExtension(highest_tier, row);
         const tier_path = highest_tier || 'i';
         return `<a href="${staticFilesPath}/data/texts/tier_${tier_path}/${full_filename}">${data}</a>`;
