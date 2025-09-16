@@ -97,7 +97,7 @@ def get_author_info(record):
         return ', '.join(record['Authors'])
 
 def get_tier_info(record):
-    highest = record['Digitization Level']
+    highest = record['Highest Tier']
     if highest == 'I':
         return highest, None
     elif highest == 'II':
