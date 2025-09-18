@@ -112,6 +112,8 @@ def process_metadata(raw_metadata: Dict[str, Dict]) -> List[Dict]:
     """
     metadata_subset = []
     for (key, record) in raw_metadata.items():
+        if key == "version":
+            continue
         highest_tier, other_tiers = get_tier_info(record)
         filename_base, tier_i_filename_extension = get_filename_info(record)
         metadata_subset.append({
