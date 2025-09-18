@@ -1,6 +1,6 @@
-<1>
-
 {1}
+
+<1>
 
 [1,1]
 
@@ -9,7 +9,7 @@
 [1,2]
 
 	praṇamya śāradāṃ devīṃ divyavijñānaśālinīm |
-	vacmi cetovinodārtham uddhāraṃ kīrasaṃmateḥ || 1.1 = 1 ||
+	vacmi cetovinodārtham uddhāraṃ kīrasaṃmateḥ || 1.1 (= 1) ||
 
 [1,4]
 
@@ -31,7 +31,7 @@ svarṇapañjarasthaḥ sthāpitaḥ paripoṣitaś ca | athaikadā rahasi
 [2,3]
 
 	pitros te duḥkhinor duḥkhāt pataty aśrucayo bhuvi |
-	tena pāpena te vatsa patanaṃ devaśarmavat || 1.2 = 2 ||
+	tena pāpena te vatsa patanaṃ devaśarmavat || 1.2 (= 2) ||
 
 [2,5]
 
@@ -55,9 +55,9 @@ jñānavatī kathaṃ ca tvaṃ jñānavān | tena vyādhenoktam |
 [3,6]
 
 	nijānvayapraṇītaṃ yaḥ samyag dharmaṃ niṣevate |
-	uttamādhamamadhyeṣu vikāreṣu parāṅmukhaḥ || 1.3 = 3 ||
+	uttamādhamamadhyeṣu vikāreṣu parāṅmukhaḥ || 1.3 (= 3) ||
 	sa gṛhī sa muniḥ sādhuḥ sa ca yogī sa dhārmikaḥ |
-	pitṛśuśrūṣako nityaṃ jantuḥ sādhāraṇaś ca yaḥ || 1.4 = 4 ||
+	pitṛśuśrūṣako nityaṃ jantuḥ sādhāraṇaś ca yaḥ || 1.4 (= 4) ||
 
 [3,10]
 
@@ -69,4 +69,4 @@ vinayaparaṃ vyādhaṃ papraccha | tenoktam |
 
 	na pūjayanti ye pūjyān mānyān no mānayanti ye |
 <4>
-	jīvanti nindyamānās te mṛtāḥ svargaṃ na yānti ca || 1.5 = 5 ||
+	jīvanti nindyamānās te mṛtāḥ svargaṃ na yānti ca || 1.5 (= 5) ||

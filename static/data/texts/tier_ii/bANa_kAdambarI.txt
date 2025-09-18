@@ -2,26 +2,28 @@
 
 <1>
 
-[1,1]
+<kādambarī |>
+
+[1,2]
 	rajojuṣe janmani sattvavṛttaye
 	sthitau prajānāṃ pralaye tamaḥspṛśe |
 	ajāya sargasthitināśahetave
 	trayīmayāya triguṇātmane namaḥ || 1 ||
 
-[1,5]
+[1,6]
 	jayanti bāṇāsuramaulilālitā
 	daśāsyacūḍāmaṇicakracumbinaḥ |
 	surāsurādhīśaśikhāntaśāyino
-	bhavacchidakhyambakapādapāṃśavaḥ || 2 ||
+	bhavacchidastryambakapādapāṃśavaḥ || 2 ||
 
-[1,9]
+[1,10]
 	jayatyupendraḥ sa cakāra dūrato
 	bibhitsayā yaḥ kṣaṇalabdhalakṣyayā |
 	dṛśaiva kopāruṇayā riporuraḥ
 	svayaṃ bhayādbhinnamivāsrapāṭalam || 3 ||
 
-[1,13]
+[1,14]
 	namāmi bharvoścaraṇāmbujadvayaṃ
 	saśekharairmaukharibhiḥ kṛtārcanam |
 	samastasāmantakirīṭavedikā-
-	viṭaṅgapīṭholluṭhitāruṇāṅguli || 4 ||
+	viṭaṅkapīṭholluṭhitāruṇāṅguli || 4 ||
