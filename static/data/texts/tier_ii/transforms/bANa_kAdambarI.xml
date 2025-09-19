@@ -1,0 +1,23 @@
+<TEI>
+  <body>
+    <div n="pūrvabhāga">
+      <pb n="1"/><milestone n="&lt;kādambarī |&gt;"/>
+      <lg xml:id="p1_l2" n="1,2">
+        <l>rajojuṣe janmani sattvavṛttaye<caesura/><lb n="3"/> sthitau prajānāṃ pralaye tamaḥspṛśe |<lb n="4"/></l>
+        <l>ajāya sargasthitināśahetave<caesura/><lb n="5"/> trayīmayāya triguṇātmane namaḥ || 1 ||<lb n="6"/></l>
+      </lg>
+      <lg xml:id="p1_l6" n="1,6">
+        <l>jayanti bāṇāsuramaulilālitā<caesura/><lb n="7"/> daśāsyacūḍāmaṇicakracumbinaḥ |<lb n="8"/></l>
+        <l>surāsurādhīśaśikhāntaśāyino<caesura/><lb n="9"/> bhavacchidastryambakapādapāṃśavaḥ || 2 ||<lb n="10"/></l>
+      </lg>
+      <lg xml:id="p1_l10" n="1,10">
+        <l>jayatyupendraḥ sa cakāra dūrato<caesura/><lb n="11"/> bibhitsayā yaḥ kṣaṇalabdhalakṣyayā |<lb n="12"/></l>
+        <l>dṛśaiva kopāruṇayā riporuraḥ<caesura/><lb n="13"/> svayaṃ bhayādbhinnamivāsrapāṭalam || 3 ||<lb n="14"/></l>
+      </lg>
+      <lg xml:id="p1_l14" n="1,14">
+        <l>namāmi bharvoścaraṇāmbujadvayaṃ<caesura/><lb n="15"/> saśekharairmaukharibhiḥ kṛtārcanam |<lb n="16"/></l>
+        <l>samastasāmantakirīṭavedikā<caesura/><lb n="17" break="no"/>viṭaṅkapīṭholluṭhitāruṇāṅguli || 4 ||<pb n="2"/></l>
+      </lg>
+    </div>
+  </body>
+</TEI>

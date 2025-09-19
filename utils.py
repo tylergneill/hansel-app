@@ -83,8 +83,8 @@ def get_filename_info(record):
     if 'Filename' not in record:
         raise(f"Filename missing for {record}")
     filename_base = record['Filename']
-    bronze_filename_extension = record['Bronze Filetype']
-    return filename_base, bronze_filename_extension
+    tier_i_filename_extension = record['Tier I Filetype']
+    return filename_base, tier_i_filename_extension
 
 def get_author_info(record):
     if not('Author' in record or 'Authors' in record):
@@ -96,14 +96,14 @@ def get_author_info(record):
     elif 'Authors' in record:
         return ', '.join(record['Authors'])
 
-def get_medallion_info(record):
-    highest = record['Digitization Level']
-    if highest == 'Bronze':
+def get_tier_info(record):
+    highest = record['Tier']
+    if highest == 'I':
         return highest, None
-    elif highest == 'Silver':
-        return highest, 'Bronze'  # TODO: add Silver when offering multiple filetypes
-    elif highest == 'Gold':
-        return highest, 'Silver, Bronze'  # TODO: add Gold when offering multiple filetypes
+    elif highest == 'II':
+        return highest, 'I'  # TODO: add II when offering multiple filetypes
+    elif highest == 'III':
+        return highest, 'II, I'  # TODO: add III when offering multiple filetypes
 
 def process_metadata(raw_metadata: Dict[str, Dict]) -> List[Dict]:
     """
@@ -112,18 +112,20 @@ def process_metadata(raw_metadata: Dict[str, Dict]) -> List[Dict]:
     """
     metadata_subset = []
     for (key, record) in raw_metadata.items():
-        highest_medallion, other_medallions = get_medallion_info(record)
-        filename_base, bronze_filename_extension = get_filename_info(record)
+        if key == "version":
+            continue
+        highest_tier, other_tiers = get_tier_info(record)
+        filename_base, tier_i_filename_extension = get_filename_info(record)
         metadata_subset.append({
             'Filename Base': filename_base,
-            'Bronze Filename Extension': bronze_filename_extension,
+            'Tier I Filename Extension': tier_i_filename_extension,
             'Title': record['Title'],
             'Author': get_author_info(record),
             'Source': record['Source File'],
             'Edition': record['Edition'],
             'PDFs': '; '.join(record['PDFs']),
-            'Highest Medallion': highest_medallion,
-            'Other Versions': other_medallions,
+            'Tier': highest_tier,
+            'Other Tiers': other_tiers,
             'Digitization Notes': record['Digitization Notes'],
             'Extent': record['Extent'],
             'Size (kb)': record['File Size (KB)'],

@@ -192,6 +192,7 @@ summary {
 .extra-links li {
     display: flex;
     align-items: center;
+    margin-bottom: 0.5em;
     gap: 0.5rem;
     flex-wrap: wrap;
 }
