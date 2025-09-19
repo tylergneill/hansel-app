@@ -1,0 +1,171 @@
+import collections
+import json
+import logging
+import os
+import time
+from pathlib import Path
+from typing import Dict, List
+import unicodedata
+
+import requests
+from skrutable.transliteration import Transliterator
+
+T = Transliterator(from_scheme='IAST', to_scheme='HK')
+
+
+def find_app_version():
+    app_version_filepath = './VERSION'
+    with open(app_version_filepath, 'r', encoding='utf8') as file:
+        # Assuming the __version__ line is the first line
+        return file.readline().strip().split('=')[1].strip().replace("'", "").replace('"', '')
+
+
+def find_data_version():
+    data_version_filepath = './static/data/VERSION'
+    with open(data_version_filepath, 'r', encoding='utf8') as file:
+        # Assuming the __version__ line is the first line
+        return file.readline().strip().split('=')[1].strip().replace("'", "").replace('"', '')
+
+
+# JSON log file for downloads
+DOWNLOAD_LOG_FILE = "downloads.json"
+if not os.path.exists(DOWNLOAD_LOG_FILE):
+    with open(DOWNLOAD_LOG_FILE, 'w') as f:
+        json.dump([], f)
+
+
+def get_geolocation(ip_address):
+    try:
+        response = requests.get(f"https://ipinfo.io/{ip_address}/json")
+        if response.status_code == 200:
+            data = response.json()
+            country = data.get("country", "Unknown")
+            region = data.get("region", "Unknown")
+            city = data.get("city", "Unknown")
+        else:
+            country, region, city = "Unknown", "Unknown", "Unknown"
+    except Exception as e:
+        logging.error(f"Geolocation error for IP {ip_address}: {e}")
+        country, region, city = "Unknown", "Unknown", "Unknown"
+    return country, region, city
+
+
+def log_download(filename, ip, country, region, city, file_size, processing_time):
+    log_entry = {
+        "timestamp": time.strftime("%Y-%m-%d %H:%M:%S"),
+        "filename": filename,
+        "ip_address": ip,
+        "country": country,
+        "region": region,
+        "city": city,
+        "file_size": file_size,
+        "processing_time": processing_time
+    }
+    try:
+        with open(DOWNLOAD_LOG_FILE, 'r+') as f:
+            data = json.load(f)
+            data.append(log_entry)
+            f.seek(0)
+            json.dump(data, f, indent=4)
+    except Exception as e:
+        logging.error(f"Error logging download: {e}")
+
+
+def load_metadata(metadata_path=Path("static/data/metadata")) -> Dict:
+    metadata_file = metadata_path / 'metadata.json'
+    with open(metadata_file, encoding="utf-8") as f:
+        metadata = json.load(f)
+    ordered_metadata = collections.OrderedDict(sorted(metadata.items()))
+    return ordered_metadata
+
+
+def get_filename_info(record):
+    if 'Filename' not in record:
+        raise(f"Filename missing for {record}")
+    filename_base = record['Filename']
+    tier_i_filename_extension = record['Tier I Filetype']
+    return filename_base, tier_i_filename_extension
+
+def get_author_info(record):
+    if not('Author' in record or 'Authors' in record):
+        return ''
+    elif 'Author' in record and 'Authors' in record:
+        raise(f"record {record} has both Author and Authors")
+    elif 'Author' in record:
+        return record['Author']
+    elif 'Authors' in record:
+        return ', '.join(record['Authors'])
+
+def get_tier_info(record):
+    highest = record['Tier']
+    if highest == 'I':
+        return highest, None
+    elif highest == 'II':
+        return highest, 'I'  # TODO: add II when offering multiple filetypes
+    elif highest == 'III':
+        return highest, 'II, I'  # TODO: add III when offering multiple filetypes
+
+def process_metadata(raw_metadata: Dict[str, Dict]) -> List[Dict]:
+    """
+    :param raw_metadata: mapping with unique id (mostly = catalog num) to full record (~18 fields)
+    :return: flattened list of dicts with error-checked values
+    """
+    metadata_subset = []
+    for (key, record) in raw_metadata.items():
+        if key == "version":
+            continue
+        highest_tier, other_tiers = get_tier_info(record)
+        filename_base, tier_i_filename_extension = get_filename_info(record)
+        metadata_subset.append({
+            'Filename Base': filename_base,
+            'Tier I Filename Extension': tier_i_filename_extension,
+            'Title': record['Title'],
+            'Author': get_author_info(record),
+            'Source': record['Source File'],
+            'Edition': record['Edition'],
+            'PDFs': '; '.join(record['PDFs']),
+            'Tier': highest_tier,
+            'Other Tiers': other_tiers,
+            'Digitization Notes': record['Digitization Notes'],
+            'Extent': record['Extent'],
+            'Size (kb)': record['File Size (KB)'],
+            'Genre': ', '.join(record['Genres']),
+            'Structure': record['Structure'],
+            'Translations': record.get('Translations', None),
+            'Additional Notes': record['Additional Notes'],
+        })
+    sorted_metadata_subset = sorted(metadata_subset, key=lambda x: custom_sort_key(x['Title']))
+    return sorted_metadata_subset
+
+
+def get_collection_size(custom_metadata):
+    return round(sum([item['Size (kb)'] for item in custom_metadata]) / 1024, 1)
+
+
+sanskrit_alphabet = [
+    'a', 'ā', 'i', 'ī', 'u', 'ū', 'ṛ', 'ṝ', 'ḷ', 'ḹ', 'e', 'ai', 'o', 'au',
+    'k', 'kh', 'g', 'gh', 'ṅ',
+    'c', 'ch', 'j', 'jh', 'ñ',
+    'ṭ', 'ṭh', 'ḍ', 'ḍh', 'ṇ',
+    't', 'th', 'd', 'dh', 'n',
+    'p', 'ph', 'b', 'bh', 'm',
+    'y', 'r', 'l', 'v',
+    'ś', 'ṣ', 's',
+    'h',
+    'ṃ', 'ḥ'
+]
+
+
+# Create a mapping of each symbol to its position
+custom_order = {char: idx for idx, char in enumerate(sanskrit_alphabet)}
+
+
+# Custom sort function
+def custom_sort_key(word):
+    word = word.lower()  # Normalize case to lowercase
+    return [custom_order.get(word[i:i+2], custom_order.get(word[i], len(sanskrit_alphabet)))
+            for i in range(len(word))]
+
+
+def get_normalized_filename(filename, form='NFD'):
+    return unicodedata.normalize(form, filename)

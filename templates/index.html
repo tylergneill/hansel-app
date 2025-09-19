@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {% include 'components/head_shared.html' %}
+    <title>HANSEL - E-Texts</title>
+</head>
+<body>
+<div id="content">
+    {% include 'components/sidenav_full.html' %}
+
+    <div class="main">
+        <div id="introduction">
+            <h1>HANSEL</h1>
+            <p>
+                An open collection of high-quality Sanskrit e-texts.
+                Current collection size is {{ num_items }} items ({{ total_size_mb }} MB in total).
+                See also <a href="table">table view</a>.
+            </p>
+        </div>
+
+        <div id="e-texts">
+            <h1>E-Texts</h1>
+            <p>Click arrows beside items for more info.</p>
+            <ul>
+                {% for item in metadata %}
+                <li class="file-item">
+                    <div class="link-and-caret">
+                        {% set highest_tier = item['Tier'] | lower %}
+                        {% set tier_path = highest_tier %}
+                        {% set filename = item['Filename Base'] ~ (item['Tier I Filename Extension'] if highest_tier == 'I' else '.txt') %}
+                        <a href="{{ static_files_path }}/data/texts/tier_{{ tier_path }}/{{ filename }}" class="main-link" target="_blank">
+                            <img src="{{ static_files_path }}/web/imgs/tier_icons/{{ highest_tier }}.png" alt="{{ highest_tier }}" title="{{ highest_tier }}" style="height: 20px; margin-right: 5px;">
+                            {{ item['Title'] ~ (' - ' ~ item['Author'] if item['Author'] else '') }}
+                        </a>
+                        <details class="caret-details">
+                            <summary class="toggle-caret"></summary>
+                        </details>
+                    </div>
+                    <ul class="extra-links">
+                        <li>
+                            <a href="{{ static_files_path }}/data/metadata/transforms/html/{{ item['Filename Base'] }}.html" target="_blank">
+                                <img src="{{ static_files_path }}/web/imgs/info.png" alt="metadata" style="height: 20px; margin-right: 2px;">
+                                Metadata
+                            </a>
+                        </li>
+                        {% if item['Other Tiers'] %}
+                        <li>
+                            Other Tiers:
+                            {% for tier in item['Other Tiers'].split(',') %}
+                                {% set tier_lower = tier.strip() | lower %}
+                                {% set filename = item['Filename Base'] ~ (item['Tier I Filename Extension'] if tier_lower == 'i' else '.txt') %}
+                                <a href="{{ static_files_path }}/data/texts/tier_{{ tier }}/{{ filename }}" title="{{ tier }}">
+                                    <img src="{{ static_files_path }}/web/imgs/tier_icons/{{ tier_lower }}.png" alt="{{ tier.strip() }}" style="height: 20px; margin-right: 2px;">
+                                </a>
+                            {% endfor %}
+                        </li>
+                        {% endif %}
+                    </ul>
+                </li>
+                {% endfor %}
+            </ul>
+        </div>
+
+        {% include 'components/index_footer.html' %}
+
+    </div>
+</div>
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        document.querySelectorAll(".toggle-caret").forEach(caret => {
+            caret.addEventListener("click", function(event) {
+                event.preventDefault(); // Prevent default summary behavior
+                let li = this.closest(".file-item"); // Find the parent <li>
+                li.classList.toggle("open"); // Toggle the 'open' class
+            });
+        });
+    });
+</script>
+</body>
+</html>

@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {% include 'components/head_shared.html' %}
+    <title>HANSEL - About</title>
+</head>
+<body>
+<div id="content">
+    {% include 'components/sidenav_smallest.html' %}
+
+    <div class="main">
+
+        <div id="about">
+
+            <h1>About</h1>
+            <p>
+                HANSEL is a companion to GRETIL.
+                Its goal is to continue the open exchange of academic-level Sanskrit e-texts,
+                with a focus on diplomatic transcriptions of printed editions produced using OCR.
+            </p>
+
+            <h2>Name and logo</h2>
+            <p>
+                "Human-accessible" means that material will always exist in forms
+                that the greatest number of students and scholars can use directly,
+                such as plain-text and HTML.
+            </p>
+            <p>
+                "NLP-ready" means that the data will also be structured in anticipation of computational applications.
+            </p>
+            <p>
+                The <em>haṃsa</em> (<a href="https://en.wikipedia.org/wiki/Hamsa_(bird)">swan, or bar-headed goose</a>)
+                symbolizes not only grace but also discernment (<em>viveka</em>).
+                A world away, in the Grimms' tale, Hänsel and Gretel succeed against the odds by working together.
+            </p>
+
+            <h2>Additional Principles</h2>
+            <p>Submitting material should be easy.</p>
+            <p>Metadata should show provenance.</p>
+            <p>All data and code should be versioned.</p>
+            <p>Originals and derivatives can coexist.</p>
+
+            <h2>Multi-Tier Concept</h2>
+            <p>In order to offer original data, with all its idiosyncracies,
+                while also supporting development toward a particular standard,
+                HANSEL uses a three-tier system to indicate progression toward its own <a href="https://github.com/tylergneill/hansel-data/blob/main/texts/DATA_MODEL.md">data model</a>:
+                <ul>
+                    <li>
+                        <strong>Tier I</strong>: Whichever initial version the contributor chooses
+                    </li>
+                    <li>
+                        <strong>Tier II</strong>: Passing automatic structural validation for HANSEL's data model
+                    </li>
+                    <li>
+                        <strong>Tier III</strong>: Still passing + high-fidelity diplomatic correspondence to source edition
+                    </li>
+                </ul>
+            </p>
+
+            <h2>Who's Who</h2>
+            <p>
+                A <a href="/team">solo creator</a> working open-source is best to get things moving,
+                and if the project works, control can be passed on to a rotating committee at a later date.
+            </p>
+
+            <h2>Contribution How-To</h2>
+            <p>
+                <ol>
+                    <li>
+                        Tier I (1–5 days):
+                        Contributor writes in to `hanselrepository` at Gmail,
+                        usually with existing text material to share.
+                        CC BY-NC-SA 4.0 license is explained and remaining work is divvied up.
+                        Maintainer posts material ASAP.
+                    </li>
+                    <li>
+                        Tier II (2–4 weeks):
+                        Maintainer (or more rarely, contributor) manually adapts text to HANSEL data model.
+                        Once text passes validation and metadata has been improved,
+                        second-version material is posted.
+                    </li>
+                    <li>
+                        Tier III (3–6 months):
+                        Material is further reworked to improve diplomatic correspondence to source edition,
+                        then posted in consultation with active collaborators.
+                    </li>
+                </ol>
+            </p>
+
+            <h2>File Types</h2>
+            <p>
+                Tier I allows for any text-based file type,
+                whereas Tiers II and III primarily use plaintext.
+            </p>
+            <p>
+                The HANSEL <a href="https://github.com/tylergneill/hansel-data/blob/main/texts/DATA_MODEL.md">data model</a> foresees automatic transformation from plaintext to TEI-XML.
+                This XML is then transformed to HTML
+                which is then the default for rendering on the website
+                (browsers are happiest when handling HTML, for memory management, etc.)
+                All of these options can be downloaded as cumulative files from the website
+                or from GitHub.
+            </p>
+            <p>
+                Metadata is stored primarily in Markdown,
+                which renders well on GitHub.
+                For display on the website, there are also HTML transforms.
+                On the backend, the web app uses a JSON transform.
+                All formats are downloadable in bulk.
+            </p>
+            <p>
+                All non-primary formats are semi-automatically regenerated in bulk
+                after changes to primary formats.
+            </p>
+
+            <h2>Under the Hood</h2>
+            <p>
+                HANSEL consists of two coordinated Git repositories on GitHub:
+                <a href="https://github.com/tylergneill/hansel-data">hansel-data</a> for e-texts and metadata,
+                and <a href="https://github.com/tylergneill/hansel-app">hansel-app</a> for the web app.
+                Using Git takes care of fine-grained versioning.
+                Public GitHub repos enable open-source access to everything,
+                including PR-based change history.
+            </p>
+            <p>
+                The web app is written in Python and Javascript
+                and runs on a Digital Ocean server
+                which holds an up-to-date clone of the data repo.
+                The data repo also contains Python management scripts
+                run periodically and locally.
+            </p>
+
+        </div>
+
+    </div>
+</div>
+</body>
+</html>

@@ -1,0 +1,56 @@
+        <div id="cumulative-data">
+            <h1>Cumulative Downloads</h1>
+            <ul>
+                <li class="file-item">
+                    <div class="link-and-caret">
+                        <a href="{{ static_files_path }}/data/texts/tier_iii/transforms/cumulative/tier_iii.zip">All Tier III as .txt</a>
+                        <details class="caret-details">
+                            <summary class="toggle-caret"></summary>
+                        </details>
+                    </div>
+                    <ul class="extra-links">
+                        <li>
+                            <a href="{{ static_files_path }}/data/texts/tier_ii/transforms/cumulative/tier_ii.zip" target="_blank">All Tier II as .txt</a>
+                            <a href="{{ static_files_path }}/data/texts/tier_i/transforms/cumulative/tier_i.zip" target="_blank">All Tier I (misc. file types)</a>
+                        </li>
+                    </ul>
+                </li>
+                <li class="file-item">
+                    <div class="link-and-caret">
+                        <a href="{{ static_files_path }}/data/metadata/transforms/cumulative/metadata_md.zip">All metadata (as .md)</a>
+                        <details class="caret-details">
+                            <summary class="toggle-caret"></summary>
+                        </details>
+                    </div>
+                    <ul class="extra-links">
+                        <li>
+                            <a href="{{ static_files_path }}/data/metadata/transforms/cumulative/metadata_html.zip" target="_blank">As .html</a>
+                        </li>
+                        <li>
+                            <a href="{{ static_files_path }}/data/metadata/transforms/cumulative/metadata.json" target="_blank">As .json</a>
+                        </li>
+                    </ul>
+
+                </li>
+            </ul>
+        </div>
+
+        <div id="more-info">
+            <h1>More Info</h1>
+
+            <p><a href="about">About</a><p>
+
+            <h2 id="contributing">Contact</h2>
+            <p>
+                Email <code>hanselrepository</code> at Gmail with any questions, suggestions, or contributions
+                (<code>.doc</code>, <code>.txt</code>, <code>.xml</code>, <code>.html</code>, <code>.pdf</code>, etc.)
+            </p>
+
+            <h2 id="technical">Technical</h2>
+            <p><strong>Web app version</strong>: v{{ app_version }}</p>
+            <p><strong>Data version</strong>: {{ data_version }}</p>
+            <p>
+                <strong>License</strong>: <a href="https://creativecommons.org/licenses/by-nc-sa/4.0">CC BY-NC-SA 4.0</a>.
+                Please share and share alike!
+            </p>
+        </div>
