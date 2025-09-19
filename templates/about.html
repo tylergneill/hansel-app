@@ -12,11 +12,11 @@
 
         <div id="about">
 
-            <h1>About HANSEL</h1>
+            <h1>About</h1>
             <p>
                 HANSEL is a companion to GRETIL.
-                Its goal is to continue the free and open exchange of academic-level Sanskrit e-texts,
-                with a focus on diplomatic transcriptions of printed editions.
+                Its goal is to continue the open exchange of academic-level Sanskrit e-texts,
+                with a focus on diplomatic transcriptions of printed editions produced using OCR.
             </p>
 
             <h2>Name and logo</h2>
@@ -34,103 +34,100 @@
                 A world away, in the Grimms' tale, Hänsel and Gretel succeed against the odds by working together.
             </p>
 
-            <h2>Principles</h2>
+            <h2>Additional Principles</h2>
+            <p>Submitting material should be easy.</p>
+            <p>Metadata should show provenance.</p>
+            <p>All data and code should be versioned.</p>
+            <p>Originals and derivatives can coexist.</p>
 
-            <p>Keep submission as easy as sending an email, with material in whatever format.</p>
-            <p>Make sure metadata always clearly indicates sources and contributions.</p>
-            <p>
-                Honor different goals by maintaining multiple versions of files,
-                using a three-tier system to indicate progression toward an explicit data standard:
+            <h2>Multi-Tier Concept</h2>
+            <p>In order to offer original data, with all its idiosyncracies,
+                while also supporting development toward a particular standard,
+                HANSEL uses a three-tier system to indicate progression toward its own data model:
                 <ul>
                     <li>
                         <strong>Tier I</strong>: Whichever initial version the contributor chooses
                     </li>
                     <li>
-                        <strong>Tier II</strong>: Passing automatic validation for HANSEL's structural data model
+                        <strong>Tier II</strong>: Passing automatic structural validation for HANSEL's data model
                     </li>
                     <li>
                         <strong>Tier III</strong>: High-fidelity diplomatic correspondence to source edition
                     </li>
                 </ul>
             </p>
+
+            <h2>Who's Who</h2>
             <p>
                 A <a href="/team">solo creator</a> working open-source is best to get things moving,
                 and if the project works, control can be passed on to a rotating committee at a later date.
             </p>
 
-            <h1>How It Works</h1>
-
+            <h2>Contribution How-To</h2>
             <p>
-                HANSEL consists of two coordinated Git repositories:
-                one for data and basic hosting with GitHub Pages,
-                and one for the primary web app with extra features.
-                Using Git takes care of fine-grained versioning.
-                The public GitHub platform enables open-source access to everything,
-                including PR-based change history.
+                <ol>
+                    <li>
+                        Tier I (1–5 days):
+                        Contributor writes in to `hanselrepository` at Gmail,
+                        usually with existing text material to share.
+                        CC BY-NC-SA 4.0 license is explained and remaining work is divvied up.
+                        Maintainer posts material ASAP.
+                    </li>
+                    <li>
+                        Tier II (2–4 weeks):
+                        Maintainer (or more rarely, contributor) manually adapts text to HANSEL data model.
+                        Once text passes validation and metadata has been improved,
+                        second-version material is posted.
+                    </li>
+                    <li>
+                        Tier III (3–6 months):
+                        Material is further reworked to improve diplomatic correspondence to source edition,
+                        then posted in consultation with active collaborators.
+                    </li>
+                </ol>
             </p>
 
+            <h2>File Types</h2>
+            <p>
+                Tier I allows for any text-based file type,
+                whereas Tiers II and III primarily use plaintext.
+            </p>
+            <p>
+                The HANSEL data model foresees automatic transformation from plaintext to TEI-XML.
+                This XML is then transformed to HTML
+                which is then the default for rendering on the website
+                (browsers are happiest when handling HTML, for memory management, etc.)
+                All of these options can be downloaded as cumulative files from the website
+                or from GitHub.
+            </p>
+            <p>
+                Metadata is stored primarily in Markdown,
+                which renders well on GitHub.
+                For display on the website, there are also HTML transforms.
+                On the backend, the web app uses a JSON transform.
+                All formats are downloadable in bulk.
+            </p>
+            <p>
+                All non-primary formats are semi-automatically regenerated in bulk
+                after changes to primary formats.
+            </p>
+
+            <h2>Under the Hood</h2>
+            <p>
+                HANSEL consists of two coordinated Git repositories:
+                one for data,
+                and one for the web app.
+                Using Git takes care of fine-grained versioning.
+                Public GitHub repos enable open-source access to everything,
+                including PR-based change history.
+            </p>
             <p>
                 The web app is written in Python and Javascript
                 and runs on a Digital Ocean server
                 which holds an up-to-date clone of the data repo.
+                The data repo also contains Python management scripts
+                run periodically and locally.
             </p>
-
-            <p>Data is progressed through the system in the following manner:</p>
-
-            <ol>
-                <li>
-                    Users submit material by email.
-                    agree to share it under the CC BY-NC-SA 4.0 license,
-                    and communicate what remains to be done and how involved they'd like to be in processing.
-                </li>
-                <li>Metadata template is filled out.</li>
-                <li>New text and metadata are uploaded and published on the site immediately.</li>
-                <li>Work begins on a Tier II version.</li>
-                <li>Tier II version and updated metadata are published.</li>
-                <li>Time permitting, a Tier III version is also prepared and published.</li>
-            </ol>
-
-            <p>
-
-
-            </p>
-
-            <h2>Contribution</h2>
-            <p>
-                HANSEL's contribution system has three stages, with correspondingly different file formats:
-            </p>
-            <ol>
-                <li><strong>Pre-Draft</strong> — any file format (<code>.doc</code>, <code>.pdf</code>, etc.), for email correspondence and preliminary local processing</li>
-                <li><strong>Draft</strong> — plain-text (<code>.txt</code>, with <a href="txt_markup">custom markup</a>), for provisional display while progressing toward publication</li>
-                <li><strong>Publication</strong> — XML (<code>.xml</code>, with <a href="xml_markup">minimal TEI markup</a>), for web display and scholarly citation</li>
-            </ol>
-            <p>
-                Pre-Draft material is moved manually toward Draft format.
-                Once the material passes a set of automated checks —
-                run locally by <a href="team">technical team</a> members and also automatically on GitHub —
-                it is suited for Draft presentation.
-                Such mature Draft material (<code>.txt</code>)
-                can then be automatically transformed into Publication material (<code>.xml</code>), and vice versa.
-                This allows for continued improvement of material without the need to work in XML.
-            </p>
-
-            <h2>Presentation</h2>
-
-            <p>
-                The website you are reading dynamically serves both Draft and Publication material alike,
-                with Drafts marked as such.
-                Publication material is rendered by default on the website with <code>.html</code> transforms,
-                but users can also opt for a <code>.txt</code> transform or the underlying <code>.xml</code>.
-                Cumulative downloads, both of the entire collection, or of filtered search sets, are also always at the ready.
-                The server also takes care of metadata search and basic transliteration.
-            </p>
-
-            <h2>Diagram</h2>
-
-            <p>
-                The below design diagram shows HANSEL's multiple community entry points, data formats, and use of automation.
-            </p>
-            <img src="/static/web/imgs/overall_design_diagram.png"/>
 
         </div>
 
