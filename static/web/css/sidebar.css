@@ -38,6 +38,7 @@
 .brand-text {
     display: flex;
     flex-direction: column;
+    padding-left: 10px;
 }
 
 .sidebar-title {
@@ -59,7 +60,7 @@
 }
 
 /* Sidebar Links */
-.sidenav a {
+.nav-links a {
     color: #ffffff;
     text-decoration: none;
     padding: 10px 14px;
@@ -68,7 +69,7 @@
     transition: background 0.2s ease, border-left 0.2s ease;
 }
 
-.sidenav a:hover {
+.nav-links a:hover {
     background-color: rgba(255, 165, 0, 0.15);
     border-left: 4px solid #FFA500;
     padding-left: 10px;
@@ -80,26 +81,33 @@
         width: 100%;
         height: auto;
         position: static;
+        flex-direction: column;
+        padding: 15px;
+    }
+
+    .brand {
         flex-direction: row;
-        flex-wrap: wrap;
-        justify-content: center;
-        padding: 10px;
+        align-items: center;
+        width: 100%;
+    }
+
+    .brand-text {
+        margin-left: 15px;
+    }
+
+    .nav-links {
+        flex-direction: row;
+        justify-content: space-evenly;
+        width: 100%;
+        margin-top: 15px;
+        order: 1;
     }
 
     .sidebar-logo {
         width: 120px;
-        margin: 0 10px 10px 10px;
-    }
-
-    .sidenav a {
-        font-size: 0.9em;
-        padding: 8px;
-        text-align: center;
-        width: auto;
     }
 }
 
 .menu-btn {
     display: none;
 }
-
