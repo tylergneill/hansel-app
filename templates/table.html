@@ -63,7 +63,6 @@ $.fn.dataTable.ext.type.order['sanskrit-desc'] = (a, b) => a < b ?  1 : a > b ? 
 
 const staticFilesPath = "{{ static_files_path }}";
 const tableData = {{ rows | tojson | safe }};   // full list of dicts
-console.log(tableData)
 
 function getFilenameWithExtension(tier, row) {
   const base = row['Filename Base'];
