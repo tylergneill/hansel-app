@@ -63,6 +63,7 @@ ul li a:hover {
 /* Disclosure triangles */
 .file-item {
     margin-bottom: 1rem;
+    font-size: 1em;
 }
 
 .link-and-caret {
@@ -160,6 +161,9 @@ summary {
     .main {
         margin-left: 0;
         padding: 20px;
+    }
+    ul {
+        font-size: 16px;
     }
 }
 

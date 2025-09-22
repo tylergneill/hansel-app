@@ -76,6 +76,7 @@
 
 .menu-btn {
     display: none;
+    font-size: 1em;
 }
 
 /* --- Responsive Design --- */
@@ -145,14 +146,18 @@
         display: none;
         position: absolute;
         top: 100%;
-        left: 0;
-        right: 0;
         background-color: #013220;
         flex-direction: column;
         border-top: 1px solid #444;
         margin-top: 0;
         order: 0;
         z-index: 1;
+        /* these match menu-btn below */
+        width: calc(100% - 30px);
+        margin-left: -30px;
+        margin-right: auto;
+        box-sizing: border-box;
+        text-align: center;
     }
 
     .nav-links.show {
@@ -175,11 +180,10 @@
         cursor: pointer;
         width: calc(100% - 30px);
         margin-top: 15px;
+        margin-left: -30px; /* hack */
         text-align: center;
         position: relative;
         z-index: 2;
         box-sizing: border-box;
-        margin-left: auto !important;
-        margin-right: auto !important;
     }
 }
