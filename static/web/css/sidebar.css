@@ -1,0 +1,83 @@
+/* Sidebar */
+.sidenav {
+    width: 220px;
+    position: fixed;
+    height: 100%;
+    top: 0;
+    left: 0;
+    background-color: #013220;
+    padding-top: 20px;
+    color: #ffffff;
+    font-size: 1em;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    text-align: left;
+    padding-left: 20px;
+}
+
+/* Sidebar Logo */
+.sidebar-logo {
+    max-width: 180px;
+    height: auto;
+    margin: 10px auto;
+    margin-left: 0;
+    margin-right: 0;
+    display: block;
+    background-color: #ffffff;
+    padding: 4px;
+    border-radius: 4px;
+}
+.sidebar-title {
+    font-family: 'EB Garamond', serif;
+    color: white;
+    font-size: 1.8em;
+    margin: 10px 0 0 0;
+}
+.sidebar-subtitle {
+    font-size: 0.9em;
+    color: #ccc;
+    margin: 5px 0 20px 0;
+    line-height: 1.2;
+}
+/* Sidebar Links */
+.sidenav a {
+    color: #ffffff;
+    text-decoration: none;
+    padding: 10px 14px;
+    width: 100%;
+    box-sizing: border-box;
+    transition: background 0.2s ease, border-left 0.2s ease;
+}
+
+.sidenav a:hover {
+    background-color: rgba(255, 165, 0, 0.15);
+    border-left: 4px solid #FFA500;
+    padding-left: 10px;
+}
+
+/* Responsive Design */
+@media only screen and (max-width: 800px) {
+    .sidenav {
+        width: 100%;
+        height: auto;
+        position: static;
+        flex-direction: row;
+        flex-wrap: wrap;
+        justify-content: center;
+        padding: 10px;
+    }
+
+    .sidebar-logo {
+        width: 120px;
+        margin: 0 10px 10px 10px;
+    }
+
+    .sidenav a {
+        font-size: 0.9em;
+        padding: 8px;
+        text-align: center;
+        width: auto;
+    }
+}
