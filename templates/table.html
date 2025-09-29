@@ -43,15 +43,7 @@
     </div>
 </div>
 <script>
-document.addEventListener("DOMContentLoaded", function() {
-    document.querySelectorAll(".toggle-caret").forEach(caret => {
-        caret.addEventListener("click", function(event) {
-            event.preventDefault(); // Prevent default summary behavior
-            let li = this.closest(".file-item"); // Find the parent <li>
-            li.classList.toggle("open"); // Toggle the 'open' class
-        });
-    });
-});
+
 
 $.fn.dataTable.ext.type.order['sanskrit-pre'] = d => {
   const txt = (d || '').replace(/<[^>]*>/g,'').toLowerCase().normalize('NFC');
