@@ -1,6 +1,12 @@
-# HANSEL: Human-Accessible NLP-ready Sanskrit E-Text Library
+# HANSEL: Human-Accessible and NLP-ready Sanskrit E-Text Library
 
-HANSEL is a Sanskrit e-text library. It is also a website giving access to that library. This repo contains code for that website. [Another repo](https://github.com/tylergneill/hansel-data) contains the data.
+A companion project to the now-defunct GRETIL.
+
+HANSEL is a Sanskrit e-text library. 
+It is also a website giving access to that library. 
+
+This repo contains code for the website. 
+[Another repo](https://github.com/tylergneill/hansel-data) contains the library data and code.
 
 ## Deployments
 
@@ -8,12 +14,12 @@ Production web app: [hansel-library.info](https://hansel-library.info)
 
 Dev/Staging web app: [hansel-stg.duckdns.org/](https://hansel-stg.duckdns.org/) (password-protected)
 
-## Features
+## Website Features
 
 *   **Browse** a collection of Sanskrit e-texts, including with metadata filters.
 *   **View complete metadata** for each text.
 *   **Download** texts and metadata in various formats.
-*   **Access tiered versions** of the texts.
+*   **Access multiple versions** of the texts.
 *   **Collaborate** by reading documentation and getting in touch.
 
 # Dev Instructions
@@ -92,9 +98,11 @@ This uses the complete data in the data repo.
 
 ## Data
 
-The Sanskrit e-texts and their corresponding metadata are located in the `static/data` directory. The data is organized into different tiers, representing different levels of processing and quality.
+The Sanskrit e-texts and their corresponding metadata are located in the `static/data` directory.
 
-The data in this repo is dummy data, for basic local testing purposes. When the app runs with Docker, it mounts a different file location to this path, effectively overwriting the dummy data in the container.
+The data in this repo is dummy data, for basic local testing purposes.
+When the app runs with Docker, it mounts a different file location to this path,
+effectively overwriting the dummy data in the container.
 
 ## Contributing
 
