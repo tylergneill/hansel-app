@@ -20,7 +20,7 @@
 
         <div id="e-texts">
             <h1>E-Texts</h1>
-            <p>Click arrows beside items for more info.</p>
+            <p><em>Click arrows&nbsp;(&nbsp;<span class="toggle-caret" style="pointer-events: none;"></span>&nbsp;)&nbsp;for more info.</em></p>
             <ul>
                 {% for item in metadata %}
                 <li class="file-item">
@@ -45,7 +45,7 @@
                             {% set downloaded_extensions = ['.doc', '.docx', '.rtf'] %}
                             {% set original_filename = item['Filename Base'] ~ original_filename_ext %}
                             <a href="{{ static_files_path }}/data/texts/originals/{{ original_filename }}" class="main-link" target="_blank">
-                                Original ({{ original_filename_ext }})
+                                Original file ({{ original_filename_ext }})
                                 {% if original_filename_ext in downloaded_extensions %}
                                 &nbsp;<img src="{{ static_files_path }}/web/imgs/dl.png" alt="download" title="download" style="height: 20px;">
                                 {% endif %}
@@ -54,7 +54,7 @@
                         <li>
                             {% set txt_filename = item['Filename Base'] ~ '.txt' %}
                             <a href="{{ static_files_path }}/data/texts/processed_txt/{{ txt_filename }}" class="main-link" target="_blank">
-                                Plaintext
+                                Processed plain-text (<code>.txt</code>)
                             </a>
                         </li>
                     </ul>
