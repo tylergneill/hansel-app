@@ -64,12 +64,9 @@ $.fn.dataTable.ext.type.order['sanskrit-desc'] = (a, b) => a < b ?  1 : a > b ? 
 const staticFilesPath = "{{ static_files_path }}";
 const tableData = {{ rows | tojson | safe }};   // full list of dicts
 
-function getFilenameWithExtension(tier, row) {
+function getOriginalFilenameWithExtension(row) {
   const base = row['Filename Base'];
-  const ext = tier.toLowerCase() === 'i'
-    ? row['Tier I Filename Extension'] || '.txt'
-    : '.txt'; // default for II/III, can be expanded later
-
+  const ext = row['Original Filename Extension']
   return `${base}${ext}`;
 }
 
@@ -77,21 +74,12 @@ $('#text_table').DataTable({
   data: tableData,
   columnDefs: [
     {
-      "targets": [1],  // Metadata column
+      "targets": [0],  // Metadata column
       "orderable": false // Disable sorting
     }
   ],
-  order: [[ 2, "asc" ]], // Sort by the 3th column (Title) in descending Sanskrit alphabetical order
+  order: [[ 1, "asc" ]], // Sort by the 2nd column (Title) in descending Sanskrit alphabetical order
   columns: [
-    {
-      data: 'Tier',
-      render: function(data, type, row) {
-        if (type !== 'display') return data;
-        const tier = data.toLowerCase();
-        const imgSrc = `${staticFilesPath}/web/imgs/tier_icons/${tier}.png`;
-        return `<img src="${imgSrc}" alt="${data}" title="${data}" style="height: 20px;">`;
-        }
-    },
     {
       data: 'Filename Base',
       render: function(data, type, row) {
@@ -113,38 +101,26 @@ $('#text_table').DataTable({
       type: 'sanskrit',  // custom sort
       render: (data, type, row) => {
         if (type !== 'display') return data;   // keep raw text for sort/filter
-        const highest_tier = row['Tier']?.toLowerCase();
-        const full_filename = getFilenameWithExtension(highest_tier, row);
-        const tier_path = highest_tier || 'i';
-        return `<a href="${staticFilesPath}/data/texts/tier_${tier_path}/${full_filename}">${data}</a>`;
+        return `<a href="${staticFilesPath}/data/texts/transforms/html/rich/${row['Filename Base']}.html">${data}</a>`;
       }
     },
     { data: 'Author', type: 'sanskrit' },
     { data: 'Genre', type: 'sanskrit' },
     { data: 'Size (kb)', className: 'text-end' },
     {
-      data: 'Other Tiers',
+      data: 'Filename Base',
       render: function(data, type, row) {
         if (type !== 'display') return data;
         if (!data) return '';
+        const original_filename = getOriginalFilenameWithExtension(row);
 
-        return data
-          .split(',')
-          .map(tier => {
-            const highest_tier_trimmed = tier.trim();
-            const highest_tier_lower = highest_tier_trimmed.toLowerCase();
-            const tier_path = highest_tier_lower;
-            const imgSrc = `${staticFilesPath}/web/imgs/tier_icons/${highest_tier_lower}.png`;
-            const full_filename = getFilenameWithExtension(highest_tier_lower, row);
-            const href = `${staticFilesPath}/data/texts/tier_${tier_path}/${full_filename}`;
-
-            return (
-              `<a href="${href}" title="${highest_tier_trimmed}">` +
-                `<img src="${imgSrc}" alt="${highest_tier_trimmed}" style="height: 20px; margin-right: 2px;">` +
-              `</a>`
-            );
-          })
-          .join('');
+        const href = `${staticFilesPath}/data/texts/processed_txt/${row['Filename Base']}.txt`;
+        imgSrc = `${staticFilesPath}/web/imgs/dl.png`;
+        return (
+          `<a href="${href}" title="metadata">` +
+              `<img src="${imgSrc}" alt="metadata" style="height: 20px; margin-right: 2px;">` +
+          `</a>`
+        )
       },
     }
   ],

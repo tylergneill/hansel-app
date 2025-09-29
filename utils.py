@@ -83,8 +83,9 @@ def get_filename_info(record):
     if 'Filename' not in record:
         raise(f"Filename missing for {record}")
     filename_base = record['Filename']
-    tier_i_filename_extension = record['Tier I Filetype']
-    return filename_base, tier_i_filename_extension
+    original_filename_extension = record['Original Filetype']
+    return filename_base, original_filename_extension
+
 
 def get_author_info(record):
     if not('Author' in record or 'Authors' in record):
@@ -96,14 +97,6 @@ def get_author_info(record):
     elif 'Authors' in record:
         return ', '.join(record['Authors'])
 
-def get_tier_info(record):
-    highest = record['Tier']
-    if highest == 'I':
-        return highest, None
-    elif highest == 'II':
-        return highest, 'I'  # TODO: add II when offering multiple filetypes
-    elif highest == 'III':
-        return highest, 'II, I'  # TODO: add III when offering multiple filetypes
 
 def process_metadata(raw_metadata: Dict[str, Dict]) -> List[Dict]:
     """
@@ -114,18 +107,15 @@ def process_metadata(raw_metadata: Dict[str, Dict]) -> List[Dict]:
     for (key, record) in raw_metadata.items():
         if key == "version":
             continue
-        highest_tier, other_tiers = get_tier_info(record)
-        filename_base, tier_i_filename_extension = get_filename_info(record)
+        filename_base, original_filename_extension = get_filename_info(record)
         metadata_subset.append({
             'Filename Base': filename_base,
-            'Tier I Filename Extension': tier_i_filename_extension,
+            'Original Filename Extension': original_filename_extension,
             'Title': record['Title'],
             'Author': get_author_info(record),
             'Source': record['Source File'],
             'Edition': record['Edition'],
             'PDFs': '; '.join(record['PDFs']),
-            'Tier': highest_tier,
-            'Other Tiers': other_tiers,
             'Digitization Notes': record['Digitization Notes'],
             'Extent': record['Extent'],
             'Size (kb)': record['File Size (KB)'],
