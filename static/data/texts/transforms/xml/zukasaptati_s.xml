@@ -23,11 +23,9 @@
         </lg>
       </lg>
       <p xml:id="p3_l10" n="3,10">ahaṃ sāpi ca evaṃ jñāninau tvaṃ ca nijapitarau parityajya bhraman mādṛśāṃ <lb n="11"/> na sambhāṣaṇārhaḥ | param atithiṃ matvā jalpitaḥ | evam uktaḥ sa brāhmaṇo  <lb n="12"/> vinayaparaṃ vyādhaṃ papraccha | tenoktam |  <lb n="13"/></p>
-      <lg type="group" n="3,13" xml:id="p3_l13">
-        <lg>
-          <l>na pūjayanti ye pūjyān mānyān no mānayanti ye |<pb n="4"/></l>
-          <l>jīvanti nindyamānās te mṛtāḥ svargaṃ na yānti ca || 1.5 (= 5) ||<lb n="2"/></l>
-        </lg>
+      <lg xml:id="p3_l13" n="3,13">
+        <l>na pūjayanti ye pūjyān mānyān no mānayanti ye |<pb n="4"/></l>
+        <l>jīvanti nindyamānās te mṛtāḥ svargaṃ na yānti ca || 1.5 (= 5) ||<lb n="2"/></l>
       </lg>
     </div>
   </body>

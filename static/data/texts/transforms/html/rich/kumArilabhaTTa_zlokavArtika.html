@@ -1,0 +1,388 @@
+<html>
+  <head>
+    <meta charset="utf-8"/>
+    <title>kumArilabhaTTa_zlokavArtika.xml</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <link rel="stylesheet" href="components/style.css"/>
+    <script src="components/script.js"></script>
+    <link rel="stylesheet" href="components/verse_style.css"/>
+    <script src="components/verse_script.js"></script>
+  </head>
+  <body>
+    <div id="controls-icon">
+      <span></span>
+      <span></span>
+      <span></span>
+    </div>
+    <div class="button-container">
+      <div id="close-button-container">×</div>
+      <div class="toggle-switch-container rich-text-toggle">
+        <label class="toggle-switch">
+          <input type="checkbox" onchange="toggleBreaks(this)"/>
+          <span class="toggle-switch-text">Line breaks</span>
+          <span class="toggle-switch-handle"/>
+        </label>
+      </div>
+      <div class="toggle-switch-container">
+        <label class="toggle-switch">
+          <input type="checkbox" onchange="toggleVerseFormatting(this)"/>
+          <span class="toggle-switch-text">Verse Styling</span>
+          <span class="toggle-switch-handle"/>
+        </label>
+      </div>
+      <div class="toggle-switch-container verse-format-toggle">
+        <label class="simple-checkbox-label">Column Width</label>
+        <input id="width-slider" type="range" min="20" max="80" value="40"/>
+      </div>
+    </div>
+    <div id="top-widgets">
+      <div id="metadata">
+        <h2>Metadata <span id="metadata-caret">▶</span></h2>
+        <ul id="metadata-list">
+          <li><b>Title: </b>Ślokavārtika</li>
+          <li><b>Author: </b>Kumārila Bhaṭṭa</li>
+          <li><b>Source File: </b>Word document by Helmut Krasser,
+obtained second-hand through private exchange.</li>
+          <li><b>Edition: </b>Dvārikādāsa Śāstrī, “Ślokavārttika of Śrī Kumārila Bhaṭṭa
+with the Commentary Nyāyaratnākara of Śrī Pārthasārathi Miśra.”
+Vārāṇasī: Tara Publications, 1978.</li>
+          <li><b>PDFs: </b><ul>
+<li><a href="https://archive.org/details/SlokavarttikaNyayaratnakara/mode/2up">on Archive (missing a few pages)</a></li>
+</ul>
+</li>
+          <li><b>Digitization Notes: </b><ul>
+<li>(Date unknown) H. Krasser: Created.</li>
+<li>(2017–2021) Tyler Neill: Supplied missing <em>Arthāpattipariccheda</em> (5.8), restructured for Pramāṇa NLP.</li>
+<li>(2025) Tyler Neill: Page numbers added for HANSEL structure.</li>
+</ul>
+</li>
+          <li><b>Extent: </b><ul>
+<li>Complete.</li>
+<li>3,350 verses (mostly anuṣṭubh).</li>
+<li>664pp in edition (with commentary on same pages).</li>
+</ul>
+</li>
+          <li><b>File Size (KB): </b>457</li>
+          <li><b>Genres: </b><ul>
+<li>Darśana</li>
+<li>Mīmāṃsā</li>
+<li>Pramāṇaśāstra</li>
+</ul>
+</li>
+          <li><b>Structure: </b><table>
+<thead>
+<tr>
+<th>#</th>
+<th>Section</th>
+<th>edition</th>
+<th>Jha transl.</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>pratijñāsūtra (PJS)</td>
+<td>3</td>
+<td>1</td>
+</tr>
+<tr>
+<td>2</td>
+<td>codanāsūtra (CDS)</td>
+<td>34</td>
+<td>21</td>
+</tr>
+<tr>
+<td>3</td>
+<td>nimittasūtra (NMS)</td>
+<td>96</td>
+<td>67</td>
+</tr>
+<tr>
+<td>4</td>
+<td>pratyakṣasūtra (PAS)</td>
+<td>97</td>
+<td>68</td>
+</tr>
+<tr>
+<td>5</td>
+<td>autpattikasūtra</td>
+<td>––</td>
+<td>––</td>
+</tr>
+<tr>
+<td>5.1</td>
+<td>vṛttikāragrantha (VKG)</td>
+<td>149</td>
+<td>113</td>
+</tr>
+<tr>
+<td>5.2</td>
+<td>(VKG vv. 17–26)</td>
+<td>152</td>
+<td>116</td>
+</tr>
+<tr>
+<td>5.3</td>
+<td>nirālambanavāda (NAV)</td>
+<td>155</td>
+<td>119</td>
+</tr>
+<tr>
+<td>5.4</td>
+<td>śunyavāda (SNV)</td>
+<td>191</td>
+<td>148</td>
+</tr>
+<tr>
+<td>5.5</td>
+<td>anumānapariccheda (AMP)</td>
+<td>246</td>
+<td>182</td>
+</tr>
+<tr>
+<td>5.6</td>
+<td>śabdapariccheda (SBP)</td>
+<td>287</td>
+<td>207</td>
+</tr>
+<tr>
+<td>5.7</td>
+<td>upamānapariccheda (UMP)</td>
+<td>307</td>
+<td>222</td>
+</tr>
+<tr>
+<td>5.8</td>
+<td>arthāpattipariccheda (AAP)</td>
+<td>320</td>
+<td>230</td>
+</tr>
+<tr>
+<td>5.9</td>
+<td>abhāvapariccheda (ABH)</td>
+<td>335</td>
+<td>243</td>
+</tr>
+<tr>
+<td>5.10</td>
+<td>citrākṣepavāda (CAV)</td>
+<td>349</td>
+<td>253</td>
+</tr>
+<tr>
+<td>5.11</td>
+<td>sambandhākṣepavāda (SAV)</td>
+<td>353</td>
+<td>254</td>
+</tr>
+<tr>
+<td>5.12</td>
+<td>sphoṭavāda (SPH)</td>
+<td>361</td>
+<td>261</td>
+</tr>
+<tr>
+<td>5.13</td>
+<td>ākṛtivāda (AKV)</td>
+<td>385</td>
+<td>281</td>
+</tr>
+<tr>
+<td>5.14</td>
+<td>apohavāda (APV)</td>
+<td>400</td>
+<td>295</td>
+</tr>
+<tr>
+<td>5.15</td>
+<td>vanavāda (VAV)</td>
+<td>435</td>
+<td>329</td>
+</tr>
+<tr>
+<td>5.16</td>
+<td>sambandhākṣepaparihāra (SAP)</td>
+<td>453</td>
+<td>347</td>
+</tr>
+<tr>
+<td>5.17</td>
+<td>citrākṣepaparihāra (CAP)</td>
+<td>483</td>
+<td>375</td>
+</tr>
+<tr>
+<td>5.18</td>
+<td>ātmavāda (ATV)</td>
+<td>488</td>
+<td>382</td>
+</tr>
+<tr>
+<td>6</td>
+<td>śabdanityatādhikaraṇa (SNA)</td>
+<td>515</td>
+<td>409</td>
+</tr>
+<tr>
+<td>7</td>
+<td>vākyādhikaraṇa (VAA)</td>
+<td>598</td>
+<td>486</td>
+</tr>
+<tr>
+<td>8</td>
+<td>vedapauruṣeyatādhikaraṇa (VPA)</td>
+<td>669</td>
+<td>553</td>
+</tr>
+</tbody>
+</table>
+</li>
+          <li><b>Translations:: </b><ul>
+<li>English, G. Jha, 1907, <a href="https://archive.org/details/in.ernet.dli.2015.282831/mode/2up">on Archive</a></li>
+</ul>
+</li>
+          <li>
+            <b>Additional Notes: </b>
+            <ul>
+<li>This text still needs a final proofread.</li>
+</ul>
+          </li>
+        </ul>
+      </div>
+      <div id="toc">
+        <h2>Table of Contents <span id="toc-caret">▶</span></h2>
+        <ul id="toc-list">
+          <li>
+            <a href="#1_pratijñāsūtra_PJS">§ 1 pratijñāsūtra PJS (p.3)</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+    <div id="content">
+      <h1 id="1_pratijñāsūtra_PJS">§ 1 pratijñāsūtra PJS</h1>
+      <ul class="verses">
+        <li class="verse" id="v1-1">
+          <ul class="padas">
+            <li>viśuddhajñānadehāya trivedīdivyacakṣuṣe |</li>
+            <li>śreyaḥprāptinimittāya namaḥ somārdhadhāriṇe || 1.1 ||</li>
+          </ul>
+        </li>
+        <li class="verse" id="v1-2">
+          <ul class="padas">
+            <li>abhivandya gurūnādau śiṣyadhīpadminīravīn |</li>
+            <li>tatprasādāt kariṣye 'haṃ mīmāṃsāślokavārttikaṃ || 1.2 ||</li>
+          </ul>
+        </li>
+        <li class="verse" id="v1-3">
+          <ul class="padas">
+            <li>tadvidvāṃso 'nugṛhṇantu cittaśrotraiḥ prasādibhiḥ |</li>
+            <li>santaḥ praṇayivākyāni gṛhṇanti hy anasūyavaḥ || 1.3 ||</li>
+          </ul>
+        </li>
+        <li class="verse" id="v1-4">
+          <ul class="padas">
+            <li>na cātrātiva kartavyaṃ doṣadṛṣṭiparaṃ manaḥ |</li>
+            <li>doṣo hy avidyamāno 'pi taccittānāṃ prakāśate || 1.4 ||<span class="pb rich-text" data-page="4">(p.4)</span><br class="pb-br rich-text"/></li>
+          </ul>
+        </li>
+        <li class="verse" id="v1-5">
+          <ul class="padas">
+            <li>kuto vā gṛhṇate doṣaṃ sūrayo madvidhoktiṣu |</li>
+            <li>neṣyate yaḥ parastho 'pi sa svayaṃ gṛhyate katham || 1.5 ||</li>
+          </ul>
+        </li>
+        <li class="verse" id="v1-6">
+          <ul class="padas">
+            <li>nirdoṣatvaikavākyatvaṃ kva vā lokasya dṛśyate |</li>
+            <li>sāpavādā yataḥ ke cin mokṣasvargāv api prati || 1.6 ||</li>
+          </ul>
+        </li>
+        <li class="verse" id="v1-7">
+          <ul class="padas">
+            <li>āgamapravaṇaś cāhaṃ nāpavādyaḥ skhaliteṣv apy apodyate |</li>
+            <li>na hi sadvartmanā gacchan skhaliteṣv apy apodyate || 1.7 ||</li>
+          </ul>
+        </li>
+        <li class="verse" id="v1-8">
+          <ul class="padas">
+            <li>yathā kathañ cid ārabdhā trayīmārgānusāriṇī |</li>
+            <li>vāgvṛttir alpasārāpi śraddadhānasya śobhate || 1.8 ||<span class="pb rich-text" data-page="5">(p.5)</span><br class="pb-br rich-text"/></li>
+          </ul>
+        </li>
+        <li class="verse" id="v1-9">
+          <ul class="padas">
+            <li>mīmāṃsāśāstratejobhir viśeṣeṇoj jvalīkṛte |</li>
+            <li>vedārthajñānaratne me tṛṣṇātīva vijṛmbhate || 1.9 ||</li>
+          </ul>
+        </li>
+        <li class="verse" id="v1-10">
+          <ul class="padas">
+            <li>prāyenaiva hi mīmāṃsā loke lokāyatīkṛtā |</li>
+            <li>tāmāstikapathe kartum ayaṃ yatnaḥ kṛto mayā || 1.10 ||</li>
+          </ul>
+        </li>
+        <li class="verse" id="v1-11">
+          <ul class="padas">
+            <li>athāto dharmajijñāsā sūtram ādyam idaṃ kṛtam |</li>
+            <li>dharmākhyaṃ viṣayaṃ vaktuṃ mīmāṃsāyāḥ prayojanam || 1.11 ||</li>
+          </ul>
+        </li>
+        <li class="verse" id="v1-12">
+          <ul class="padas">
+            <li>sarvasyaiva hi śāstrasya karmaṇo vāpi kasya cit |</li>
+            <li>yāvat prayojanaṃ noktaṃ tāvat tat kena gṛhyate || 1.12 ||</li>
+          </ul>
+        </li>
+        <li class="verse" id="v1-13">
+          <ul class="padas">
+            <li>mīmāṃsākhyā tu vidyeyaṃ bahuvidyāntarāśritā |</li>
+            <li>na śuśrūṣayituṃ śakyā prāganuktvā prayojanam || 1.13 ||<span class="pb rich-text" data-page="6">(p.6)</span><br class="pb-br rich-text"/></li>
+          </ul>
+        </li>
+        <li class="verse" id="v1-14">
+          <ul class="padas">
+            <li>vidyāntareṣu nāpy etad yady abhīṣṭaṃ prayojanam |</li>
+            <li>anarthaprāpaṇaṃ tāvat tebhyo nāśaṅkyate kva cit || 1.14 ||</li>
+          </ul>
+        </li>
+        <li class="verse" id="v1-15">
+          <ul class="padas">
+            <li>mīmāṃsāyāṃ tv ihājñāte durjñāte vāvivekataḥ |</li>
+            <li>nyāyamārge mahān doṣa iti yatnopacaryatā || 1.15 ||</li>
+          </ul>
+        </li>
+        <li class="verse" id="v1-16">
+          <ul class="padas">
+            <li>tasmāt prayojanaṃ pūrvam uktaṃ sūtrakṛtā svayam |</li>
+            <li>yat svenoktaṃ vadeyus tad bhāṣyakārādayaḥ katham || 1.16 ||</li>
+          </ul>
+        </li>
+        <li class="verse" id="v1-17">
+          <ul class="padas">
+            <li>siddhārthaṃ jñātasambandhaṃ śrotuṃ śrotā pravartate |</li>
+            <li>śāstrādau tena vaktavyaḥ sambandhaḥ saprayojanaḥ || 1.17 ||<span class="pb rich-text" data-page="7">(p.7)</span><br class="pb-br rich-text"/></li>
+          </ul>
+        </li>
+        <li class="verse" id="v1-18">
+          <ul class="padas">
+            <li>śāstraṃ prayojanaṃ caiva sambandhasyāśrayāv ubhau |</li>
+            <li>taduktyantargatas tasmād bhinno noktaḥ prayojanāt || 1.18 ||</li>
+          </ul>
+        </li>
+        <li class="verse" id="v1-19">
+          <ul class="padas">
+            <li>siddhiḥ śrotṛpravṛttīnāṃ sambandhakathanād yataḥ |</li>
+            <li>tasmāt sarveṣu śāstreṣu sambandhaḥ pūrvam ucyate || 1.19 ||</li>
+          </ul>
+        </li>
+        <li class="verse" id="v1-20">
+          <ul class="padas">
+            <li>yāvat prayojanenāsya sambandho nābhidhīyate |</li>
+            <li>asambaddhapralāpitvād bhavet tāvad asaṃgatiḥ || 1.20 ||</li>
+          </ul>
+        </li>
+      </ul>
+    </div>
+  </body>
+</html>
