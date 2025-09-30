@@ -1,4 +1,4 @@
-/* Sidebar */
+/* Sidenav */
 .sidenav {
     width: 220px;
     position: fixed;
@@ -21,8 +21,8 @@
     flex-direction: column;
 }
 
-/* Sidebar Logo */
-.sidebar-logo {
+/* Sidenav Logo */
+.sidenav-logo {
     max-width: 180px;
     height: auto;
     margin: 10px auto;
@@ -40,13 +40,13 @@
     padding-left: 10px;
 }
 
-.sidebar-title {
+.sidenav-title {
     font-family: 'EB Garamond', serif;
     color: white;
     font-size: 1.8em;
     margin: 10px 0 0 0;
 }
-.sidebar-subtitle {
+.sidenav-subtitle {
     font-size: 0.9em;
     color: #ccc;
     margin: 5px 0 20px 0;
@@ -58,7 +58,7 @@
     flex-direction: column;
 }
 
-/* Sidebar Links */
+/* Sidenav Links */
 .nav-links a {
     color: #ffffff;
     text-decoration: none;
@@ -110,7 +110,7 @@
         order: 1;
     }
 
-    .sidebar-logo {
+    .sidenav-logo {
         width: 120px;
     }
 }
@@ -124,17 +124,17 @@
         padding: 15px;
     }
 
-    .sidebar-logo {
-        width: 80px;
+    .sidenav-logo {
+        width: 50px;
         margin: 0;
     }
 
-    .sidebar-title {
+    .sidenav-title {
         font-size: 1.5em;
         margin: 0 0 0 10px;
     }
 
-    .sidebar-subtitle {
+    .sidenav-subtitle {
         display: none;
     }
 
