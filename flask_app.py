@@ -93,21 +93,14 @@ def about():
         static_files_path=STATIC_FILES_PATH
     )
 
-@app.route("/how")
-def how():
-    return render_template("how.html")
-
 @app.route("/team")
 def team():
     return render_template("team.html")
 
-@app.route("/backlog")
-def backlog():
-    return render_template("backlog.html")
+@app.route("/tutorial")
+def tutorial():
+    return render_template("tutorial.html")
 
-@app.route("/txt_markup")
-def txt_markup():
-    return render_template("txt_markup.html")
 
 if __name__ == "__main__":
     # Enable debug mode for local development
