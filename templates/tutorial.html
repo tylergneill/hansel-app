@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {% include 'components/head_shared.html' %}
+    <title>HANSEL - Tutorial</title>
+</head>
+<body>
+<div id="content">
+    {% from 'components/sidenav.html' import sidenav %}
+    {% set nav_links = [
+        {'url': '/about', 'text': 'Back to About'},
+        {'url': '/', 'text': 'Back Home'}
+    ] %}
+    {{ sidenav(nav_links) }}
+
+    <div class="main">
+
+        <div id="tutorial">
+            <h1>Tutorial Video</h1>
+            <p>Coming soon...</p>
+        </div>
+
+    </div>
+</div>
+</body>
+</html>
