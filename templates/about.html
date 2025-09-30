@@ -14,9 +14,35 @@
 
             <h1>About</h1>
             <p>
-                HANSEL is a companion to GRETIL.
-                Its goal is to continue the open exchange of academic-level Sanskrit e-texts,
+                HANSEL is a companion to GRETIL,
+                facilitating open exchange of academic-level Sanskrit e-texts,
                 with a focus on diplomatic transcriptions of printed editions produced using OCR.
+            </p>
+
+            <h2>FAQ</h2>
+
+            <p>
+                <strong>How do I contribute?</strong>
+                Just send an email to&nbsp;<code>hanselrepository</code> at Gmail, wherever you're at in your process.
+                The <a href="/team">“team”</a> will help you from there.
+            </p>
+            <p>
+                <strong>Will HANSEL incorporate all of GRETIL?</strong>
+                No, at least not all at once. HANSEL's focus is on new or newly modified material.
+                GRETIL will have no problem remaining available online
+                in the form of its <a href="https://textgridrep.org/project/TGPR-2ba9cb1b-9602-202d-71ce-67e63a29de55" target="_blank">official archive</a> and,
+                when the <a href="https://gretil.sub.uni-goettingen.de/gretil.html" target="_blank">main site</a> eventually goes down, mirrors.
+            </p>
+            <p>
+                <strong>How does HANSEL compare to GRETIL or SARIT?</strong>
+                Like SARIT, HANSEL has an explicit <a href="https://github.com/tylergneill/hansel-data/blob/main/texts/DATA_MODEL.md" target="_blank">data model</a>,
+                everything is versioned, and consistent metadata is required.
+                Like GRETIL, HANSEL is all-purpose and easy to contribute to.
+                Unlike either, the base format is plain-text, from which are produced XML and HTML.
+            </p>
+            <p>
+                <strong>How do we know HANSEL will survive?</strong>
+                This project is independent, open-source, well documented, and built on standard and inexpensive technologies.
             </p>
 
             <h2>Name and logo</h2>
@@ -34,84 +60,6 @@
                 A world away, in the Grimms' tale, Hänsel and Gretel succeed against the odds by working together.
             </p>
 
-            <h2>Additional Principles</h2>
-            <p>Submitting material should be easy.</p>
-            <p>Metadata should show provenance.</p>
-            <p>All data and code should be versioned.</p>
-            <p>Originals and derivatives can coexist.</p>
-
-            <h2>Multi-Tier Concept</h2>
-            <p>In order to offer original data, with all its idiosyncracies,
-                while also supporting development toward a particular standard,
-                HANSEL uses a three-tier system to indicate progression toward its own <a href="https://github.com/tylergneill/hansel-data/blob/main/texts/DATA_MODEL.md">data model</a>:
-                <ul>
-                    <li>
-                        <strong>Tier I</strong>: Whichever initial version the contributor chooses
-                    </li>
-                    <li>
-                        <strong>Tier II</strong>: Passing automatic structural validation for HANSEL's data model
-                    </li>
-                    <li>
-                        <strong>Tier III</strong>: Still passing + high-fidelity diplomatic correspondence to source edition
-                    </li>
-                </ul>
-            </p>
-
-            <h2>Who's Who</h2>
-            <p>
-                A <a href="/team">solo creator</a> working open-source is best to get things moving,
-                and if the project works, control can be passed on to a rotating committee at a later date.
-            </p>
-
-            <h2>Contribution How-To</h2>
-            <p>
-                <ol>
-                    <li>
-                        Tier I (1–5 days):
-                        Contributor writes in to `hanselrepository` at Gmail,
-                        usually with existing text material to share.
-                        CC BY-NC-SA 4.0 license is explained and remaining work is divvied up.
-                        Maintainer posts material ASAP.
-                    </li>
-                    <li>
-                        Tier II (2–4 weeks):
-                        Maintainer (or more rarely, contributor) manually adapts text to HANSEL data model.
-                        Once text passes validation and metadata has been improved,
-                        second-version material is posted.
-                    </li>
-                    <li>
-                        Tier III (3–6 months):
-                        Material is further reworked to improve diplomatic correspondence to source edition,
-                        then posted in consultation with active collaborators.
-                    </li>
-                </ol>
-            </p>
-
-            <h2>File Types</h2>
-            <p>
-                Tier I allows for any text-based file type,
-                whereas Tiers II and III primarily use plaintext.
-            </p>
-            <p>
-                The HANSEL <a href="https://github.com/tylergneill/hansel-data/blob/main/texts/DATA_MODEL.md">data model</a> foresees automatic transformation from plaintext to TEI-XML.
-                This XML is then transformed to HTML
-                which is then the default for rendering on the website
-                (browsers are happiest when handling HTML, for memory management, etc.)
-                All of these options can be downloaded as cumulative files from the website
-                or from GitHub.
-            </p>
-            <p>
-                Metadata is stored primarily in Markdown,
-                which renders well on GitHub.
-                For display on the website, there are also HTML transforms.
-                On the backend, the web app uses a JSON transform.
-                All formats are downloadable in bulk.
-            </p>
-            <p>
-                All non-primary formats are semi-automatically regenerated in bulk
-                after changes to primary formats.
-            </p>
-
             <h2>Under the Hood</h2>
             <p>
                 HANSEL consists of two coordinated Git repositories on GitHub:
@@ -125,8 +73,7 @@
                 The web app is written in Python and Javascript
                 and runs on a Digital Ocean server
                 which holds an up-to-date clone of the data repo.
-                The data repo also contains Python management scripts
-                run periodically and locally.
+                The data repo also contains some Python and Bash automation code.
             </p>
 
         </div>
