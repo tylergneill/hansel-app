@@ -12,7 +12,6 @@
 <div id="content">
     {% from 'components/sidenav.html' import sidenav %}
     {% set nav_links = [
-        {'url': '#introduction', 'text': 'Introduction'},
         {'url': '#e-texts', 'text': 'E-Texts'},
         {'url': '#cumulative-data', 'text': 'Cumulative Data'},
         {'url': '#more-info', 'text': 'More Info'}
@@ -21,10 +20,10 @@
 
     <div class="main">
         <div id="introduction">
-            <h1>HANSEL</h1>
             <p>
-                An open collection of high-quality Sanskrit e-texts.
-                Current collection size is {{ num_items }} items ({{ total_size_mb }} MB in total).
+                <span id="index-title" style="font-size: 1.5em;">HANSEL</span>
+                is an open collection of high-quality Sanskrit e-texts.
+                <a href="/">How to use it.</a>
             </p>
         </div>
 
@@ -174,17 +173,24 @@
 
             <p><a href="about" class="main-link">About Page</a><p>
 
-            <h2 id="contributing">Contact</h2>
             <p>
                 Email <span style="background: #f0f0f0;"><code>hanselrepository</code></span> at Gmail with any questions, suggestions, or contributions
                 (<code>.doc</code>, <code>.txt</code>, <code>.xml</code>, <code>.html</code>, <code>.pdf</code>, etc.)
             </p>
 
             <h2 id="technical">Technical</h2>
-            <p><strong>Web app version</strong>: v{{ app_version }}</p>
-            <p><strong>Data version</strong>: {{ data_version }}</p>
+            <p>Current collection size is {{ num_items }} items ({{ total_size_mb }} MB in total).</p>
             <p>
-                <strong>License</strong>: <a href="https://creativecommons.org/licenses/by-nc-sa/4.0">CC BY-NC-SA 4.0</a>.
+                <strong>Web app version</strong>: v{{ app_version }}
+                (<a href="https://github.com/tylergneill/hansel-app">on GitHub</a>)
+            </p>
+            <p>
+                <strong>Data version</strong>: {{ data_version }}
+                (<a href="https://github.com/tylergneill/hansel-data">on GitHub</a>)
+            </p>
+            <p>
+                <strong>License</strong>:
+                <a href="https://creativecommons.org/licenses/by-nc-sa/4.0">CC BY-NC-SA 4.0</a>.
                 Please share and share alike!
             </p>
         </div>

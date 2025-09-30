@@ -21,7 +21,8 @@ body {
 /* Headings */
 .main h1,
 .main h2,
-.main h3 {
+.main h3,
+#index-title {
     font-family: 'EB Garamond', serif;
     color: #013220;
 }
