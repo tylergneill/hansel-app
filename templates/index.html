@@ -3,6 +3,10 @@
 <head>
     {% include 'components/head_shared.html' %}
     <title>HANSEL - E-Texts</title>
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.8/css/jquery.dataTables.min.css">
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <script src="https://cdn.datatables.net/1.13.8/js/jquery.dataTables.min.js"></script>
+    <script src="{{ url_for('static', filename='web/js/sort.js') }}"></script>
 </head>
 <body>
 <div id="content">
@@ -14,58 +18,233 @@
             <p>
                 An open collection of high-quality Sanskrit e-texts.
                 Current collection size is {{ num_items }} items ({{ total_size_mb }} MB in total).
-                See also <a href="table">table view</a>.
             </p>
         </div>
 
         <div id="e-texts">
-            <h1>E-Texts</h1>
-            <p><em>Click arrows&nbsp;(&nbsp;<span class="toggle-caret" style="pointer-events: none;"></span>&nbsp;)&nbsp;for more info.</em></p>
-            <ul>
-                {% for item in metadata %}
-                <li class="file-item">
-                    <div class="link-and-caret">
-                        {% set html_filename = item['Filename Base'] ~ '.html' %}
-                        <a href="{{ static_files_path }}/data/texts/transforms/html/rich/{{ html_filename }}" class="main-link" target="_blank">
-                            {{ item['Title'] ~ (' - ' ~ item['Author'] if item['Author'] else '') }}
-                        </a>
-                        <details class="caret-details">
-                            <summary class="toggle-caret"></summary>
-                        </details>
-                    </div>
-                    <ul class="extra-links">
-                        <li>
-                            <a href="{{ static_files_path }}/data/metadata/transforms/html/{{ item['Filename Base'] }}.html" target="_blank">
-                                <img src="{{ static_files_path }}/web/imgs/info.png" alt="metadata" style="height: 20px; margin-right: 2px;">
-                                Metadata
+            <div class="view-toggle">
+                <h1 style="padding-right: 20px;">E-Texts</h1>
+                <div class="toggle-switch-container">
+                    <label class="switch">
+                        <input type="checkbox" id="view-toggle-checkbox">
+                        <span class="switch-text-off">List</span>
+                        <span class="switch-text-on">Table</span>
+                    </label>
+                </div>
+            </div>
+
+            <div id="list-view">
+                <p><em>Click arrows&nbsp;(&nbsp;<span class="toggle-caret" style="pointer-events: none;"></span>&nbsp;)&nbsp;for more info.</em></p>
+                <ul>
+                    {% for item in metadata %}
+                    <li class="file-item">
+                        <div class="link-and-caret">
+                            {% set html_filename = item['Filename Base'] ~ '.html' %}
+                            <a href="{{ static_files_path }}/data/texts/transforms/html/rich/{{ html_filename }}" class="main-link" target="_blank">
+                                {{ item['Title'] ~ (' - ' ~ item['Author'] if item['Author'] else '') }}
                             </a>
-                        </li>
-                        <li>
-                            {% set original_filename_ext = (item['Original Filename Extension']) %}
-                            {% set downloaded_extensions = ['.doc', '.docx', '.rtf'] %}
-                            {% set original_filename = item['Filename Base'] ~ original_filename_ext %}
-                            <a href="{{ static_files_path }}/data/texts/originals/{{ original_filename }}" class="main-link" target="_blank">
-                                Original file ({{ original_filename_ext }})
-                                {% if original_filename_ext in downloaded_extensions %}
-                                &nbsp;<img src="{{ static_files_path }}/web/imgs/dl.png" alt="download" title="download" style="height: 20px;">
-                                {% endif %}
-                            </a>
-                        </li>
-                        <li>
-                            {% set txt_filename = item['Filename Base'] ~ '.txt' %}
-                            <a href="{{ static_files_path }}/data/texts/processed_txt/{{ txt_filename }}" class="main-link" target="_blank">
-                                Processed plain-text (<code>.txt</code>)
-                            </a>
-                        </li>
-                    </ul>
-                </li>
-                {% endfor %}
-            </ul>
+                            <details class="caret-details">
+                                <summary class="toggle-caret"></summary>
+                            </details>
+                        </div>
+                        <ul class="extra-links">
+                            <li>
+                                <a href="{{ static_files_path }}/data/metadata/transforms/html/{{ item['Filename Base'] }}.html" target="_blank">
+                                    <img src="{{ static_files_path }}/web/imgs/info.png" alt="metadata" style="height: 20px; margin-right: 2px;">
+                                    Metadata
+                                </a>
+                            </li>
+                            <li>
+                                {% set original_filename_ext = (item['Original Filename Extension']) %}
+                                {% set downloaded_extensions = ['.doc', '.docx', '.rtf'] %}
+                                {% set original_filename = item['Filename Base'] ~ original_filename_ext %}
+                                <a href="{{ static_files_path }}/data/texts/originals/{{ original_filename }}" class="main-link" target="_blank">
+                                    Original file ({{ original_filename_ext }})
+                                    {% if original_filename_ext in downloaded_extensions %}
+                                    &nbsp;<img src="{{ static_files_path }}/web/imgs/dl.png" alt="download" title="download" style="height: 20px;">
+                                    {% endif %}
+                                </a>
+                            </li>
+                            <li>
+                                {% set txt_filename = item['Filename Base'] ~ '.txt' %}
+                                <a href="{{ static_files_path }}/data/texts/processed_txt/{{ txt_filename }}" class="main-link" target="_blank">
+                                    Processed plain-text (<code>.txt</code>)
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+                    {% endfor %}
+                </ul>
+            </div>
+
+            <div id="table-view" style="display: none;">
+                <table id="text_table" class="display" style="width:100%">
+                  <thead>
+                    <tr>
+                      {% for field in display_fields %}
+                        <th>{{ field }}</th>
+                      {% endfor %}
+                    </tr>
+                  </thead>
+                  <tbody>
+                  </tbody>
+                </table>
+            </div>
         </div>
 
         {% include 'components/index_footer.html' %}
 
     </div>
 </div>
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const listView = document.getElementById('list-view');
+    const tableView = document.getElementById('table-view');
+    const viewToggle = document.getElementById('view-toggle-checkbox');
+
+    let dataTable;
+
+    function initializeDataTable() {
+        $.fn.dataTable.ext.type.order['sanskrit-pre'] = d => {
+          const txt = (d || '').replace(/<[^>]*>/g,'').toLowerCase().normalize('NFC');
+          if (txt.trim() === '') return -Infinity; // blank cells get smallest possible key
+          return saKey(txt);
+        };
+        $.fn.dataTable.ext.type.order['sanskrit-asc']  = (a, b) => a < b ? -1 : a > b ? 1 : 0;
+        $.fn.dataTable.ext.type.order['sanskrit-desc'] = (a, b) => a < b ?  1 : a > b ? -1 : 0;
+
+        const staticFilesPath = "{{ static_files_path }}";
+        const tableData = {{ rows | tojson | safe }};   // full list of dicts
+
+        function getOriginalFilenameWithExtension(row) {
+          const base = row['Filename Base'];
+          const ext = row['Original Filename Extension']
+          return `${base}${ext}`;
+        }
+
+        dataTable = $('#text_table').DataTable({
+          data: tableData,
+          columnDefs: [
+            {
+              "targets": [0],  // Metadata column
+              "orderable": false // Disable sorting
+            }
+          ],
+          order: [[ 1, "asc" ]], // Sort by the 2nd column (Title) in descending Sanskrit alphabetical order
+          columns: [
+            {
+              data: 'Filename Base',
+              render: function(data, type, row) {
+                if (type !== 'display') return data;
+                const href = `${staticFilesPath}/data/metadata/transforms/html/${row['Filename Base']}.html`;
+                imgSrc = `${staticFilesPath}/web/imgs/info.png`;
+                return (
+                  `<a href="${href}" title="metadata">` +
+                      `<img src="${imgSrc}" alt="metadata" style="height: 20px; margin-right: 2px;">` +
+                  `</a>`
+                )
+              },
+              createdCell: function(td) {
+                td.style.textAlign = 'center';
+              }
+            },
+            {
+              data: 'Title',
+              type: 'sanskrit',  // custom sort
+              render: (data, type, row) => {
+                if (type !== 'display') return data;   // keep raw text for sort/filter
+                return `<a href="${staticFilesPath}/data/texts/transforms/html/rich/${row['Filename Base']}.html">${data}</a>`;
+              }
+            },
+            { data: 'Author', type: 'sanskrit' },
+            { data: 'Genre', type: 'sanskrit' },
+            { data: 'Size (kb)', className: 'text-end' },
+            {
+              data: 'Filename Base',
+              render: function(data, type, row) {
+                if (type !== 'display') return data;
+                if (!data) return '';
+                const original_filename = getOriginalFilenameWithExtension(row);
+
+                const href = `${staticFilesPath}/data/texts/processed_txt/${row['Filename Base']}.txt`;
+                imgSrc = `${staticFilesPath}/web/imgs/dl.png`;
+                return (
+                  `<a href="${href}" title="metadata">` +
+                      `<img src="${imgSrc}" alt="metadata" style="height: 20px; margin-right: 2px;">` +
+                  `</a>`
+                )
+              },
+            }
+          ],
+          pageLength: 10
+        });
+    }
+
+    viewToggle.addEventListener('change', function() {
+        if (this.checked) {
+            listView.style.display = 'none';
+            tableView.style.display = 'block';
+            if (!$.fn.DataTable.isDataTable('#text_table')) {
+                initializeDataTable();
+            }
+        } else {
+            listView.style.display = 'block';
+            tableView.style.display = 'none';
+        }
+    });
+});
+</script>
+<style>
+    .view-toggle {
+        display: flex;
+        align-items: center;
+        margin-bottom: 1rem;
+    }
+    .toggle-switch-container {
+        margin-left: 1rem;
+        width: 100px; /* Adjust width as needed */
+    }
+    .switch {
+        position: relative;
+        display: flex;
+        width: 100%;
+        height: 34px;
+        background-color: #ccc;
+        border-radius: 4px;
+        overflow: hidden;
+        cursor: pointer;
+    }
+    .switch input {
+        opacity: 0;
+        width: 0;
+        height: 0;
+        position: absolute;
+    }
+    .switch-text-on, .switch-text-off {
+        flex: 1;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-size: 12px;
+        user-select: none;
+        transition: all 0.2s;
+    }
+    .switch input:not(:checked) ~ .switch-text-off {
+        background-color: #113121;
+        color: white;
+    }
+    .switch input:not(:checked) ~ .switch-text-on {
+        background-color: #ccc;
+        color: #333;
+    }
+    .switch input:checked ~ .switch-text-on {
+        background-color: #113121;
+        color: white;
+    }
+    .switch input:checked ~ .switch-text-off {
+        background-color: #ccc;
+        color: #333;
+    }
+</style>
 </body>
 </html>
