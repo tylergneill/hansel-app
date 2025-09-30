@@ -1,10 +1,10 @@
 /* Import fonts */
 @import url('https://fonts.googleapis.com/css2?family=EB+Garamond&family=Inter:wght@400;600&display=swap');
 
-/* Reset body */
+/* Body */
 body {
     margin: 0;
-    background-color: #ffffff;
+    background-color: #013220;
     font-family: 'Inter', sans-serif;
     color: #1a1a1a;
 }
@@ -12,11 +12,13 @@ body {
 /* Main content */
 .main {
     margin-left: 220px;
-    padding: 0px 40px 40px 40px; /* top, right, bottom, left */
+    padding: 0px 40px 40px 40px;
     background-color: #ffffff;
     min-height: 100vh;
     color: #1a1a1a;
     overflow-x: auto;
+    display: flex;
+    flex-direction: column;
 }
 
 /* Headings */
@@ -169,7 +171,24 @@ summary {
     }
 }
 
-/* Info Pages */
-.team_member_block {
+/* Info Box */
+.info-box {
+    background-color: #013220;
+    color: #ffffff;
+    padding: 20px 40px 40px;
+    margin: auto -40px -40px -40px;
+    border-radius: 8px;
+}
 
+.info-box h1,
+.info-box h2 {
+    color: #ffffff;
+}
+
+.info-box a {
+    color: #FFA500;
+}
+
+.info-box a:hover {
+    color: #ffffff;
 }
