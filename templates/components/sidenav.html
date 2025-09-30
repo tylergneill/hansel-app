@@ -1,4 +1,5 @@
-    <div class="sidenav">
+{% macro sidenav(links) %}
+<div class="sidenav">
       <div class="brand">
         <a class="brand-logo" href="{{ url_for('index') }}">
           <img src="{{ url_for('static', filename='web/imgs/logo.png') }}" class="sidebar-logo" alt="Swan Logo">
@@ -10,8 +11,11 @@
       </div>
 
       <nav class="nav-links">
-        <a href="/">Back Home</a>
+        {% for link in links %}
+        <a href="{{ link.url }}">{{ link.text }}</a>
+        {% endfor %}
       </nav>
 
       <button id="menu-btn" class="menu-btn">Menu</button>
     </div>
+{% endmacro %}

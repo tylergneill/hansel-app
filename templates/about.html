@@ -6,7 +6,11 @@
 </head>
 <body>
 <div id="content">
-    {% include 'components/sidenav_smallest.html' %}
+    {% from 'components/sidenav.html' import sidenav %}
+    {% set nav_links = [
+        {'url': '/', 'text': 'Back Home'}
+    ] %}
+    {{ sidenav(nav_links) }}
 
     <div class="main">
 
@@ -23,7 +27,7 @@
 
             <p>
                 <strong>How do I contribute?</strong>
-                Just send an email to&nbsp;<code>hanselrepository</code> at Gmail, wherever you're at in your process.
+                Just send an email to&nbsp;<span style="background: #f0f0f0;"><code>hanselrepository</code></span> at Gmail, wherever you're at in your process.
                 The <a href="/team">“team”</a> will help you from there.
             </p>
             <p>

@@ -77,18 +77,6 @@ def index():
         "index.html",
         static_files_path=STATIC_FILES_PATH,
         metadata=CUSTOM_METADATA,
-        app_version=APP_VERSION,
-        data_version=DATA_VERSION,
-        num_items=NUM_ITEMS,
-        total_size_mb=TOTAL_SIZE_MB,
-    )
-
-
-@app.route("/table")
-def index_table():
-    return render_template(
-        "table.html",
-        static_files_path=STATIC_FILES_PATH,
         rows=CUSTOM_METADATA,
         display_fields=DISPLAY_FIELDS,
         app_version=APP_VERSION,
