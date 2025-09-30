@@ -6,7 +6,11 @@
 </head>
 <body>
 <div id="content">
-    {% include 'components/sidenav_smallest.html' %}
+    {% from 'components/sidenav.html' import sidenav %}
+    {% set nav_links = [
+        {'url': '/', 'text': 'Back Home'}
+    ] %}
+    {{ sidenav(nav_links) }}
 
     <div class="main">
 

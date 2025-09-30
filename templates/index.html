@@ -10,7 +10,14 @@
 </head>
 <body>
 <div id="content">
-    {% include 'components/sidenav_full.html' %}
+    {% from 'components/sidenav.html' import sidenav %}
+    {% set nav_links = [
+        {'url': '#introduction', 'text': 'Introduction'},
+        {'url': '#e-texts', 'text': 'E-Texts'},
+        {'url': '#cumulative-data', 'text': 'Cumulative Data'},
+        {'url': '#more-info', 'text': 'More Info'}
+    ] %}
+    {{ sidenav(nav_links) }}
 
     <div class="main">
         <div id="introduction">
