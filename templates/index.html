@@ -41,7 +41,7 @@
             </div>
 
             <div id="list-view">
-                <p><em>Click arrows&nbsp;(&nbsp;<span class="toggle-caret" style="pointer-events: none;"></span>&nbsp;)&nbsp;for more info.</em></p>
+                <p><em>Click arrows&nbsp;(&nbsp;<span class="toggle-caret" style="pointer-events: none;"></span>&nbsp;)&nbsp;for more info.</em>&nbsp;&nbsp;<a href="#" id="expand-all-link">Expand All</a></p>
                 <ul>
                     {% for item in metadata %}
                     <li class="file-item">
@@ -287,6 +287,31 @@ document.addEventListener('DOMContentLoaded', function() {
             tableView.style.display = 'none';
         }
     });
+
+    let allExpanded = false;
+    const expandCollapseLink = document.getElementById('expand-all-link');
+
+    if (expandCollapseLink) {
+        expandCollapseLink.addEventListener('click', function(e) {
+            e.preventDefault();
+            const allFileItems = document.querySelectorAll('.file-item');
+
+            if (allExpanded) {
+                // Collapse all
+                allFileItems.forEach(item => {
+                    item.classList.remove('open');
+                });
+                expandCollapseLink.textContent = 'Expand All';
+            } else {
+                // Expand all
+                allFileItems.forEach(item => {
+                    item.classList.add('open');
+                });
+                expandCollapseLink.textContent = 'Collapse All';
+            }
+            allExpanded = !allExpanded;
+        });
+    }
 });
 </script>
 <style>
