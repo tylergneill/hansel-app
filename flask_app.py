@@ -79,10 +79,6 @@ def index():
         metadata=CUSTOM_METADATA,
         rows=CUSTOM_METADATA,
         display_fields=DISPLAY_FIELDS,
-        app_version=APP_VERSION,
-        data_version=DATA_VERSION,
-        num_items=NUM_ITEMS,
-        total_size_mb=TOTAL_SIZE_MB,
     )
 
 
@@ -90,7 +86,11 @@ def index():
 def about():
     return render_template(
         "about.html",
-        static_files_path=STATIC_FILES_PATH
+        static_files_path=STATIC_FILES_PATH,
+        app_version = APP_VERSION,
+        data_version = DATA_VERSION,
+        num_items = NUM_ITEMS,
+        total_size_mb = TOTAL_SIZE_MB,
     )
 
 @app.route("/team")

@@ -31,7 +31,7 @@
             </p>
             <p>
                 <strong>How do I contribute?</strong>
-                Just send an email to&nbsp;<span style="background: #f0f0f0;"><code>hanselrepository</code></span> at Gmail, wherever you're at in your process.
+                Just send an email to&nbsp;<span style="background: #FFA500;"><code>hanselrepository</code></span> at Gmail, wherever you're at in your process.
                 The <a href="/team">“team”</a> will help you from there.
             </p>
             <p>
@@ -52,10 +52,10 @@
                 <strong>Is this project sustainable?</strong>
                 HANSEL is a labor of love by a committed, technically skilled, and financially independent creator.
                 It is independent, open-source, well documented, and built with standard and inexpensive technologies.
-                <!-- See <a href="/costs" target="_blank">Costs Page</a> for more details.
+                <!-- See <a href="/costs" target="_blank">Costs Page</a> for more details. -->
             </p>
 
-            <h2>Name and logo</h2>
+            <h2>Name and Logo</h2>
             <p>
                 "Human-accessible" means that material will always exist in forms
                 that the greatest number of students and scholars can use directly,
@@ -70,20 +70,24 @@
                 A world away, in the Grimms' tale, Hänsel and Gretel succeed against the odds by working together.
             </p>
 
-            <h2>Under the Hood</h2>
+            <h2>Technical</h2>
+            <p>Collection size: {{ num_items }} items ({{ total_size_mb }} MB).</p>
             <p>
-                HANSEL consists of two coordinated Git repositories on GitHub:
-                <a href="https://github.com/tylergneill/hansel-data">hansel-data</a> for e-texts and metadata,
-                and <a href="https://github.com/tylergneill/hansel-app">hansel-app</a> for the web app.
-                Using Git takes care of fine-grained versioning.
-                Public GitHub repos enable open-source access to everything,
-                including PR-based change history.
+                <strong>Web app</strong>: v{{ app_version }}
+                (<a href="https://github.com/tylergneill/hansel-app">GitHub</a>)
             </p>
             <p>
-                The web app is written in Python and Javascript
-                and runs on a Digital Ocean server
-                which holds an up-to-date clone of the data repo.
-                The data repo also contains some Python and Bash automation code.
+                <strong>Data</strong>: v{{ data_version }}
+                (<a href="https://github.com/tylergneill/hansel-data">GitHub</a>)
+            </p>
+            <p>
+                <strong>Stack</strong>: Python (Flask), JavaScript, Gunicorn, Nginx, Digital Ocean.
+            </p>
+
+            <p>
+                <strong>License</strong>:
+                <a href="https://creativecommons.org/licenses/by-nc-sa/4.0">CC BY-NC-SA 4.0</a>.
+                Please share and share alike!
             </p>
 
         </div>
