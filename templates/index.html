@@ -46,7 +46,7 @@
                     <li class="file-item">
                         <div class="link-and-caret">
                             {% set html_filename = item['Filename Base'] ~ '.html' %}
-                            <a href="{{ static_files_path }}/data/texts/transforms/html/rich/{{ html_filename }}" class="main-link" target="_blank">
+                            <a href="{{ static_files_path }}/data/texts/transforms/html/rich/{{ html_filename }}" class="main-link">
                                 {{ item['Title'] ~ (' - ' ~ item['Author'] if item['Author'] else '') }}
                             </a>
                             <details class="caret-details">
@@ -179,7 +179,7 @@
             </p>
 
             <h2 id="technical">Technical</h2>
-            <p>Current collection size is {{ num_items }} items ({{ total_size_mb }} MB in total).</p>
+            <p>Collection size: {{ num_items }} items ({{ total_size_mb }} MB).</p>
             <p>
                 <strong>Web app</strong>: v{{ app_version }}
                 (<a href="https://github.com/tylergneill/hansel-app">GitHub</a>)
