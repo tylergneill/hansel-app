@@ -164,6 +164,17 @@
         display: flex !important;
     }
 
+    .nav-links.single-link {
+        display: flex !important; /* Make it visible */
+        position: static; /* Reset position */
+        flex-direction: row; /* Align horizontally */
+        justify-content: center; /* Center the link */
+        width: 100%;
+        border-top: none; /* Remove border */
+        margin-top: 15px; /* Add some space */
+        margin-left: 0;
+    }
+
     .nav-links a {
         width: 100%;
         text-align: center;

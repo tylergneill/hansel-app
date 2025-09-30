@@ -10,12 +10,14 @@
         </div>
       </div>
 
-      <nav class="nav-links">
+      <nav class="nav-links {% if links|length == 1 %}single-link{% endif %}">
         {% for link in links %}
         <a href="{{ link.url }}">{{ link.text }}</a>
         {% endfor %}
       </nav>
 
+      {% if links|length > 1 %}
       <button id="menu-btn" class="menu-btn">Menu</button>
+      {% endif %}
     </div>
 {% endmacro %}
