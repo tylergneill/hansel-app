@@ -6,6 +6,7 @@ import time
 from pathlib import Path
 from typing import Dict, List
 import unicodedata
+from urllib.parse import urlencode
 
 import requests
 from skrutable.transliteration import Transliterator
@@ -98,6 +99,30 @@ def get_author_info(record):
         return ', '.join(record['Authors'])
 
 
+def get_pandit_author_info(record):
+    if not('Pandit Author' in record or 'Pandit Authors' in record):
+        return ''
+    elif 'Pandit Author' in record and 'Pandit Authors' in record:
+        raise(f"record {record} has both Pandit Author and Pandit Authors")
+    elif 'Pandit Author' in record:
+        return record['Pandit Author']
+    elif 'Pandit Authors' in record:
+        return ','.join([str(a) for a in record['Pandit Authors']])
+
+def get_panditya_url(record):
+    pandit_author = get_pandit_author_info(record)
+    pandit_work = record.get('Pandit Work', '')
+    if not(pandit_author or pandit_work):
+        return ''
+
+    params = {'hops': '1'}
+    if pandit_author:
+        params['authors'] = pandit_author
+    if pandit_work:
+        params['works'] = pandit_work
+    return 'https://panditya.info/view?' + urlencode(params)
+
+
 def process_metadata(raw_metadata: Dict[str, Dict]) -> List[Dict]:
     """
     :param raw_metadata: mapping with unique id (mostly = catalog num) to full record (~18 fields)
@@ -108,11 +133,13 @@ def process_metadata(raw_metadata: Dict[str, Dict]) -> List[Dict]:
         if key == "version":
             continue
         filename_base, original_filename_extension = get_filename_info(record)
+        panditya_url = get_panditya_url(record)
         metadata_subset.append({
             'Filename Base': filename_base,
             'Original Filename Extension': original_filename_extension,
             'Title': record['Title'],
             'Author': get_author_info(record),
+            'Panditya URL': panditya_url,
             'Source': record['Source File'],
             'Edition': record['Edition Short'],
             'Edition Full Info': record['Edition'],

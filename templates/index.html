@@ -23,7 +23,8 @@
             <p>
                 <span id="index-title" style="font-size: 1.5em;">HANSEL</span>
                 is an open collection of high-quality Sanskrit e-texts.
-                <a href="/tutorial">How to use it.</a>
+                <br>
+                Get started <a href="/tutorial">here</a>.
             </p>
         </div>
 
@@ -213,28 +214,12 @@ document.addEventListener('DOMContentLoaded', function() {
           data: tableData,
           columnDefs: [
             {
-              "targets": [0],  // Metadata column
+              "targets": [5, 6, 7],  // Metadata, Panditya, download columns
               "orderable": false // Disable sorting
             }
           ],
-          order: [[ 1, "asc" ]], // Sort by the 2nd column (Title) in descending Sanskrit alphabetical order
+          order: [[ 0, "asc" ]], // Sort by the 1st column (Title) in descending Sanskrit alphabetical order
           columns: [
-            {
-              data: 'Filename Base',
-              render: function(data, type, row) {
-                if (type !== 'display') return data;
-                const href = `${staticFilesPath}/data/metadata/transforms/html/${row['Filename Base']}.html`;
-                imgSrc = `${staticFilesPath}/web/imgs/info.png`;
-                return (
-                  `<a href="${href}" title="metadata">` +
-                      `<img src="${imgSrc}" alt="metadata" style="height: 20px; margin-right: 2px;">` +
-                  `</a>`
-                )
-              },
-              createdCell: function(td) {
-                td.style.textAlign = 'center';
-              }
-            },
             {
               data: 'Title',
               type: 'sanskrit',  // custom sort
@@ -251,13 +236,43 @@ document.addEventListener('DOMContentLoaded', function() {
               data: 'Filename Base',
               render: function(data, type, row) {
                 if (type !== 'display') return data;
+                const href = `${staticFilesPath}/data/metadata/transforms/html/${row['Filename Base']}.html`;
+                imgSrc = `${staticFilesPath}/web/imgs/info.png`;
+                return (
+                  `<a href="${href}" title="metadata" class="icon-link">` +
+                      `<img src="${imgSrc}" alt="metadata" style="height: 20px; margin-right: 2px;">` +
+                  `</a>`
+                )
+              },
+              createdCell: function(td) {
+                td.style.textAlign = 'center';
+              }
+            },
+            {
+                data: 'Panditya URL',
+                orderable: false,
+                render: function(data, type, row) {
+                    if (type === 'display' && data) {
+                        const imgSrc = `${staticFilesPath}/web/imgs/panditya.png`;
+                        return `<a href="${data}" target="_blank" title="View on Panditya" class="icon-link"><img src="${imgSrc}" alt="Panditya" style="height: 20px;"></a>`;
+                    }
+                    return '';
+                },
+                createdCell: function(td) {
+                  td.style.textAlign = 'center';
+                }
+            },
+            {
+              data: 'Filename Base',
+              render: function(data, type, row) {
+                if (type !== 'display') return data;
                 if (!data) return '';
                 const original_filename = getOriginalFilenameWithExtension(row);
 
                 const href = `${staticFilesPath}/data/texts/processed_txt/${row['Filename Base']}.txt`;
                 imgSrc = `${staticFilesPath}/web/imgs/dl.png`;
                 return (
-                  `<a href="${href}" title="metadata">` +
+                  `<a href="${href}" title="metadata" class="icon-link">` +
                       `<img src="${imgSrc}" alt="metadata" style="height: 20px; margin-right: 2px;">` +
                   `</a>`
                 )

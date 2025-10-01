@@ -171,3 +171,7 @@ summary {
         font-size: 16px;
     }
 }
+
+a.icon-link:hover {
+    background-color: transparent;
+}
