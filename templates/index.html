@@ -12,19 +12,18 @@
 <div id="content">
     {% from 'components/sidenav.html' import sidenav %}
     {% set nav_links = [
-        {'url': '#introduction', 'text': 'Introduction'},
         {'url': '#e-texts', 'text': 'E-Texts'},
         {'url': '#cumulative-data', 'text': 'Cumulative Data'},
-        {'url': '#more-info', 'text': 'More Info'}
+        {'url': '/about', 'text': 'About'}
     ] %}
     {{ sidenav(nav_links) }}
 
     <div class="main">
         <div id="introduction">
-            <h1>HANSEL</h1>
             <p>
-                An open collection of high-quality Sanskrit e-texts.
-                Current collection size is {{ num_items }} items ({{ total_size_mb }} MB in total).
+                <span id="index-title" style="font-size: 1.5em;">HANSEL</span>
+                is an open collection of high-quality Sanskrit e-texts.
+                <a href="/tutorial">How to use it.</a>
             </p>
         </div>
 
@@ -41,13 +40,13 @@
             </div>
 
             <div id="list-view">
-                <p><em>Click arrows&nbsp;(&nbsp;<span class="toggle-caret" style="pointer-events: none;"></span>&nbsp;)&nbsp;for more info.</em></p>
+                <p><em>Click arrows&nbsp;(&nbsp;<span class="toggle-caret" style="pointer-events: none;"></span>&nbsp;)&nbsp;for more info.</em>&nbsp;&nbsp;<a href="#" id="expand-all-link">Expand All</a></p>
                 <ul>
                     {% for item in metadata %}
                     <li class="file-item">
                         <div class="link-and-caret">
                             {% set html_filename = item['Filename Base'] ~ '.html' %}
-                            <a href="{{ static_files_path }}/data/texts/transforms/html/rich/{{ html_filename }}" class="main-link" target="_blank">
+                            <a href="{{ static_files_path }}/data/texts/transforms/html/rich/{{ html_filename }}" class="main-link">
                                 {{ item['Title'] ~ (' - ' ~ item['Author'] if item['Author'] else '') }}
                             </a>
                             <details class="caret-details">
@@ -169,24 +168,17 @@
             </ul>
         </div>
 
+        <br>
+
         <div id="more-info">
-            <h1>More Info</h1>
 
             <p><a href="about" class="main-link">About Page</a><p>
 
-            <h2 id="contributing">Contact</h2>
             <p>
-                Email <span style="background: #f0f0f0;"><code>hanselrepository</code></span> at Gmail with any questions, suggestions, or contributions
+                Email <strong><code>hanselrepository</code></strong> at Gmail with any questions, suggestions, or contributions
                 (<code>.doc</code>, <code>.txt</code>, <code>.xml</code>, <code>.html</code>, <code>.pdf</code>, etc.)
             </p>
 
-            <h2 id="technical">Technical</h2>
-            <p><strong>Web app version</strong>: v{{ app_version }}</p>
-            <p><strong>Data version</strong>: {{ data_version }}</p>
-            <p>
-                <strong>License</strong>: <a href="https://creativecommons.org/licenses/by-nc-sa/4.0">CC BY-NC-SA 4.0</a>.
-                Please share and share alike!
-            </p>
         </div>
 
     </div>
@@ -287,6 +279,31 @@ document.addEventListener('DOMContentLoaded', function() {
             tableView.style.display = 'none';
         }
     });
+
+    let allExpanded = false;
+    const expandCollapseLink = document.getElementById('expand-all-link');
+
+    if (expandCollapseLink) {
+        expandCollapseLink.addEventListener('click', function(e) {
+            e.preventDefault();
+            const allFileItems = document.querySelectorAll('.file-item');
+
+            if (allExpanded) {
+                // Collapse all
+                allFileItems.forEach(item => {
+                    item.classList.remove('open');
+                });
+                expandCollapseLink.textContent = 'Expand All';
+            } else {
+                // Expand all
+                allFileItems.forEach(item => {
+                    item.classList.add('open');
+                });
+                expandCollapseLink.textContent = 'Collapse All';
+            }
+            allExpanded = !allExpanded;
+        });
+    }
 });
 </script>
 <style>

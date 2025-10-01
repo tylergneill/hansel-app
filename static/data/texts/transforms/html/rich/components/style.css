@@ -1,7 +1,7 @@
 body {
     font-family: sans-serif;
     margin: 0;
-    border: 30px solid rgb(17, 49, 33);
+    border: 20px solid rgb(17, 49, 33);
     padding: 1em;
     box-sizing: border-box;
 }
@@ -227,7 +227,7 @@ body.simple-view .rich-text { display: none; }
         right: 15%;
     }
     #metadata, #toc {
-        width: 75%;
+        width: 100%;
         margin-right: 0;
         margin-bottom: 1em;
     }
@@ -286,4 +286,10 @@ body.simple-view .rich-text { display: none; }
 
 .toggle-switch:has(input:checked) .toggle-switch-handle {
     left: calc(100% - 31px);
+}
+
+@media (max-width: 600px) {
+    body {
+        border: none;
+    }
 }

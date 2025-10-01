@@ -79,10 +79,6 @@ def index():
         metadata=CUSTOM_METADATA,
         rows=CUSTOM_METADATA,
         display_fields=DISPLAY_FIELDS,
-        app_version=APP_VERSION,
-        data_version=DATA_VERSION,
-        num_items=NUM_ITEMS,
-        total_size_mb=TOTAL_SIZE_MB,
     )
 
 
@@ -90,24 +86,21 @@ def index():
 def about():
     return render_template(
         "about.html",
-        static_files_path=STATIC_FILES_PATH
+        static_files_path=STATIC_FILES_PATH,
+        app_version = APP_VERSION,
+        data_version = DATA_VERSION,
+        num_items = NUM_ITEMS,
+        total_size_mb = TOTAL_SIZE_MB,
     )
-
-@app.route("/how")
-def how():
-    return render_template("how.html")
 
 @app.route("/team")
 def team():
     return render_template("team.html")
 
-@app.route("/backlog")
-def backlog():
-    return render_template("backlog.html")
+@app.route("/tutorial")
+def tutorial():
+    return render_template("tutorial.html")
 
-@app.route("/txt_markup")
-def txt_markup():
-    return render_template("txt_markup.html")
 
 if __name__ == "__main__":
     # Enable debug mode for local development
