@@ -58,10 +58,24 @@
                             <li>
                                 <a href="{{ static_files_path }}/data/metadata/transforms/html/{{ item['Filename Base'] }}.html" target="_blank">
                                     <img src="{{ static_files_path }}/web/imgs/info.png" alt="metadata" style="height: 20px; margin-right: 2px;">
-                                    Metadata
+                                    Full Metadata
                                 </a>
                             </li>
+                            {% if item['Panditya URL'] %}
                             <li>
+                                <a href="{{ item['Panditya URL'] }}" target="_blank" class="icon-link">
+                                    <img src="{{ static_files_path }}/web/imgs/panditya.png" alt="Panditya" style="height: 20px; margin-left: -2px; margin-right: 4px;">
+                                    View on Pāṇḍitya
+                                </a>
+                            </li>
+                            {% endif %}
+                            <li>
+                                <div style="display: flex; align-items: center;">
+                                    <img src="{{ static_files_path }}/web/imgs/dl.png" alt="download" style="height: 20px; margin-left: 4px; margin-right: 3px;">
+                                    <span>Downloads</span>
+                                </div>
+                            </li>
+                            <li style="padding-left: 24px;">
                                 {% set original_filename_ext = (item['Original Filename Extension']) %}
                                 {% set downloaded_extensions = ['.doc', '.docx', '.rtf'] %}
                                 {% set original_filename = item['Filename Base'] ~ original_filename_ext %}
@@ -72,7 +86,7 @@
                                     {% endif %}
                                 </a>
                             </li>
-                            <li>
+                            <li style="padding-left: 24px;">
                                 {% set txt_filename = item['Filename Base'] ~ '.txt' %}
                                 <a href="{{ static_files_path }}/data/texts/processed_txt/{{ txt_filename }}" class="main-link" target="_blank">
                                     Processed plain-text (<code>.txt</code>)
