@@ -281,15 +281,25 @@ document.addEventListener('DOMContentLoaded', function() {
               render: function(data, type, row) {
                 if (type !== 'display') return data;
                 if (!data) return '';
-                const original_filename = getOriginalFilenameWithExtension(row);
 
-                const href = `${staticFilesPath}/data/texts/processed_txt/${row['Filename Base']}.txt`;
-                imgSrc = `${staticFilesPath}/web/imgs/dl.png`;
-                return (
-                  `<a href="${href}" title="metadata" class="icon-link">` +
-                      `<img src="${imgSrc}" alt="metadata" style="height: 20px; margin-right: 2px;">` +
-                  `</a>`
-                )
+                const txt_href = `${staticFilesPath}/data/texts/processed_txt/${row['Filename Base']}.txt`;
+                const original_filename = getOriginalFilenameWithExtension(row);
+                const original_href = `${staticFilesPath}/data/texts/originals/${original_filename}`;
+                const original_ext = row['Original Filename Extension'];
+
+                const imgSrc = `${staticFilesPath}/web/imgs/dl.png`;
+
+                return `
+                    <div class="dl-dropdown">
+                        <button class="dl-dropdown-toggle icon-link">
+                            <img src="${imgSrc}" alt="download" style="height: 20px;">
+                        </button>
+                        <div class="dl-dropdown-menu">
+                            <a href="${txt_href}" target="_blank">processed .txt</a>
+                            <a href="${original_href}" target="_blank">original file (${original_ext})</a>
+                        </div>
+                    </div>
+                `;
               },
             }
           ],
@@ -334,6 +344,26 @@ document.addEventListener('DOMContentLoaded', function() {
             allExpanded = !allExpanded;
         });
     }
+
+    // dl-dropdown toggle
+    document.addEventListener('click', function(event) {
+        // Close all open dl-dropdowns that were not the one just clicked
+        document.querySelectorAll('.dl-dropdown-menu.show').forEach(function(menu) {
+            if (!menu.closest('.dl-dropdown').contains(event.target)) {
+                menu.classList.remove('show');
+            }
+        });
+
+        // Toggle the clicked dl-dropdown
+        const dlDropdownToggle = event.target.closest('.dl-dropdown-toggle');
+        if (dlDropdownToggle) {
+            event.preventDefault();
+            const dlDropdownMenu = dlDropdownToggle.nextElementSibling;
+            if (dlDropdownMenu) {
+                dlDropdownMenu.classList.toggle('show');
+            }
+        }
+    });
 });
 </script>
 <style>
