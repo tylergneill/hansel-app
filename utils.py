@@ -123,6 +123,18 @@ def get_panditya_url(record):
     return 'https://panditya.info/view?' + urlencode(params)
 
 
+def get_pdf_links(record):
+    pdf_links = []
+    if 'PDFs' in record:
+        for pdf_string in record['PDFs']:
+            if pdf_string.startswith('[') and '](' in pdf_string:
+                parts = pdf_string.split('](')
+                text = parts[0][1:]
+                url = parts[1][:-1]
+                pdf_links.append({'text': text, 'url': url})
+    return pdf_links
+
+
 def process_metadata(raw_metadata: Dict[str, Dict]) -> List[Dict]:
     """
     :param raw_metadata: mapping with unique id (mostly = catalog num) to full record (~18 fields)
@@ -134,6 +146,7 @@ def process_metadata(raw_metadata: Dict[str, Dict]) -> List[Dict]:
             continue
         filename_base, original_filename_extension = get_filename_info(record)
         panditya_url = get_panditya_url(record)
+        pdf_links = get_pdf_links(record)
         metadata_subset.append({
             'Filename Base': filename_base,
             'Original Filename Extension': original_filename_extension,
@@ -144,6 +157,7 @@ def process_metadata(raw_metadata: Dict[str, Dict]) -> List[Dict]:
             'Edition': record['Edition Short'],
             'Edition Full Info': record['Edition'],
             'PDFs': '; '.join(record['PDFs']),
+            'PDFLinks': pdf_links,
             'Digitization Notes': record['Digitization Notes'],
             'Extent': record['Extent'],
             'Size (kb)': record['File Size (KB)'],

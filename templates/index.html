@@ -55,6 +55,13 @@
                             </details>
                         </div>
                         <ul class="extra-links">
+                            {% if item['PDFLinks'] %}
+                            <li>
+                                <a href="{{ item['PDFLinks'][0]['url'] }}" target="_blank">
+                                    {{ item['Edition'] }}
+                                </a>
+                            </li>
+                            {% endif %}
                             <li>
                                 <a href="{{ static_files_path }}/data/metadata/transforms/html/{{ item['Filename Base'] }}.html" target="_blank">
                                     <img src="{{ static_files_path }}/web/imgs/info.png" alt="metadata" style="height: 20px; margin-right: 2px;">
@@ -263,7 +270,15 @@ document.addEventListener('DOMContentLoaded', function() {
               }
             },
             { data: 'Author', type: 'sanskrit' },
-            { data: 'Edition' },
+                        { 
+              data: 'Edition',
+              render: function(data, type, row) {
+                if (type === 'display' && row['PDFLinks'] && row['PDFLinks'].length > 0) {
+                  return `<a href="${row['PDFLinks'][0]['url']}" target="_blank">${data}</a>`;
+                }
+                return data;
+              }
+            },
             { data: 'Genre', type: 'sanskrit' },
             { data: 'Size (kb)', className: 'text-end' },
             {
