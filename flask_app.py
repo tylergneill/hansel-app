@@ -17,7 +17,7 @@ DATA_PATH = Path(os.getenv('DATA_PATH', str(STATIC_FILES_PATH / 'data')))
 METADATA_PATH = DATA_PATH / 'metadata' / 'transforms' / 'cumulative'
 RAW_METADATA: Dict = load_metadata(METADATA_PATH)
 CUSTOM_METADATA = process_metadata(RAW_METADATA)
-DISPLAY_FIELDS = ['', 'Title', 'Author', 'Genre', 'Size (kb)', '']  # first is metadata
+DISPLAY_FIELDS = ['Title', 'Author', 'Edition', 'Genre', 'Size (kb)', '', '', '']
 NUM_ITEMS = len(CUSTOM_METADATA)
 TOTAL_SIZE_MB = get_collection_size(CUSTOM_METADATA)
 

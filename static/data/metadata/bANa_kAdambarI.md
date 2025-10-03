@@ -2,16 +2,29 @@
 
 Kādambarī
 
+# Pandit Work
+
+109562
+
 # Authors
 
 - Bāṇa Bhaṭṭa (Pūrvabhāga)
 - Bhūṣaṇa Bhaṭṭa (Uttarabhāga)
+
+# Pandit Authors
+
+- 108814
+- 109559
 
 # Source File
 
 SARIT XML file downloaded from GitHub:
 [bana-kadambari.xml, commit 
 8ad8588, Feb 1, 2022](https://github.com/sarit/SARIT-corpus/blob/8ad858812f8fcd0a62f8684e7c4fdab74ffb2435/bana-kadambari.xml).
+
+# Edition Short
+
+Peterson 1885
 
 # Edition
 

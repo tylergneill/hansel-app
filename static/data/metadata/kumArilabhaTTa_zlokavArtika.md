@@ -2,14 +2,26 @@
 
 Ślokavārtika
 
+# Pandit Work
+
+88597
+
 # Author
 
 Kumārila Bhaṭṭa
+
+# Pandit Author
+
+85206
 
 # Source File
 
 Word document by Helmut Krasser,
 obtained second-hand through private exchange.
+
+# Edition Short
+
+Dvārikādāsa Śāstrī 1978
 
 # Edition
 
