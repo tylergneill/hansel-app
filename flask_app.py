@@ -7,7 +7,7 @@ from typing import Dict
 from flask import Flask, request, send_file, render_template, abort
 
 from utils import (
-    find_app_version, find_data_version,
+    find_app_version, find_data_version, find_bundle_version,
     get_geolocation, log_download,
     load_metadata, process_metadata, get_collection_size, get_normalized_filename,
 )
@@ -23,6 +23,7 @@ TOTAL_SIZE_MB = get_collection_size(CUSTOM_METADATA)
 
 APP_VERSION = find_app_version()
 DATA_VERSION = find_data_version()
+BUNDLE_VERSION = find_bundle_version()
 
 app = Flask(__name__)
 
@@ -89,6 +90,7 @@ def about():
         static_files_path=STATIC_FILES_PATH,
         app_version = APP_VERSION,
         data_version = DATA_VERSION,
+        bundle_version = BUNDLE_VERSION,
         num_items = NUM_ITEMS,
         total_size_mb = TOTAL_SIZE_MB,
     )
