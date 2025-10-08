@@ -24,7 +24,6 @@ TOTAL_SIZE_MB = get_collection_size(CUSTOM_METADATA)
 APP_VERSION = find_app_version()
 DATA_VERSION = find_data_version()
 BUNDLE_VERSION = find_bundle_version()
-breakpoint()
 
 app = Flask(__name__)
 
