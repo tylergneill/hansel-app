@@ -24,8 +24,17 @@ def find_app_version():
 def find_data_version():
     data_version_filepath = './static/data/VERSION'
     with open(data_version_filepath, 'r', encoding='utf8') as file:
-        # Assuming the __version__ line is the first line
-        return file.readline().strip().split('=')[1].strip().replace("'", "").replace('"', '')
+        for line in file:
+            if line.startswith('__data_version__'):
+                return line.split('=')[1].strip().replace("'", "").replace('"', '')
+
+
+def find_bundle_version():
+    data_version_filepath = './static/data/VERSION'
+    with open(data_version_filepath, 'r', encoding='utf8') as file:
+        for line in file:
+            if line.startswith('__bundle_version__'):
+                return line.split('=')[1].strip().replace("'", "").replace('"', '')
 
 
 # JSON log file for downloads
