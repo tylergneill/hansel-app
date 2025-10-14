@@ -215,3 +215,7 @@ a.icon-link:hover {
 .burger-icon span:last-child {
     margin-bottom: 0;
 }
+
+#table-view {
+    overflow-x: auto;
+}
