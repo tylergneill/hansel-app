@@ -116,7 +116,7 @@
 }
 
 /* Mobile View */
-@media only screen and (max-width: 600px) {
+@media only screen and (max-width: 400px) {
     .sidenav {
         position: relative;
         flex-direction: column;
