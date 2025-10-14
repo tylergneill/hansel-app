@@ -104,6 +104,8 @@ summary {
     align-self: center;
     display: inline-block;
     vertical-align: middle;
+    margin-left: 10px;
+    padding: 0px 5px 0px 5px;
 }
 
 .toggle-caret::after {
@@ -111,6 +113,7 @@ summary {
     display: inline-block;
     transition: transform 0.2s ease;
     color: #006400;
+    font-size: 1.5em;
 }
 
 .caret-details[open] .toggle-caret::after,
