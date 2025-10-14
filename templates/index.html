@@ -362,31 +362,6 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     });
 
-    let allExpanded = false;
-    const expandCollapseLink = document.getElementById('expand-all-link');
-
-    if (expandCollapseLink) {
-        expandCollapseLink.addEventListener('click', function(e) {
-            e.preventDefault();
-            const allFileItems = document.querySelectorAll('.file-item');
-
-            if (allExpanded) {
-                // Collapse all
-                allFileItems.forEach(item => {
-                    item.classList.remove('open');
-                });
-                expandCollapseLink.textContent = 'Expand All';
-            } else {
-                // Expand all
-                allFileItems.forEach(item => {
-                    item.classList.add('open');
-                });
-                expandCollapseLink.textContent = 'Collapse All';
-            }
-            allExpanded = !allExpanded;
-        });
-    }
-
     // dl-dropdown toggle
     document.addEventListener('click', function(event) {
         // Close all open dl-dropdowns that were not the one just clicked
