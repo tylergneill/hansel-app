@@ -53,17 +53,13 @@ ul {
 }
 
 ul li a {
-    color: #006400;
-    text-decoration: none;
     display: block;
-    padding: 6px 0;
+    padding: 6px 0 6px 6px;
+    border-left: 4px solid transparent;
 }
 
 ul li a:hover {
-    color: #FFA500;
-    background-color: rgba(255, 165, 0, 0.15);
-    border-left: 4px solid #FFA500;
-    padding-left: 6px;
+    border-left-color: #FFA500;
 }
 
 /* Disclosure triangles */
@@ -81,17 +77,13 @@ ul li a:hover {
 .main-link {
     display: inline-block;
     vertical-align: middle;
-    text-decoration: none;
-    padding: 5px 0;
-    color: #006400;
+    padding: 5px 0 5px 6px;
     white-space: nowrap;
+    border-left: 4px solid transparent;
 }
 
 .main-link:hover {
-    color: #FFA500;
-    background-color: rgba(255, 165, 0, 0.15);
-    border-left: 4px solid #FFA500;
-    padding-left: 6px;
+    border-left-color: #FFA500;
 }
 
 .caret-details {
@@ -151,15 +143,11 @@ summary {
     max-width: fit-content;
     padding: 2px 6px;
     white-space: nowrap;
-    color: #006400;
-    text-decoration: none;
+    border-left: 4px solid transparent;
 }
 
 .extra-links li a:hover {
-    color: #FFA500;
-    background-color: rgba(255, 165, 0, 0.15);
-    border-left: 4px solid #FFA500;
-    padding-left: 6px;
+    border-left-color: #FFA500;
 }
 
 /* Responsive Design */
