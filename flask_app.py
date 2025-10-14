@@ -99,9 +99,9 @@ def about():
 def team():
     return render_template("team.html")
 
-@app.route("/tutorial")
-def tutorial():
-    return render_template("tutorial.html")
+@app.route("/getting_started")
+def getting_started():
+    return render_template("getting_started.html")
 
 
 if __name__ == "__main__":
