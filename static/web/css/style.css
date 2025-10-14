@@ -203,3 +203,15 @@ a.icon-link:hover {
 .dl-dropdown-menu.show {
     display: block;
 }
+
+/* Burger Icon */
+.burger-icon span {
+    display: block;
+    margin-bottom: 5px;
+    position: relative;
+    border-radius: 3px;
+}
+
+.burger-icon span:last-child {
+    margin-bottom: 0;
+}

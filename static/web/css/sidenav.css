@@ -198,3 +198,11 @@
         box-sizing: border-box;
     }
 }
+
+.menu-btn span {
+    width: 25px;
+    height: 3px;
+    background: white;
+    margin-left: auto;
+    margin-right: auto;
+}
