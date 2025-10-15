@@ -104,6 +104,11 @@ def getting_started():
     return render_template("getting_started.html")
 
 
+@app.route("/contact")
+def contact():
+    return render_template("contact.html")
+
+
 if __name__ == "__main__":
     # Enable debug mode for local development
     app.run(debug=True, host="0.0.0.0", port=5030)
