@@ -248,7 +248,8 @@ a.icon-link:hover {
 
 #contact-form input[type="text"],
 #contact-form input[type="email"],
-#contact-form textarea {
+#contact-form textarea,
+#contact-form select {
     width: 100%;
     max-width: 600px;
     padding: 8px;
