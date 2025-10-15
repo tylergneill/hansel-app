@@ -1,4 +1,4 @@
-# HANSEL: Human-Accessible and NLP-ready Sanskrit E-Text Library
+# HANSEL: Human-Accessible and NLP-ready Sanskrit E-text Library
 
 A companion project to the now-defunct GRETIL.
 
@@ -107,7 +107,7 @@ effectively overwriting the dummy data in the container.
 ## Contributing
 
 Contributions are welcome! Please feel free to submit a pull request or open an issue.
-More simply, write an email to `hanselrepository` at Gmail. 
+More simply, write an email to `hello` at `hansel-library.info`. 
 
 ## License
 

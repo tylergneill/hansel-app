@@ -36,6 +36,7 @@ a {
     color: #006400;
     text-decoration: none;
     transition: color 0.2s ease;
+    font-weight: bold;
 }
 
 a:hover {
@@ -52,17 +53,13 @@ ul {
 }
 
 ul li a {
-    color: #006400;
-    text-decoration: none;
     display: block;
-    padding: 6px 0;
+    padding: 6px 0 6px 6px;
+    border-left: 4px solid transparent;
 }
 
 ul li a:hover {
-    color: #FFA500;
-    background-color: rgba(255, 165, 0, 0.15);
-    border-left: 4px solid #FFA500;
-    padding-left: 6px;
+    border-left-color: #FFA500;
 }
 
 /* Disclosure triangles */
@@ -80,17 +77,13 @@ ul li a:hover {
 .main-link {
     display: inline-block;
     vertical-align: middle;
-    text-decoration: none;
-    padding: 5px 0;
-    color: #006400;
+    padding: 5px 0 5px 6px;
     white-space: nowrap;
+    border-left: 4px solid transparent;
 }
 
 .main-link:hover {
-    color: #FFA500;
-    background-color: rgba(255, 165, 0, 0.15);
-    border-left: 4px solid #FFA500;
-    padding-left: 6px;
+    border-left-color: #FFA500;
 }
 
 .caret-details {
@@ -111,6 +104,8 @@ summary {
     align-self: center;
     display: inline-block;
     vertical-align: middle;
+    margin-left: 10px;
+    padding: 0px 5px 0px 5px;
 }
 
 .toggle-caret::after {
@@ -118,6 +113,7 @@ summary {
     display: inline-block;
     transition: transform 0.2s ease;
     color: #006400;
+    font-size: 1.5em;
 }
 
 .caret-details[open] .toggle-caret::after,
@@ -150,15 +146,40 @@ summary {
     max-width: fit-content;
     padding: 2px 6px;
     white-space: nowrap;
-    color: #006400;
-    text-decoration: none;
+    border-left: 4px solid transparent;
 }
 
 .extra-links li a:hover {
-    color: #FFA500;
-    background-color: rgba(255, 165, 0, 0.15);
-    border-left: 4px solid #FFA500;
-    padding-left: 6px;
+    border-left-color: #FFA500;
+}
+
+.faq-question {
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.faq-header {
+    display: flex;
+    align-items: baseline;
+}
+
+.faq-header a {
+    margin-left: 40px;
+}
+
+.faq-list .extra-links li {
+    display: inline;
+}
+
+.faq-list .extra-links li a {
+    display: inline;
+    padding: 0;
+    border-left: none;
+}
+
+.faq-list .extra-links li a:hover {
+    border-left: none;
+    background-color: transparent;
 }
 
 /* Responsive Design */
@@ -213,4 +234,10 @@ a.icon-link:hover {
 
 .dl-dropdown-menu.show {
     display: block;
+}
+
+
+
+#table-view {
+    overflow-x: auto;
 }
