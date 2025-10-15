@@ -1,4 +1,4 @@
-# HANSEL: Human-Accessible and NLP-ready Sanskrit E-Text Library
+# HANSEL: Human-Accessible and NLP-ready Sanskrit E-text Library
 
 A companion project to the now-defunct GRETIL.
 
