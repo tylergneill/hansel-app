@@ -18,9 +18,9 @@
 
             <h1>About</h1>
             <p>
-                HANSEL is a companion to GRETIL,
-                facilitating open exchange of academic-level Sanskrit e-texts,
-                with a focus on diplomatic transcriptions of printed editions produced using OCR.
+                HANSEL is a <strong>companion</strong> to GRETIL,
+                focused on the open exchange of <a href="">new and newly modified</a> Sanskrit e-text material,
+                especially diplomatic transcriptions of printed editions produced using OCR.
             </p>
 
             <div class="faq-header">
@@ -28,9 +28,30 @@
                 <a href="#" id="expand-all-link">Expand All</a>
             </div>
             <ul class="faq-list">
-                <li class="file-item">
+                <li class="file-item" id="faq-gretil">
                     <div class="link-and-caret">
-                        <a href="#" class="faq-question">How do I use it?</a>
+                        <a href="#" class="faq-question">Will HANSEL incorporate all of GRETIL?</a>
+                        <details class="caret-details">
+                            <summary class="toggle-caret"></summary>
+                        </details>
+                    </div>
+                    <ul class="extra-links">
+                        <li>
+                            No, HANSEL's focus is on <strong>new or newly modified</strong> material.
+                            HANSEL has particular requirements of structure and quality that make mass-import of GRETIL infeasible.
+                            That said, anyone wishing to improve upon a given GRETIL item
+                            can do that on HANSEL.
+                            In the meantime, GRETIL will have no problem remaining publicly available online in the form of its
+                            <a href="https://textgridrep.org/project/TGPR-2ba9cb1b-9602-202d-71ce-67e63a29de55" target="_blank">official archive on TextGrid</a>
+                            (see <a href="https://list.indology.info/pipermail/indology/2025-July/060853.html" target="_blank">post on Indology</a>)
+                            and, when the <a href="https://gretil.sub.uni-goettingen.de/gretil.html" target="_blank">main site</a> eventually goes down,
+                            through mirror sites.
+                        </li>
+                    </ul>
+                </li>
+                <li class="file-item" id="faq-use">
+                    <div class="link-and-caret">
+                        <a href="#" class="faq-question">How do I use the site?</a>
                         <details class="caret-details">
                             <summary class="toggle-caret"></summary>
                         </details>
@@ -43,7 +64,7 @@
                             </li>
                     </ul>
                 </li>
-                <li class="file-item">
+                <li class="file-item" id="faq-contribute">
                     <div class="link-and-caret">
                         <a href="#" class="faq-question">How do I contribute?</a>
                         <details class="caret-details">
@@ -58,25 +79,7 @@
                             the <a href="/team">“team”</a> will help you from there.</li>
                     </ul>
                 </li>
-                <li class="file-item">
-                    <div class="link-and-caret">
-                        <a href="#" class="faq-question">Will HANSEL incorporate all of GRETIL?</a>
-                        <details class="caret-details">
-                            <summary class="toggle-caret"></summary>
-                        </details>
-                    </div>
-                    <ul class="extra-links">
-                        <li>No, HANSEL's focus is on new or newly modified material.
-                            GRETIL will have no problem remaining publicly available online in the form of its
-                            <a href="https://textgridrep.org/project/TGPR-2ba9cb1b-9602-202d-71ce-67e63a29de55" target="_blank">official archive on TextGrid</a>
-                            (see <a href="https://list.indology.info/pipermail/indology/2025-July/060853.html" target="_blank">post on Indology</a>)
-                            and, when the <a href="https://gretil.sub.uni-goettingen.de/gretil.html" target="_blank">main site</a> eventually goes down,
-                            through mirror sites.
-                            That said, any individual GRETIL items the community wishes to adapt, HANSEL will try to adopt.
-                        </li>
-                    </ul>
-                </li>
-                <li class="file-item">
+                <li class="file-item" id="faq-compare">
                     <div class="link-and-caret">
                         <a href="#" class="faq-question">How does HANSEL compare to other online Sanskrit e-text collections?</a>
                         <details class="caret-details">
@@ -96,7 +99,7 @@
                         </li>
                     </ul>
                 </li>
-                <li class="file-item">
+                <li class="file-item" id="faq-sustainable">
                     <div class="link-and-caret">
                         <a href="#" class="faq-question">Is this project sustainable?</a>
                         <details class="caret-details">
@@ -157,5 +160,22 @@
 
     </div>
 </div>
+<script>
+    function openFaqFromHash() {
+        if (window.location.hash) {
+            const element = document.querySelector(window.location.hash);
+            if (element && element.classList.contains('file-item')) {
+                element.classList.add('open');
+                const details = element.querySelector('details.caret-details');
+                if (details) {
+                    details.open = true;
+                }
+            }
+        }
+    }
+
+    document.addEventListener('DOMContentLoaded', openFaqFromHash);
+    window.addEventListener('hashchange', openFaqFromHash);
+</script>
 </body>
 </html>
