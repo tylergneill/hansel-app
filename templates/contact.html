@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {% include 'components/head_shared.html' %}
+    <title>HANSEL - Contact</title>
+</head>
+<body>
+<div id="content">
+    {% from 'components/sidenav.html' import sidenav %}
+    {% set nav_links = [
+        {'url': '/', 'text': 'Back Home'}
+    ] %}
+    {{ sidenav(nav_links) }}
+
+    <div class="main">
+        <div id="contact">
+            <h1>Get in Touch!</h1>
+            <p>
+                We'll get back to you right away over email
+                to talk through potential contributions
+                or anything else concerning HANSEL.
+            </p>
+
+            <form action="https://usebasin.com/f/602353378d6d"
+                  method="POST"
+                  id="contact-form"
+                  enctype="multipart/form-data"
+                  accept-charset="UTF-8">
+
+                <input type="hidden" name="from_name" value="HANSEL Contact Form">
+
+                <div>
+                    <label for="name">Full Name</label>
+                    <input type="text" name="name" id="name" required>
+                </div>
+
+                <div>
+                    <label for="email">Email</label>
+                    <input type="email" name="email" id="email" required>
+                </div>
+
+                <div>
+                    <label for="subject">Subject</label>
+                    <input type="text" name="subject" id="subject" required>
+                </div>
+
+                <div>
+                    <label for="message">Message</label>
+                    <textarea name="message" id="message" required rows="8"></textarea>
+                </div>
+
+                <div>
+                    <label for="license">Preferred Sharing License</label>
+                    <p style="font-size: smaller; color: #6c757d; margin: 0;">For any material you are submitting with your message.</p>
+                    <select name="license" id="license">
+                        <option value="">--Please choose an option--</option>
+                        <option value="CC BY-NC-SA 4.0">CC BY-NC-SA 4.0</option>
+                        <option value="CC BY-SA 4.0">CC BY-SA 4.0</option>
+                        <option value="CC BY 4.0">CC BY 4.0</option>
+                        <option value="CC0">CC0 (Public Domain Dedication)</option>
+                        <option value="Other">Other</option>
+                        <option value="IDK">I don't know</option>
+                    </select>
+                </div>
+
+                <div id="attachment-container">
+                    <label>Attachments</label>
+                    <p style="font-size: smaller; color: #6c757d; margin: 0 0 3px 0;">Submit files up to 20 MB each. Samples are fine to start, the rest can be handled over email.</p>
+
+                    <div id="drop-zone" style="position:relative;">
+                        <div class="text-center">
+                            <svg style="margin:auto;" height="48" width="48" stroke="currentColor"
+                                 fill="none" viewBox="0 0 48 48" aria-hidden="true">
+                              <path d="M28 8H12a4 4 0 00-4 4v20m32-12v8m0 0v8a4 4 0 01-4 4H12a4 4 0 01-4-4v-4m32-4l-3.172-3.172a4 4 0 00-5.656 0L28 28M8 32l9.172-9.172a4 4 0 015.656 0L28 28m0 0l4 4m4-24h8m-4-4v8"
+                                    stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                            </svg>
+                            <p><span>Click to upload</span> or drag and drop</p>
+                            <p style="font-size: smaller;">
+                              <code>.txt, .doc, .xml, .html, .pdf</code> etc. (each file up to 20 MB)
+                            </p>
+                        </div>
+                            <input id="file-upload" name="attachments[]" type="file" multiple
+                                style="position:absolute; top:0; left:0; width:100%; height:100%;
+                                opacity:0; cursor:pointer;">
+                    </div>
+                    <div id="file-list"></div>
+                </div>
+
+                <br>
+
+                <button type="submit">Send Message</button>
+
+                <p id="result"></p>
+            </form>
+        </div>
+    </div>
+</div>
+<script>
+    const form = document.getElementById('contact-form');
+    form.addEventListener('submit', function(e) {
+        const name = document.getElementById('name').value;
+        const email = document.getElementById('email').value;
+        const fromNameInput = document.querySelector('input[name="from_name"]');
+        if (name && email && fromNameInput) {
+            fromNameInput.value = `${name} <${email}>`;
+        }
+    });
+</script>
+</body>
+</html>

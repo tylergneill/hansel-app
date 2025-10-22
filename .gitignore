@@ -55,3 +55,9 @@ venv*/
 .DS_Store
 
 app.log
+
+node_modules/
+
+package.json
+package-lock.json
+eslint.config.mjs

@@ -40,4 +40,50 @@ document.addEventListener('DOMContentLoaded', function() {
             allExpanded = !allExpanded;
         });
     }
+
+    const form = document.getElementById('contact-form');
+    if (form) {
+        const dropZone = document.getElementById('drop-zone');
+        const fileInput = document.getElementById('file-upload');
+        const fileList = document.getElementById('file-list');
+
+        // --- Drag and Drop Logic ---
+        if (dropZone) {
+            dropZone.addEventListener('dragover', (e) => {
+                e.preventDefault();
+                dropZone.classList.add('drag-area-highlight');
+            });
+
+            dropZone.addEventListener('dragleave', () => {
+                dropZone.classList.remove('drag-area-highlight');
+            });
+
+            dropZone.addEventListener('drop', (e) => {
+                e.preventDefault();
+                dropZone.classList.remove('drag-area-highlight');
+                fileInput.files = e.dataTransfer.files;
+                updateFileList();
+            });
+            
+            fileInput.addEventListener('change', updateFileList);
+
+            function updateFileList() {
+                fileList.innerHTML = ''; // Clear existing list
+                if (fileInput.files.length > 0) {
+                    const list = document.createElement('ul');
+                    list.className = 'list-disc pl-5 space-y-1';
+                    for (const file of fileInput.files) {
+                        const listItem = document.createElement('li');
+                        listItem.textContent = `${file.name} (${(file.size / 1024).toFixed(1)} KB)`;
+                        list.appendChild(listItem);
+                    }
+                    fileList.appendChild(list);
+                }
+            }
+            
+            function clearFileList() {
+                fileList.innerHTML = '';
+            }
+        }
+    }
 });

@@ -182,6 +182,13 @@ summary {
     background-color: transparent;
 }
 
+/* Team Member Photo */
+.team-member-photo {
+    max-width: 100%; /* Ensure responsiveness */
+    height: auto; /* Maintain aspect ratio */
+    width: 300px; /* Default size */
+}
+
 /* Responsive Design */
 @media only screen and (max-width: 800px) {
     .main {
@@ -190,6 +197,15 @@ summary {
     }
     ul {
         font-size: 16px;
+    }
+    .team-member-photo {
+        width: 150px; /* Smaller on mobile */
+        display: block; /* For centering */
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+        margin: 15px auto;
+    }
+    .hide-on-mobile-br {
+        display: none;
     }
 }
 
@@ -236,8 +252,72 @@ a.icon-link:hover {
     display: block;
 }
 
-
-
 #table-view {
     overflow-x: auto;
+}
+
+/* Contact Form */
+#contact-form label {
+    display: block;
+    margin-bottom: 2px;
+}
+
+#contact-form input[type="text"],
+#contact-form input[type="email"],
+#contact-form textarea,
+#contact-form select {
+    width: 100%;
+    max-width: 600px;
+    padding: 8px;
+    margin: 6px 0 16px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+}
+
+#contact-form button {
+    background-color: #013220;
+    color: white;
+    padding: 12px 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    width: 100%;
+    max-width: 600px;
+}
+
+#contact-form button:hover {
+    background-color: #006400;
+}
+
+#attachment-container {
+    max-width: 600px;
+}
+
+#drop-zone {
+    position: relative;
+    border: 2px dashed #ccc;
+    border-radius: 4px;
+    padding: 25px;
+    text-align: center;
+    cursor: pointer;
+    box-sizing: border-box;
+}
+
+#drop-zone.drag-area-highlight {
+    border-color: #006400;
+    background-color: #f0fff0;
+}
+
+#file-list ul {
+    list-style-type: disc;
+    padding-left: 20px;
+}
+
+.text-red-500 {
+    color: red;
+}
+
+.text-green-500 {
+    color: green;
 }
