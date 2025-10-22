@@ -186,11 +186,7 @@ summary {
 .team-member-photo {
     max-width: 100%; /* Ensure responsiveness */
     height: auto; /* Maintain aspect ratio */
-    width: 150px; /* Default size */
-    display: block; /* For centering */
-    margin: 20px auto; /* Center the image and add some vertical spacing */
-    border-radius: 50%; /* Make it round */
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+    width: 300px; /* Default size */
 }
 
 /* Responsive Design */
@@ -204,6 +200,8 @@ summary {
     }
     .team-member-photo {
         width: 150px; /* Smaller on mobile */
+        display: block; /* For centering */
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow */
         margin: 15px auto;
     }
     .hide-on-mobile-br {
