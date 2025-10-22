@@ -38,14 +38,11 @@
                     <ul class="extra-links">
                         <li>
                             No, HANSEL's focus is on <strong>new or newly modified</strong> material.
-                            HANSEL has particular requirements of structure and quality that make mass-import of GRETIL infeasible.
-                            That said, anyone wishing to improve upon a given GRETIL item
-                            can do that on HANSEL.
-                            In the meantime, GRETIL will have no problem remaining publicly available online in the form of its
-                            <a href="https://textgridrep.org/project/TGPR-2ba9cb1b-9602-202d-71ce-67e63a29de55" target="_blank">official archive on TextGrid</a>
+                            HANSEL has particular requirements of structure and quality that make mass-import of GRETIL impossible.
+                            That said, anyone wishing to improve upon a given GRETIL item can do that on HANSEL. In the meantime, GRETIL continues to exist statically online through its <a href="https://textgridrep.org/project/TGPR-2ba9cb1b-9602-202d-71ce-67e63a29de55" target="_blank">official archive on TextGrid</a>
                             (see <a href="https://list.indology.info/pipermail/indology/2025-July/060853.html" target="_blank">post on Indology</a>)
-                            and, when the <a href="https://gretil.sub.uni-goettingen.de/gretil.html" target="_blank">main site</a> eventually goes down,
-                            through mirror sites.
+                            and its <a href="https://gretil.sub.uni-goettingen.de/gretil.html" target="_blank">Uni Göttingen site</a>.
+                            (When the Uni site eventually goes down, it can be recreated as a mirror.)
                         </li>
                     </ul>
                 </li>
@@ -58,9 +55,7 @@
                     </div>
                     <ul class="extra-links">
                         <li>
-                            The <a href="/getting_started">getting-started videos</a>
-                            should answer most questions.
-                            (Let me know if not!)
+                            The <a href="/getting_started">getting-started videos</a> should answer most questions. Let me know if not!
                             </li>
                     </ul>
                 </li>
@@ -113,39 +108,72 @@
             <br>
 
             <h2>Backronym and Logo</h2>
-            <p>
-                "Human-accessible" means that material will always exist in forms
-                that the greatest number of students and scholars can use directly,
-                such as plain-text and HTML.
-            </p>
-            <p>
-                "NLP-ready" means that the data will also be structured in anticipation of computational applications.
-                (NLP stands for “natural language processing.”)
-            </p>
-            <p>
-                The <em>haṃsa</em> (<a href="https://en.wikipedia.org/wiki/Hamsa_(bird)" target="_blank">swan, or bar-headed goose</a>)
-                symbolizes not only grace but also discernment (<em>viveka</em>).
-                A world away, in the Grimms' tale, Hänsel and Gretel succeed by working together.
-            </p>
+            <ul class="faq-list">
+                <li class="file-item" id="backronym-human-accessible">
+                    <div class="link-and-caret">
+                        <a href="#" class="faq-question">"Human-accessible"</a>
+                        <details class="caret-details">
+                            <summary class="toggle-caret"></summary>
+                        </details>
+                    </div>
+                    <ul class="extra-links">
+                        <li>
+                            <p>HANSEL's text data will always exist in forms that the greatest number of students and scholars can use directly, such as plain-text and HTML.</p>
+                        </li>
+                    </ul>
+                </li>
+                <li class="file-item" id="backronym-nlp-ready">
+                    <div class="link-and-caret">
+                        <a href="#" class="faq-question">"NLP-ready"</a>
+                        <details class="caret-details">
+                            <summary class="toggle-caret"></summary>
+                        </details>
+                    </div>
+                    <ul class="extra-links">
+                        <li>
+                            <p>
+                                The data will also be structured in anticipation of computational applications. (NLP stands for “natural language processing.”)
+                            </p>
+                        </li>
+                    </ul>
+                </li>
+                <li class="file-item" id="backronym-hamsa-logo">
+                    <div class="link-and-caret">
+                        <a href="#" class="faq-question"><em>Haṃsa</em> logo</a>
+                        <details class="caret-details">
+                            <summary class="toggle-caret"></summary>
+                        </details>
+                    </div>
+                    <ul class="extra-links">
+                        <li>
+                            <p>
+                                In Sanskrit literature, the <a href="https://en.wikipedia.org/wiki/Hamsa_(bird)" target="_blank">swan or bar-headed goose</a>
+                                symbolizes not only grace but also discernment (<em>viveka</em>).
+                                A world away, in the Grimms' tale, Hänsel and Gretel succeed by working together.
+                            </p>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
 
             <br>
 
             <h2>Technical</h2>
             <p>Collection size: {{ num_items }} items ({{ total_size_mb }} MB).</p>
             <p>
-                <strong>Web app</strong>: v{{ app_version }}
+                <strong>Web App</strong>: v{{ app_version }}
                 (<a href="https://github.com/tylergneill/hansel-app" target="_blank">GitHub</a>)
             </p>
             <p>
-                <strong>Data Core</strong>: v{{ data_version }}
+                <strong>Text Data</strong>: v{{ data_version }}
                 (<a href="https://github.com/tylergneill/hansel-data/tree/main/texts" target="_blank">GitHub</a>)
             </p>
             <p>
-                <strong>Data Bundle</strong>: v{{ bundle_version }}
+                <strong>Transform Bundle</strong>: v{{ bundle_version }}
                 (<a href="https://github.com/tylergneill/hansel-data/tree/main/utils" target="_blank">GitHub</a>)
             </p>
             <p>
-                <strong>Stack</strong>: Python (Flask), JavaScript, Gunicorn, Nginx, Digital Ocean.
+                <strong>Stack</strong>: Python (Flask), JavaScript, Docker, Digital Ocean.
             </p>
 
             <p>

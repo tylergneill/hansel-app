@@ -15,8 +15,11 @@
     <div class="main">
         <div id="contact">
             <h1>Get in Touch!</h1>
-            <p>Use this form to start an email conversation about any questions you have or changes you'd like to make.
-                We'll get back to you right away.</p>
+            <p>
+                We'll get back to you right away over email
+                to talk through potential contributions
+                or anything else concerning HANSEL.
+            </p>
 
             <form action="https://usebasin.com/f/602353378d6d"
                   method="POST"
@@ -32,7 +35,7 @@
                 </div>
 
                 <div>
-                    <label for="email">Email Address</label>
+                    <label for="email">Email</label>
                     <input type="email" name="email" id="email" required>
                 </div>
 
@@ -62,7 +65,7 @@
 
                 <div id="attachment-container">
                     <label>Attachments</label>
-                    <p style="font-size: smaller; color: #6c757d; margin: 0 0 3px 0;">Only one small sample (&lt; 5 MB) to begin, please. The rest can be handled over email.</p>
+                    <p style="font-size: smaller; color: #6c757d; margin: 0 0 3px 0;">Submit files up to 20 MB each. Samples are fine to start, the rest can be handled over email.</p>
 
                     <div id="drop-zone" style="position:relative;">
                         <div class="text-center">
@@ -73,7 +76,7 @@
                             </svg>
                             <p><span>Click to upload</span> or drag and drop</p>
                             <p style="font-size: smaller;">
-                              <code>.txt, .doc, .xml, .html, .pdf</code> etc. (one file up to 5 MB)
+                              <code>.txt, .doc, .xml, .html, .pdf</code> etc. (each file up to 20 MB)
                             </p>
                         </div>
                             <input id="file-upload" name="attachments[]" type="file" multiple
@@ -82,6 +85,8 @@
                     </div>
                     <div id="file-list"></div>
                 </div>
+
+                <br>
 
                 <button type="submit">Send Message</button>
 
