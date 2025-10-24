@@ -60,29 +60,29 @@
                         <ul class="extra-links">
                             {% if item['PDFLinks'] %}
                             <li>
-                                Based on:
                                 <a href="{{ item['PDFLinks'][0]['url'] }}" target="_blank">
-                                    {{ item['Edition'] }}
+                                    <img src="{{ static_files_path }}/web/imgs/edition.jpg" alt="metadata" style="height: 20px; margin-left: -4px; margin-right: 7px;">
+                                    Edition: {{ item['Edition'] }}
                                 </a>
                             </li>
                             {% endif %}
                             <li>
                                 <a href="{{ static_files_path }}/data/metadata/transforms/html/{{ item['Filename Base'] }}.html">
-                                    <img src="{{ static_files_path }}/web/imgs/info.png" alt="metadata" style="height: 20px; margin-right: 2px;">
+                                    <img src="{{ static_files_path }}/web/imgs/info.png" alt="metadata" style="height: 20px; margin-left: -6px; margin-right: 8px;">
                                     Full Metadata
                                 </a>
                             </li>
                             {% if item['Panditya URL'] %}
                             <li>
                                 <a href="{{ item['Panditya URL'] }}" target="_blank" class="icon-link">
-                                    <img src="{{ static_files_path }}/web/imgs/panditya.png" alt="Panditya" style="height: 20px; margin-left: -2px; margin-right: 4px;">
+                                    <img src="{{ static_files_path }}/web/imgs/panditya.png" alt="Panditya" style="height: 20px; margin-left: -6px; margin-right: 9px;">
                                     View on Pāṇḍitya
                                 </a>
                             </li>
                             {% endif %}
                             <li>
                                 <div style="display: flex; align-items: center;">
-                                    <img src="{{ static_files_path }}/web/imgs/dl.png" alt="download" style="height: 20px; margin-left: 4px; margin-right: 3px;">
+                                    <img src="{{ static_files_path }}/web/imgs/dl.png" alt="download" style="height: 20px; margin-left: 3px; margin-right: 8px;">
                                     <span>Downloads</span>
                                 </div>
                             </li>
@@ -107,21 +107,21 @@
                                         {% set txt_filename = item['Filename Base'] ~ '.txt' %}
                                         <a href="{{ static_files_path }}/data/texts/processed_txt/{{ txt_filename }}" class="main-link">
                                             <img src="{{ static_files_path }}/web/imgs/txt.png" alt="txt" style="height: 20px; margin-right: 2px;">
-                                            Processed plain-text (<code>.txt</code>)
+                                            Master - Plain-text
                                         </a>
                                     </li>
                                     <li>
                                         {% set xml_filename = item['Filename Base'] ~ '.xml' %}
                                         <a href="{{ static_files_path }}/data/texts/transforms/xml/{{ xml_filename }}" class="main-link">
                                             <img src="{{ static_files_path }}/web/imgs/xml.png" alt="xml" style="height: 20px; margin-right: 2px;">
-                                            XML (<code>.xml</code>)
+                                            Master - XML
                                         </a>
                                     </li>
                                     <li>
                                         {% set html_filename = item['Filename Base'] ~ '.html' %}
                                         <a href="{{ static_files_path }}/data/texts/transforms/html/plain/{{ html_filename }}" class="main-link">
                                             <img src="{{ static_files_path }}/web/imgs/html.png" alt="html" style="height: 20px; margin-right: 2px;">
-                                            Plain HTML (<code>.html</code>)
+                                            Transform - Plain HTML
                                         </a>
                                     </li>
                                 </ul>
@@ -154,7 +154,7 @@
                 <li class="file-item">
                     <div class="link-and-caret">
                         <a href="{{ static_files_path }}/data/texts/transforms/cumulative/txt.zip">
-                            All plaintext (<code>.zip</code> of <code>.txt</code>)
+                            Master - Plain-text (<code>.zip</code> of <code>.txt</code>)
                             <img src="{{ static_files_path }}/web/imgs/dl.png" alt="download" title="download" style="height: 25px; margin-bottom: -5px;">
                         </a>
                         <details class="caret-details">
@@ -164,25 +164,25 @@
                     <ul class="extra-links">
                         <li>
                             <a href="{{ static_files_path }}/data/texts/transforms/cumulative/originals_misc.zip">
-                                All originals (<code>.zip</code>&nbsp;of miscellaneous filetypes)
+                                Original Submissions (<code>.zip</code>&nbsp;of miscellaneous filetypes)
                                 &nbsp;<img src="{{ static_files_path }}/web/imgs/dl.png" alt="download" title="download" style="height: 25px; margin-bottom: -5px;">
                             </a>
                         </li>
                         <li>
                             <a href="{{ static_files_path }}/data/texts/transforms/cumulative/xml.zip">
-                                All XML (<code>.zip</code>&nbsp;of&nbsp;<code>.xml</code>)
+                                Master - XML (<code>.zip</code>&nbsp;of&nbsp;<code>.xml</code>)
                                 &nbsp;<img src="{{ static_files_path }}/web/imgs/dl.png" alt="download" title="download" style="height: 25px; margin-bottom: -5px;">
                             </a>
                         </li>
                         <li>
                             <a href="{{ static_files_path }}/data/texts/transforms/cumulative/html_plain.zip">
-                                All HTML, plain (<code>.zip</code>&nbsp;of&nbsp;<code>.html</code>)
+                                Transform - Plain HTML (<code>.zip</code>&nbsp;of&nbsp;<code>.html</code>)
                                 &nbsp;<img src="{{ static_files_path }}/web/imgs/dl.png" alt="download" title="download" style="height: 25px; margin-bottom: -5px;">
                             </a>
                         </li>
                         <li>
                             <a href="{{ static_files_path }}/data/texts/transforms/cumulative/html_rich.zip">
-                                All HTML, rich (<code>.zip</code>&nbsp;of&nbsp;<code>.html</code>)
+                                Transform - Rich HTML (<code>.zip</code>&nbsp;of&nbsp;<code>.html</code>)
                                 &nbsp;<img src="{{ static_files_path }}/web/imgs/dl.png" alt="download" title="download" style="height: 25px; margin-bottom: -5px;">
                             </a>
                         </li>
@@ -191,7 +191,7 @@
                 <li class="file-item">
                     <div class="link-and-caret">
                         <a href="{{ static_files_path }}/data/metadata/transforms/cumulative/metadata_md.zip">
-                            All metadata (<code>.zip</code>&nbsp;of&nbsp;<code>.md</code>)
+                            Metadata - Markdown (<code>.zip</code>&nbsp;of&nbsp;<code>.md</code>)
                             <img src="{{ static_files_path }}/web/imgs/dl.png" alt="download" title="download" style="height: 25px; margin-bottom: -5px;">
                         </a>
                         <details class="caret-details">
@@ -201,13 +201,13 @@
                     <ul class="extra-links">
                         <li>
                             <a href="{{ static_files_path }}/data/metadata/transforms/cumulative/metadata_html.zip">
-                                (<code>.zip</code>&nbsp;of&nbsp;<code>.html</code>)
+                                Metadata - HTML (<code>.zip</code>&nbsp;of&nbsp;<code>.html</code>)
                                 &nbsp;<img src="{{ static_files_path }}/web/imgs/dl.png" alt="download" title="download" style="height: 25px; margin-bottom: -5px;">
                             </a>
                         </li>
                         <li>
                             <a href="{{ static_files_path }}/data/metadata/transforms/cumulative/metadata.json">
-                                (single&nbsp;<code>.json</code>)
+                                Metadata - JSON (single file)
                             </a>
                         </li>
                     </ul>
