@@ -93,8 +93,8 @@ def get_filename_info(record):
     if 'Filename' not in record:
         raise(f"Filename missing for {record}")
     filename_base = record['Filename']
-    original_filename_extension = record['Original Filetype']
-    return filename_base, original_filename_extension
+    original_submission_filename_extension = record['Original Submission Filetype']
+    return filename_base, original_submission_filename_extension
 
 
 def get_author_info(record):
@@ -152,12 +152,12 @@ def process_metadata(raw_metadata: Dict[str, Dict]) -> List[Dict]:
     for (key, record) in raw_metadata.items():
         if key == "version":
             continue
-        filename_base, original_filename_extension = get_filename_info(record)
+        filename_base, original_submission_filename_extension = get_filename_info(record)
         panditya_url = get_panditya_url(record)
         pdf_links = get_pdf_links(record)
         metadata_subset.append({
             'Filename Base': filename_base,
-            'Original Filename Extension': original_filename_extension,
+            'Original Submission Filename Extension': original_submission_filename_extension,
             'Title': record['Title'],
             'Author': get_author_info(record),
             'Panditya URL': panditya_url,

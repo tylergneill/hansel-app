@@ -58,25 +58,25 @@
                             </details>
                         </div>
                         <ul class="extra-links">
-                            {% if item['PDFLinks'] %}
-                            <li>
-                                <a href="{{ item['PDFLinks'][0]['url'] }}" target="_blank">
-                                    <img src="{{ static_files_path }}/web/imgs/edition.jpg" alt="metadata" style="height: 20px; margin-left: -4px; margin-right: 7px;">
-                                    Edition: {{ item['Edition'] }}
-                                </a>
-                            </li>
-                            {% endif %}
                             <li>
                                 <a href="{{ static_files_path }}/data/metadata/transforms/html/{{ item['Filename Base'] }}.html">
                                     <img src="{{ static_files_path }}/web/imgs/info.png" alt="metadata" style="height: 20px; margin-left: -6px; margin-right: 8px;">
                                     Full Metadata
                                 </a>
                             </li>
+                            {% if item['PDFLinks'] %}
+                            <li>
+                                <a href="{{ item['PDFLinks'][0]['url'] }}" target="_blank">
+                                    <img src="{{ static_files_path }}/web/imgs/edition.jpg" alt="metadata" style="height: 20px; margin-left: -4px; margin-right: 7px;">
+                                    Edition (Printed): {{ item['Edition'] }}
+                                </a>
+                            </li>
+                            {% endif %}
                             {% if item['Panditya URL'] %}
                             <li>
                                 <a href="{{ item['Panditya URL'] }}" target="_blank" class="icon-link">
                                     <img src="{{ static_files_path }}/web/imgs/panditya.png" alt="Panditya" style="height: 20px; margin-left: -6px; margin-right: 9px;">
-                                    View on Pāṇḍitya
+                                    View Network on Pāṇḍitya
                                 </a>
                             </li>
                             {% endif %}
@@ -88,40 +88,40 @@
                             </li>
                                 <ul style="padding-left: 24px; margin-top: 5px;">
                                     <li>
-                                        {% set original_filename_ext = item['Original Filename Extension'] %}
-                                        {% set original_filename = item['Filename Base'] ~ original_filename_ext %}
-                                        <a href="{{ static_files_path }}/data/texts/originals/{{ original_filename }}" class="main-link">
-                                            {% if original_filename_ext == '.doc' %}
+                                        {% set original_submission_filename_ext = item['Original Submission Submission Filename Extension'] %}
+                                        {% set original_submission_filename = item['Filename Base'] ~ original_submission_filename_ext %}
+                                        <a href="{{ static_files_path }}/data/texts/original_submissions/{{ original_submission_filename }}" class="main-link">
+                                            {% if original_submission_filename_ext == '.doc' %}
                                                 <img src="{{ static_files_path }}/web/imgs/doc.png" alt="doc" style="height: 20px; margin-right: 2px;">
-                                            {% elif original_filename_ext == '.xml' %}
+                                            {% elif original_submission_filename_ext == '.xml' %}
                                                 <img src="{{ static_files_path }}/web/imgs/xml.png" alt="xml" style="height: 20px; margin-right: 2px;">
-                                            {% elif original_filename_ext == '.txt' %}
+                                            {% elif original_submission_filename_ext == '.txt' %}
                                                 <img src="{{ static_files_path }}/web/imgs/txt.png" alt="txt" style="height: 20px; margin-right: 2px;">
                                             {% else %}
                                                 <img src="{{ static_files_path }}/web/imgs/dl.png" alt="download" style="height: 20px; margin-right: 2px;">
                                             {% endif %}
-                                            Original file ({{ original_filename_ext }})
+                                            Original Submission – File Received ({{ original_submission_filename_ext }})
                                         </a>
                                     </li>
                                     <li>
                                         {% set txt_filename = item['Filename Base'] ~ '.txt' %}
-                                        <a href="{{ static_files_path }}/data/texts/processed_txt/{{ txt_filename }}" class="main-link">
+                                        <a href="{{ static_files_path }}/data/texts/project_editions/txt/{{ txt_filename }}" class="main-link">
                                             <img src="{{ static_files_path }}/web/imgs/txt.png" alt="txt" style="height: 20px; margin-right: 2px;">
-                                            Master - Plain-text
+                                            Project Digital Edition — Plain-text
                                         </a>
                                     </li>
                                     <li>
                                         {% set xml_filename = item['Filename Base'] ~ '.xml' %}
-                                        <a href="{{ static_files_path }}/data/texts/transforms/xml/{{ xml_filename }}" class="main-link">
+                                        <a href="{{ static_files_path }}/data/texts/project_editions/xml/{{ xml_filename }}" class="main-link">
                                             <img src="{{ static_files_path }}/web/imgs/xml.png" alt="xml" style="height: 20px; margin-right: 2px;">
-                                            Master - XML
+                                            Project Digital Edition — XML
                                         </a>
                                     </li>
                                     <li>
                                         {% set html_filename = item['Filename Base'] ~ '.html' %}
                                         <a href="{{ static_files_path }}/data/texts/transforms/html/plain/{{ html_filename }}" class="main-link">
                                             <img src="{{ static_files_path }}/web/imgs/html.png" alt="html" style="height: 20px; margin-right: 2px;">
-                                            Transform - Plain HTML
+                                            Transform — Plain HTML
                                         </a>
                                     </li>
                                 </ul>
@@ -154,7 +154,7 @@
                 <li class="file-item">
                     <div class="link-and-caret">
                         <a href="{{ static_files_path }}/data/texts/transforms/cumulative/txt.zip">
-                            Master - Plain-text (<code>.zip</code> of <code>.txt</code>)
+                            Project Digital Edition - Plain-text (<code>.zip</code> of <code>.txt</code>)
                             <img src="{{ static_files_path }}/web/imgs/dl.png" alt="download" title="download" style="height: 25px; margin-bottom: -5px;">
                         </a>
                         <details class="caret-details">
@@ -163,14 +163,14 @@
                     </div>
                     <ul class="extra-links">
                         <li>
-                            <a href="{{ static_files_path }}/data/texts/transforms/cumulative/originals_misc.zip">
-                                Original Submissions (<code>.zip</code>&nbsp;of miscellaneous filetypes)
+                            <a href="{{ static_files_path }}/data/texts/transforms/cumulative/original_submissions_misc.zip">
+                                Original Submission (<code>.zip</code>&nbsp;of miscellaneous filetypes)
                                 &nbsp;<img src="{{ static_files_path }}/web/imgs/dl.png" alt="download" title="download" style="height: 25px; margin-bottom: -5px;">
                             </a>
                         </li>
                         <li>
                             <a href="{{ static_files_path }}/data/texts/transforms/cumulative/xml.zip">
-                                Master - XML (<code>.zip</code>&nbsp;of&nbsp;<code>.xml</code>)
+                                Project Digital Edition - XML (<code>.zip</code>&nbsp;of&nbsp;<code>.xml</code>)
                                 &nbsp;<img src="{{ static_files_path }}/web/imgs/dl.png" alt="download" title="download" style="height: 25px; margin-bottom: -5px;">
                             </a>
                         </li>
@@ -261,9 +261,9 @@ document.addEventListener('DOMContentLoaded', function() {
         const staticFilesPath = "{{ static_files_path }}";
         const tableData = {{ rows | tojson | safe }};   // full list of dicts
 
-        function getOriginalFilenameWithExtension(row) {
+        function getOriginalSubmissionFilenameWithExtension(row) {
           const base = row['Filename Base'];
-          const ext = row['Original Filename Extension']
+          const ext = row['Original Submission Filename Extension']
           return `${base}${ext}`;
         }
 
@@ -333,11 +333,11 @@ document.addEventListener('DOMContentLoaded', function() {
                 if (type !== 'display') return data;
                 if (!data) return '';
 
-                const txt_href = `${staticFilesPath}/data/texts/processed_txt/${row['Filename Base']}.txt`;
-                const original_filename = getOriginalFilenameWithExtension(row);
-                const original_href = `${staticFilesPath}/data/texts/originals/${original_filename}`;
-                const original_ext = row['Original Filename Extension'];
-                const xml_href = `${staticFilesPath}/data/texts/transforms/xml/${row['Filename Base']}.xml`;
+                const txt_href = `${staticFilesPath}/data/texts/project_editions/txt/${row['Filename Base']}.txt`;
+                const original_submission_filename = getOriginalSubmissionFilenameWithExtension(row);
+                const original_submission_href = `${staticFilesPath}/data/texts/original_submissions/${original_submission_filename}`;
+                const original_submission_ext = row['Original Submission Filename Extension'];
+                const xml_href = `${staticFilesPath}/data/texts/project_editions/xml/${row['Filename Base']}.xml`;
                 const html_href = `${staticFilesPath}/data/texts/transforms/html/plain/${row['Filename Base']}.html`;
 
                 const imgSrc = `${staticFilesPath}/web/imgs/dl.png`;
@@ -350,7 +350,7 @@ document.addEventListener('DOMContentLoaded', function() {
                             alt="Downloads" style="height: 20px;">
                         </button>
                         <div class="dl-dropdown-menu">
-                            <a href="${original_href}">original file (${original_ext})</a>
+                            <a href="${original_submission_href}">original submission (${original_ext})</a>
                             <a href="${txt_href}">processed .txt</a>
                             <a href="${xml_href}">.xml transform </a>
                             <a href="${html_href}">plain .html transform </a>
