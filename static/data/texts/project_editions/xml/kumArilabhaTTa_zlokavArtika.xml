@@ -1,0 +1,209 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<TEI xmlns="http://www.tei-c.org/ns/1.0">
+  <teiHeader>
+    <fileDesc>
+      <titleStmt>
+        <title type="main">Ślokavārtika</title>
+        <title type="sub">A HANSEL edition</title>
+        <author>Kumārila Bhaṭṭa</author>
+        <respStmt>
+          <persName>Helmut Krasser</persName>
+          <resp>Contribution to the digital edition.</resp>
+        </respStmt>
+        <respStmt>
+          <persName>Tyler Neill</persName>
+          <resp>Contribution to the digital edition.</resp>
+        </respStmt>
+      </titleStmt>
+      <publicationStmt>
+        <authority>HANSEL: Human-Accessible NLP-ready Sanskrit E-text Library</authority>
+        <availability status="restricted">
+          <licence>
+            <p>Copyright 2025 Tyler Neill.</p>
+            <p>
+              <ref target="https://creativecommons.org/licenses/by-nc-sa/4.0/" type="licence">
+      Distributed by <ref target="https://hansel-library.info" type="url">HANSEL</ref>
+      under a Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License.
+    </ref>
+            </p>
+            <p>Under this licence, you are free to:
+    <list>
+                <item>Share — copy and redistribute the material in any medium or format.</item>
+                <item>Adapt — remix, transform, and build upon the material.</item>
+              </list>
+            </p>
+            <p>Under the following terms:</p>
+            <p>
+              <list>
+                <item>Attribution — You must give appropriate credit, provide a link to the license, and indicate if changes were made. You may do so in any reasonable manner, but not in any way that suggests the licensor endorses you or your use.</item>
+                <item>NonCommercial — You may not use the material for commercial purposes.</item>
+                <item>ShareAlike — If you remix, transform, or build upon the material, you must distribute your contributions under the same license as the original.</item>
+                <item>No additional restrictions — You may not apply legal terms or technological measures that legally restrict others from doing anything the license permits.</item>
+              </list>
+            </p>
+            <p>See the Creative Commons site for full details.</p>
+            <p>HANSEL assumes no responsibility for unauthorised use that infringes rights.</p>
+          </licence>
+        </availability>
+        <date when="2025-10-22" from="2025" to="2025">October 22, 2025</date>
+      </publicationStmt>
+      <notesStmt>
+        <note>xyz</note>
+      </notesStmt>
+      <sourceDesc>
+        <bibl>
+          <title>Ślokavārttika of Śrī Kumārila Bhaṭṭa with the Commentary Nyāyaratnākara of Śrī Pārthasārathi Miśra.</title>
+          <editor>Dvārikādāsa Śāstrī</editor>
+          <imprint>
+            <publisher>Tara Publications</publisher>
+            <pubPlace>Varanasi</pubPlace>
+            <date>1978</date>
+          </imprint>
+        </bibl>
+        <series>
+          <title level="s"/>
+          <biblScope/>
+        </series>
+        <note/>
+      </sourceDesc>
+    </fileDesc>
+    <encodingDesc>
+      <editorialDecl>
+        <p id="file-creation-method">I (Tyler Neill) produced this HANSEL edition by minimally adapting the corresponding file in the Pramāṇa NLP collection by adding page numbers. The Pramāṇa NLP file had been manually converted from Helmut Krasser's Word document into plain text, also by myself a few years earlier, mainly using regular expressions. Krasser's original Word file had been manually typed from the edition in an abstracted fashion, namely by extracting only the Ślokavārtika content and ignoring both Pārthasārathi Miśra's commentary and all physical aspects of the edition (e.g., page numbers). The text is known to contain errors and still needs a final proofread.</p>
+        <p id="transliteration">
+          The source edition is printed in Devanāgarī; the electronic text uses lossless IAST transliteration.
+          IAST differs slightly from ISO 15919; conversion can be achieved via:
+          <list>
+            <item>
+              <code>ṛ → r̥</code>
+            </item>
+            <item>
+              <code>ḷ → l̥</code>
+            </item>
+            <item>
+              <code>ḻ → ḷ</code>
+            </item>
+            <item>
+              <code>ṃ → ṁ</code>
+            </item>
+            <item>
+              <code>e → ē</code>
+            </item>
+            <item>
+              <code>o → ō</code>
+            </item>
+          </list>
+        </p>
+        <p id="word-division">Roman-like (ity evam, not ityevam)</p>
+        <p id="error-markup">
+          Corrections and uncertainties:
+          <list>
+            <item>Replacement: <choice>
+                <sic>before</sic>
+                <corr>after</corr>
+              </choice>
+            </item>
+            <item>Deletion: <del/>
+            </item>
+            <item>Addition: <supplied/>
+            </item>
+            <item>Unclear: <unclear/>
+            </item>
+          </list>
+        </p>
+        <p id="intermediate-textual-units">.</p>
+      </editorialDecl>
+    </encodingDesc>
+    <revisionDesc>
+      <change when="Date unknown" who="H. Krasser">Created.</change>
+      <change when="2017–2021" who="Tyler Neill">Supplied missing _Arthāpattipariccheda_ (5.8), restructured for Pramāṇa NLP collection.</change>
+      <change when="2025" who="Tyler Neill" ana="#hansel-contributor">Added page numbers for HANSEL structure.</change>
+    </revisionDesc>
+  </teiHeader>
+  <text>
+    <body>
+      <div n="1 pratijñāsūtra PJS">
+        <pb n="3"/><lg n="1.1" xml:id="v1_1">
+          <l n="ab">viśuddhajñānadehāya trivedīdivyacakṣuṣe |</l>
+          <l n="cd">śreyaḥprāptinimittāya namaḥ somārdhadhāriṇe ||</l>
+        </lg>
+        <lg n="1.2" xml:id="v1_2">
+          <l n="ab">abhivandya gurūnādau śiṣyadhīpadminīravīn |</l>
+          <l n="cd">tatprasādāt kariṣye 'haṃ mīmāṃsāślokavārttikaṃ ||</l>
+        </lg>
+        <lg n="1.3" xml:id="v1_3">
+          <l n="ab">tadvidvāṃso 'nugṛhṇantu cittaśrotraiḥ prasādibhiḥ |</l>
+          <l n="cd">santaḥ praṇayivākyāni gṛhṇanti hy anasūyavaḥ ||</l>
+        </lg>
+        <lg n="1.4" xml:id="v1_4">
+          <l n="ab">na cātrātiva kartavyaṃ doṣadṛṣṭiparaṃ manaḥ |</l>
+          <l n="cd">doṣo hy avidyamāno 'pi taccittānāṃ prakāśate ||<pb n="4"/></l>
+        </lg>
+        <lg n="1.5" xml:id="v1_5">
+          <l n="ab">kuto vā gṛhṇate doṣaṃ sūrayo madvidhoktiṣu |</l>
+          <l n="cd">neṣyate yaḥ parastho 'pi sa svayaṃ gṛhyate katham ||</l>
+        </lg>
+        <lg n="1.6" xml:id="v1_6">
+          <l n="ab">nirdoṣatvaikavākyatvaṃ kva vā lokasya dṛśyate |</l>
+          <l n="cd">sāpavādā yataḥ ke cin mokṣasvargāv api prati ||</l>
+        </lg>
+        <lg n="1.7" xml:id="v1_7">
+          <l n="ab">āgamapravaṇaś cāhaṃ nāpavādyaḥ skhaliteṣv apy apodyate |</l>
+          <l n="cd">na hi sadvartmanā gacchan skhaliteṣv apy apodyate ||</l>
+        </lg>
+        <lg n="1.8" xml:id="v1_8">
+          <l n="ab">yathā kathañ cid ārabdhā trayīmārgānusāriṇī |</l>
+          <l n="cd">vāgvṛttir alpasārāpi śraddadhānasya śobhate ||<pb n="5"/></l>
+        </lg>
+        <lg n="1.9" xml:id="v1_9">
+          <l n="ab">mīmāṃsāśāstratejobhir viśeṣeṇoj jvalīkṛte |</l>
+          <l n="cd">vedārthajñānaratne me tṛṣṇātīva vijṛmbhate ||</l>
+        </lg>
+        <lg n="1.10" xml:id="v1_10">
+          <l n="ab">prāyenaiva hi mīmāṃsā loke lokāyatīkṛtā |</l>
+          <l n="cd">tāmāstikapathe kartum ayaṃ yatnaḥ kṛto mayā ||</l>
+        </lg>
+        <lg n="1.11" xml:id="v1_11">
+          <l n="ab">athāto dharmajijñāsā sūtram ādyam idaṃ kṛtam |</l>
+          <l n="cd">dharmākhyaṃ viṣayaṃ vaktuṃ mīmāṃsāyāḥ prayojanam ||</l>
+        </lg>
+        <lg n="1.12" xml:id="v1_12">
+          <l n="ab">sarvasyaiva hi śāstrasya karmaṇo vāpi kasya cit |</l>
+          <l n="cd">yāvat prayojanaṃ noktaṃ tāvat tat kena gṛhyate ||</l>
+        </lg>
+        <lg n="1.13" xml:id="v1_13">
+          <l n="ab">mīmāṃsākhyā tu vidyeyaṃ bahuvidyāntarāśritā |</l>
+          <l n="cd">na śuśrūṣayituṃ śakyā prāganuktvā prayojanam ||<pb n="6"/></l>
+        </lg>
+        <lg n="1.14" xml:id="v1_14">
+          <l n="ab">vidyāntareṣu nāpy etad yady abhīṣṭaṃ prayojanam |</l>
+          <l n="cd">anarthaprāpaṇaṃ tāvat tebhyo nāśaṅkyate kva cit ||</l>
+        </lg>
+        <lg n="1.15" xml:id="v1_15">
+          <l n="ab">mīmāṃsāyāṃ tv ihājñāte durjñāte vāvivekataḥ |</l>
+          <l n="cd">nyāyamārge mahān doṣa iti yatnopacaryatā ||</l>
+        </lg>
+        <lg n="1.16" xml:id="v1_16">
+          <l n="ab">tasmāt prayojanaṃ pūrvam uktaṃ sūtrakṛtā svayam |</l>
+          <l n="cd">yat svenoktaṃ vadeyus tad bhāṣyakārādayaḥ katham ||</l>
+        </lg>
+        <lg n="1.17" xml:id="v1_17">
+          <l n="ab">siddhārthaṃ jñātasambandhaṃ śrotuṃ śrotā pravartate |</l>
+          <l n="cd">śāstrādau tena vaktavyaḥ sambandhaḥ saprayojanaḥ ||<pb n="7"/></l>
+        </lg>
+        <lg n="1.18" xml:id="v1_18">
+          <l n="ab">śāstraṃ prayojanaṃ caiva sambandhasyāśrayāv ubhau |</l>
+          <l n="cd">taduktyantargatas tasmād bhinno noktaḥ prayojanāt ||</l>
+        </lg>
+        <lg n="1.19" xml:id="v1_19">
+          <l n="ab">siddhiḥ śrotṛpravṛttīnāṃ sambandhakathanād yataḥ |</l>
+          <l n="cd">tasmāt sarveṣu śāstreṣu sambandhaḥ pūrvam ucyate ||</l>
+        </lg>
+        <lg n="1.20" xml:id="v1_20">
+          <l n="ab">yāvat prayojanenāsya sambandho nābhidhīyate |</l>
+          <l n="cd">asambaddhapralāpitvād bhavet tāvad asaṃgatiḥ ||</l>
+        </lg>
+      </div>
+    </body>
+  </text>
+</TEI>
