@@ -61,7 +61,7 @@
                             <li>
                                 <a href="{{ static_files_path }}/data/metadata/transforms/html/{{ item['Filename Base'] }}.html">
                                     <img src="{{ static_files_path }}/web/imgs/info.png" alt="metadata" style="height: 20px; margin-left: -6px; margin-right: 8px;">
-                                    Full Metadata
+                                    Full Metadata - HTML
                                 </a>
                             </li>
                             {% if item['PDFLinks'] %}
@@ -91,39 +91,41 @@
                                         {% set original_submission_filename_ext = item['Original Submission Filename Extension'] %}
                                         {% set original_submission_filename = item['Filename Base'] ~ original_submission_filename_ext %}
                                         <a href="{{ static_files_path }}/data/texts/original_submissions/{{ original_submission_filename }}" class="main-link">
-                                            {% if original_submission_filename_ext == '.doc' %}
-                                                <img src="{{ static_files_path }}/web/imgs/doc.png" alt="doc" style="height: 20px; margin-right: 2px;">
-                                            {% elif original_submission_filename_ext == '.xml' %}
-                                                <img src="{{ static_files_path }}/web/imgs/xml.png" alt="xml" style="height: 20px; margin-right: 2px;">
-                                            {% elif original_submission_filename_ext == '.txt' %}
-                                                <img src="{{ static_files_path }}/web/imgs/txt.png" alt="txt" style="height: 20px; margin-right: 2px;">
-                                            {% else %}
-                                                <img src="{{ static_files_path }}/web/imgs/dl.png" alt="download" style="height: 20px; margin-right: 2px;">
-                                            {% endif %}
-                                            Original Submission – File Received ({{ original_submission_filename_ext }})
+                                            {% set ext = original_submission_filename_ext[1:] %}
+                                            {% set icon = ext if ext in ['doc', 'xml', 'txt'] else 'dl' %}
+                                            <img src="{{ static_files_path }}/web/imgs/{{ icon }}.png" alt="{{ 'download' if icon == 'dl' else icon }}" style="height: 20px; margin-left: -6px; margin-right: 8px;">
+                                            Original Submission – {{ original_submission_filename_ext }} File Received
                                         </a>
                                     </li>
                                     <li>
                                         {% set txt_filename = item['Filename Base'] ~ '.txt' %}
                                         <a href="{{ static_files_path }}/data/texts/project_editions/txt/{{ txt_filename }}" class="main-link">
-                                            <img src="{{ static_files_path }}/web/imgs/txt.png" alt="txt" style="height: 20px; margin-right: 2px;">
-                                            Project Digital Edition — Plain-text
+                                            <img src="{{ static_files_path }}/web/imgs/txt.png" alt="txt" style="height: 20px; margin-left: -6px; margin-right: 8px;">
+                                            Project Digital Edition - Plain-text
                                         </a>
                                     </li>
                                     <li>
                                         {% set xml_filename = item['Filename Base'] ~ '.xml' %}
                                         <a href="{{ static_files_path }}/data/texts/project_editions/xml/{{ xml_filename }}" class="main-link">
-                                            <img src="{{ static_files_path }}/web/imgs/xml.png" alt="xml" style="height: 20px; margin-right: 2px;">
-                                            Project Digital Edition — XML
+                                            <img src="{{ static_files_path }}/web/imgs/xml.png" alt="xml" style="height: 20px; margin-left: -6px; margin-right: 8px;">
+                                            Project Digital Edition - XML
                                         </a>
                                     </li>
                                     <li>
                                         {% set html_filename = item['Filename Base'] ~ '.html' %}
                                         <a href="{{ static_files_path }}/data/texts/transforms/html/plain/{{ html_filename }}" class="main-link">
-                                            <img src="{{ static_files_path }}/web/imgs/html.png" alt="html" style="height: 20px; margin-right: 2px;">
-                                            Transform — Plain HTML
+                                            <img src="{{ static_files_path }}/web/imgs/html.png" alt="html" style="height: 20px; margin-left: -6px; margin-right: 8px;">
+                                            Transform - Plain HTML
                                         </a>
                                     </li>
+                                    <li>
+                                        {% set md_filename = item['Filename Base'] ~ '.md' %}
+                                        <a href="{{ static_files_path }}/data/metadata/{{ md_filename }}">
+                                            <img src="{{ static_files_path }}/web/imgs/info.png" alt="metadata" style="height: 20px; margin-left: -6px; margin-right: 8px;">
+                                            Full Metadata - Markdown
+                                        </a>
+                                    </li>
+
                                 </ul>
                         </ul>
                     </li>
