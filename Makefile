@@ -10,4 +10,4 @@ run:
 	  -it \
 	  -p 5030:5030 \
 	  -v $(LOCAL_DATA_PATH):/app/static/data \
-	  hansel:$(VERSION)
+	  tylergneill/hansel-app:$(VERSION)
