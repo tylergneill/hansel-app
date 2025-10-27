@@ -88,7 +88,7 @@
                             </li>
                                 <ul style="padding-left: 24px; margin-top: 5px;">
                                     <li>
-                                        {% set original_submission_filename_ext = item['Original Submission Submission Filename Extension'] %}
+                                        {% set original_submission_filename_ext = item['Original Submission Filename Extension'] %}
                                         {% set original_submission_filename = item['Filename Base'] ~ original_submission_filename_ext %}
                                         <a href="{{ static_files_path }}/data/texts/original_submissions/{{ original_submission_filename }}" class="main-link">
                                             {% if original_submission_filename_ext == '.doc' %}
