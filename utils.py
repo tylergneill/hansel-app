@@ -98,29 +98,28 @@ def get_filename_info(record):
 
 
 def get_author_info(record):
-    if not('Author' in record or 'Authors' in record):
-        return ''
-    elif 'Author' in record and 'Authors' in record:
-        raise(f"record {record} has both Author and Authors")
-    elif 'Author' in record:
+    if 'Author' in record:
         return record['Author']
-    elif 'Authors' in record:
+    if 'Authors' in record:
         return ', '.join(record['Authors'])
+    if 'Attributed Author' in record:
+        return record['Attributed Author']
+    return ''
 
 
 def get_pandit_author_info(record):
-    if not('Pandit Author' in record or 'Pandit Authors' in record):
-        return ''
-    elif 'Pandit Author' in record and 'Pandit Authors' in record:
-        raise(f"record {record} has both Pandit Author and Pandit Authors")
-    elif 'Pandit Author' in record:
-        return record['Pandit Author']
-    elif 'Pandit Authors' in record:
-        return ','.join([str(a) for a in record['Pandit Authors']])
+    if 'Pandit Author IDs' in record:
+        author_ids = record['Pandit Author IDs']
+        if isinstance(author_ids, list):
+            return ','.join(author_ids)
+        return str(author_ids)
+    if 'Pandit Attributed Author ID' in record:
+        return record['Pandit Attributed Author ID']
+    return ''
 
 def get_panditya_url(record):
     pandit_author = get_pandit_author_info(record)
-    pandit_work = record.get('Pandit Work', '')
+    pandit_work = record.get('Pandit Work ID', '')
     if not(pandit_author or pandit_work):
         return ''
 
@@ -134,8 +133,8 @@ def get_panditya_url(record):
 
 def get_pdf_links(record):
     pdf_links = []
-    if 'PDFs' in record:
-        for pdf_string in record['PDFs']:
+    if 'Edition PDFs' in record:
+        for pdf_string in record['Edition PDFs']:
             if pdf_string.startswith('[') and '](' in pdf_string:
                 parts = pdf_string.split('](')
                 text = parts[0][1:]
@@ -162,18 +161,10 @@ def process_metadata(raw_metadata: Dict[str, Dict]) -> List[Dict]:
             'Title': record['Title'],
             'Author': get_author_info(record),
             'Panditya URL': panditya_url,
-            'Source': record['Source File'],
             'Edition': record['Edition Short'],
-            'Edition Full Info': record['Edition'],
-            'PDFs': '; '.join(record['PDFs']),
             'PDFLinks': pdf_links,
-            'Digitization Notes': record['Digitization Notes'],
-            'Extent': record['Extent'],
             'Size (kb)': record['File Size (KB)'],
             'Genre': ', '.join(record['Genres']),
-            'Structure': record['Structure'],
-            'Translations': record.get('Translations', None),
-            'Additional Notes': record['Additional Notes'],
         })
     sorted_metadata_subset = sorted(metadata_subset, key=lambda x: custom_sort_key(x['Title']))
     return sorted_metadata_subset
