@@ -22,7 +22,6 @@ RAW_METADATA: Dict = load_metadata(METADATA_PATH)
 CUSTOM_METADATA = process_metadata(RAW_METADATA)
 DISPLAY_FIELDS = ['Title', 'Author', 'Edition', 'Genre', 'Size (kb)', '', '', '']
 NUM_ITEMS = len(CUSTOM_METADATA)
-TOTAL_SIZE_MB = get_collection_size(CUSTOM_METADATA)
 
 APP_VERSION = find_app_version()
 DATA_VERSION = find_data_version()
@@ -90,6 +89,13 @@ def calculate_file_group_sizes():
         FILE_GROUP_SIZES[key] = round(total_size / (1024 * 1024), 1)
     logging.info(f"File group sizes (MB): {FILE_GROUP_SIZES}")
 
+def calculate_total_size():
+    """Calculates the true total size of the data directory from disk."""
+    logging.info("Calculating total collection size from disk...")
+    total_bytes = sum(p.stat().st_size for p in DATA_PATH.rglob('*') if p.is_file())
+    # Return size in MB with one decimal place
+    return round(total_bytes / (1024 * 1024), 1)
+
 # Configure logging
 logging.basicConfig(
     filename="app.log",
@@ -100,6 +106,7 @@ logging.basicConfig(
 # Startup calculations
 get_latest_update_date()
 calculate_file_group_sizes()
+TOTAL_SIZE_MB = calculate_total_size()
 
 @app.route(f"/{STATIC_FILES_PATH}/<path:filename>")
 def serve_file(filename):
