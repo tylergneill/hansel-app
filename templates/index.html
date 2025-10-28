@@ -45,6 +45,14 @@
 
             <div id="list-view">
                 <p style="padding-left: 10px;"><em>Arrows&nbsp;</em>(<span class="toggle-caret" style="pointer-events: none; padding: 0px;"></span>&nbsp;&nbsp;)&nbsp;<em>expand for more info.</em>&nbsp;&nbsp;<a href="#" id="expand-all-link">Expand All</a></p>
+                {% set ext_map = {
+                    '.txt': 'Plain-text',
+                    '.doc': 'Word Doc',
+                    '.docx': 'Word Doc',
+                    '.xml': 'XML',
+                    '.html': 'HTML',
+                    '.md': 'Markdown'
+                } %}
                 <ul>
                     {% for item in metadata %}
                     <li class="file-item">
@@ -89,12 +97,13 @@
                                 <ul style="padding-left: 24px; margin-top: 5px;">
                                     <li>
                                         {% set original_submission_filename_ext = item['Original Submission Filename Extension'] %}
+                                        {% set readable_ext = ext_map.get(original_submission_filename_ext, original_submission_filename_ext) %}
                                         {% set original_submission_filename = item['Filename Base'] ~ original_submission_filename_ext %}
                                         <a href="{{ static_files_path }}/data/texts/original_submissions/{{ original_submission_filename }}" class="main-link">
                                             {% set ext = original_submission_filename_ext[1:] %}
                                             {% set icon = ext if ext in ['doc', 'xml', 'txt'] else 'dl' %}
                                             <img src="{{ static_files_path }}/web/imgs/{{ icon }}.png" alt="{{ 'download' if icon == 'dl' else icon }}" style="height: 20px; margin-left: -6px; margin-right: 8px;">
-                                            Original Submission – {{ original_submission_filename_ext }} File Received
+                                            Original Submission – {{ readable_ext }}
                                         </a>
                                     </li>
                                     <li>
@@ -150,74 +159,53 @@
 
         <hr style="border: none; border-top: 20px solid #013220; border-radius: 5px; margin: 20px 0;">
 
-        <div id="cumulative-data">
-            <h1>Cumulative Downloads</h1>
-            <ul>
-                <li class="file-item">
-                    <div class="link-and-caret">
-                        <a href="{{ static_files_path }}/data/texts/transforms/cumulative/txt.zip">
-                            Project Digital Edition - Plain-text (<code>.zip</code> of <code>.txt</code>)
-                            <img src="{{ static_files_path }}/web/imgs/dl.png" alt="download" title="download" style="height: 25px; margin-bottom: -5px;">
-                        </a>
-                        <details class="caret-details">
-                            <summary class="toggle-caret"></summary>
-                        </details>
+                <div id="cumulative-data">
+                    <h1>Cumulative Downloads</h1>
+            
+                    <!-- New "Download All" Link -->
+                    <div class="file-item">
+                        <div class="link-and-caret">
+                     <a href="/downloads/all" id="download-all-link">Download all files and metadata</a>
+                    <img src="{{ static_files_path }}/web/imgs/dl.png" alt="download" class="download-icon">
+                    <span class="size-estimate">({{ total_size_mb }} MB)</span>
+                        </div>
                     </div>
-                    <ul class="extra-links">
-                        <li>
-                            <a href="{{ static_files_path }}/data/texts/transforms/cumulative/original_submissions_misc.zip">
-                                Original Submission (<code>.zip</code>&nbsp;of miscellaneous filetypes)
-                                &nbsp;<img src="{{ static_files_path }}/web/imgs/dl.png" alt="download" title="download" style="height: 25px; margin-bottom: -5px;">
-                            </a>
-                        </li>
-                        <li>
-                            <a href="{{ static_files_path }}/data/texts/transforms/cumulative/xml.zip">
-                                Project Digital Edition - XML (<code>.zip</code>&nbsp;of&nbsp;<code>.xml</code>)
-                                &nbsp;<img src="{{ static_files_path }}/web/imgs/dl.png" alt="download" title="download" style="height: 25px; margin-bottom: -5px;">
-                            </a>
-                        </li>
-                        <li>
-                            <a href="{{ static_files_path }}/data/texts/transforms/cumulative/html_plain.zip">
-                                Transform - Plain HTML (<code>.zip</code>&nbsp;of&nbsp;<code>.html</code>)
-                                &nbsp;<img src="{{ static_files_path }}/web/imgs/dl.png" alt="download" title="download" style="height: 25px; margin-bottom: -5px;">
-                            </a>
-                        </li>
-                        <li>
-                            <a href="{{ static_files_path }}/data/texts/transforms/cumulative/html_rich.zip">
-                                Transform - Rich HTML (<code>.zip</code>&nbsp;of&nbsp;<code>.html</code>)
-                                &nbsp;<img src="{{ static_files_path }}/web/imgs/dl.png" alt="download" title="download" style="height: 25px; margin-bottom: -5px;">
-                            </a>
-                        </li>
-                    </ul>
-                </li>
-                <li class="file-item">
-                    <div class="link-and-caret">
-                        <a href="{{ static_files_path }}/data/metadata/transforms/cumulative/metadata_md.zip">
-                            Metadata - Markdown (<code>.zip</code>&nbsp;of&nbsp;<code>.md</code>)
-                            <img src="{{ static_files_path }}/web/imgs/dl.png" alt="download" title="download" style="height: 25px; margin-bottom: -5px;">
-                        </a>
-                        <details class="caret-details">
-                            <summary class="toggle-caret"></summary>
-                        </details>
-                    </div>
-                    <ul class="extra-links">
-                        <li>
-                            <a href="{{ static_files_path }}/data/metadata/transforms/cumulative/metadata_html.zip">
-                                Metadata - HTML (<code>.zip</code>&nbsp;of&nbsp;<code>.html</code>)
-                                &nbsp;<img src="{{ static_files_path }}/web/imgs/dl.png" alt="download" title="download" style="height: 25px; margin-bottom: -5px;">
-                            </a>
-                        </li>
-                        <li>
-                            <a href="{{ static_files_path }}/data/metadata/transforms/cumulative/metadata.json">
-                                Metadata - JSON (single file)
-                            </a>
-                        </li>
-                    </ul>
-
-                </li>
-            </ul>
-        </div>
-
+            
+                    <hr style="border: none; border-top: 1px solid #ccc; margin: 1rem 0;">
+            
+                                <div class="file-item" id="bundle-container">
+                                    <div class="link-and-caret">
+                                        <a href="#" class="faq-question">Build a custom bundle</a>
+                                        <details class="caret-details">
+                                            <summary class="toggle-caret"></summary>
+                                        </details>
+                                    </div>
+                                    <div class="extra-links" style="padding-left: 0;">
+                                        <form id="bundleForm" onsubmit="return false">
+                                            <fieldset>
+                                              <legend>Text format</legend>
+                                              <div class="radio-container"><input type="radio" id="text_none" name="text" value="none"><label for="text_none">None (metadata only)</label></div>
+                                              <div class="radio-container"><input type="radio" id="text_txt" name="text" value="txt" checked><label for="text_txt">Plain-text (.txt)</label></div>
+                                              <div class="radio-container"><input type="radio" id="text_xml" name="text" value="xml"><label for="text_xml">TEI-XML (.xml)</label></div>
+                                              <div class="radio-container"><input type="radio" id="text_html_plain" name="text" value="html_plain"><label for="text_html_plain">HTML — Plain</label></div>
+                                              <div class="radio-container"><input type="radio" id="text_html_rich" name="text" value="html_rich"><label for="text_html_rich">HTML — Rich</label></div>
+                                            </fieldset>
+                        
+                                            <fieldset style="margin-top:0.75rem">
+                                              <legend>Metadata format</legend>
+                                              <div class="radio-container"><input type="radio" id="meta_md" name="meta" value="md" checked><label for="meta_md">Markdown (.md)</label></div>
+                                              <div class="radio-container"><input type="radio" id="meta_html" name="meta" value="html"><label for="meta_html">HTML (.html)</label></div>
+                                              <div class="radio-container"><input type="radio" id="meta_json" name="meta" value="json"><label for="meta_json">JSON (single file)</label></div>
+                                            </fieldset>
+                        
+                    <button id="downloadBtn" type="button">Download</button>
+                    <span id="bundle-size-container" style="display: none;">
+                        <img src="{{ static_files_path }}/web/imgs/dl.png" alt="download" class="download-icon">
+                        <span class="size-estimate" id="bundle-size-estimate"></span>
+                    </span>
+                                          </form>
+                                    </div>
+                                </div>                </div>
         <br>
 
         <hr style="border: none; border-top: 20px solid #013220; border-radius: 5px; margin: 20px 0;">
@@ -244,6 +232,9 @@
     </div>
 </div>
 <script>
+const fileGroupSizes = {{ file_group_sizes | tojson | safe }};
+
+// This script initializes the DataTable with server-side data from Jinja2 templates.
 document.addEventListener('DOMContentLoaded', function() {
     const listView = document.getElementById('list-view');
     const tableView = document.getElementById('table-view');
@@ -262,6 +253,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
         const staticFilesPath = "{{ static_files_path }}";
         const tableData = {{ rows | tojson | safe }};   // full list of dicts
+        const extMap = {{ ext_map | tojson | safe }};
 
         function getOriginalSubmissionFilenameWithExtension(row) {
           const base = row['Filename Base'];
@@ -339,6 +331,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 const original_submission_filename = getOriginalSubmissionFilenameWithExtension(row);
                 const original_submission_href = `${staticFilesPath}/data/texts/original_submissions/${original_submission_filename}`;
                 const original_submission_ext = row['Original Submission Filename Extension'];
+                const readableExt = extMap[original_submission_ext] || original_submission_ext;
                 const xml_href = `${staticFilesPath}/data/texts/project_editions/xml/${row['Filename Base']}.xml`;
                 const html_href = `${staticFilesPath}/data/texts/transforms/html/plain/${row['Filename Base']}.html`;
 
@@ -352,7 +345,7 @@ document.addEventListener('DOMContentLoaded', function() {
                             alt="Downloads" style="height: 20px;">
                         </button>
                         <div class="dl-dropdown-menu">
-                            <a href="${original_submission_href}">original submission (${original_ext})</a>
+                            <a href="${original_submission_href}">original submission (${readableExt})</a>
                             <a href="${txt_href}">processed .txt</a>
                             <a href="${xml_href}">.xml transform </a>
                             <a href="${html_href}">plain .html transform </a>
@@ -366,91 +359,22 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 
-    viewToggle.addEventListener('change', function() {
-        if (this.checked) {
-            listView.style.display = 'none';
-            tableView.style.display = 'block';
-            if (!$.fn.DataTable.isDataTable('#text_table')) {
-                initializeDataTable();
-            }
-        } else {
-            listView.style.display = 'block';
-            tableView.style.display = 'none';
-        }
-    });
-
-    // dl-dropdown toggle
-    document.addEventListener('click', function(event) {
-        // Close all open dl-dropdowns that were not the one just clicked
-        document.querySelectorAll('.dl-dropdown-menu.show').forEach(function(menu) {
-            if (!menu.closest('.dl-dropdown').contains(event.target)) {
-                menu.classList.remove('show');
+    if (viewToggle) {
+        viewToggle.addEventListener('change', function() {
+            if (this.checked) {
+                listView.style.display = 'none';
+                tableView.style.display = 'block';
+                if (!$.fn.DataTable.isDataTable('#text_table')) {
+                    initializeDataTable();
+                }
+            } else {
+                listView.style.display = 'block';
+                tableView.style.display = 'none';
             }
         });
-
-        // Toggle the clicked dl-dropdown
-        const dlDropdownToggle = event.target.closest('.dl-dropdown-toggle');
-        if (dlDropdownToggle) {
-            event.preventDefault();
-            const dlDropdownMenu = dlDropdownToggle.nextElementSibling;
-            if (dlDropdownMenu) {
-                dlDropdownMenu.classList.toggle('show');
-            }
-        }
-    });
+    }
 });
 </script>
-<style>
-    .view-toggle {
-        display: flex;
-        align-items: center;
-        margin-bottom: 1rem;
-    }
-    .toggle-switch-container {
-        margin-left: 1rem;
-        width: 100px; /* Adjust width as needed */
-    }
-    .switch {
-        position: relative;
-        display: flex;
-        width: 100%;
-        height: 34px;
-        background-color: #ccc;
-        border-radius: 4px;
-        overflow: hidden;
-        cursor: pointer;
-    }
-    .switch input {
-        opacity: 0;
-        width: 0;
-        height: 0;
-        position: absolute;
-    }
-    .switch-text-on, .switch-text-off {
-        flex: 1;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        font-size: 12px;
-        user-select: none;
-        transition: all 0.2s;
-    }
-    .switch input:not(:checked) ~ .switch-text-off {
-        background-color: #113121;
-        color: white;
-    }
-    .switch input:not(:checked) ~ .switch-text-on {
-        background-color: #ccc;
-        color: #333;
-    }
-    .switch input:checked ~ .switch-text-on {
-        background-color: #113121;
-        color: white;
-    }
-    .switch input:checked ~ .switch-text-off {
-        background-color: #ccc;
-        color: #333;
-    }
-</style>
+
 </body>
 </html>
