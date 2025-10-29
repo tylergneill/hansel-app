@@ -170,10 +170,6 @@ def process_metadata(raw_metadata: Dict[str, Dict]) -> List[Dict]:
     return sorted_metadata_subset
 
 
-def get_collection_size(custom_metadata):
-    return round(sum([item['Size (kb)'] for item in custom_metadata]) / 1024, 1)
-
-
 sanskrit_alphabet = [
     'a', 'ā', 'i', 'ī', 'u', 'ū', 'ṛ', 'ṝ', 'ḷ', 'ḹ', 'e', 'ai', 'o', 'au',
     'k', 'kh', 'g', 'gh', 'ṅ',
@@ -212,37 +208,38 @@ def calculate_all_sizes(file_type_paths: Dict[str, Path], data_path: Path):
 
     file_group_sizes_mb = {}
     
-    def round_mb_size(value):
+    def get_rounded_mb_size(bytes_value):
         """
         Round to either 1 decimal place or 2.
         """
-        if round(value, 1) == 0 and value > 0:
-            return round(value, 2)
+        mb_value = bytes_value / 1024 / 1024
+        if round(mb_value, 1) == 0 and bytes_value > 0:
+            return round(mb_value, 2)
         else:
-            return round(value, 1)
+            return round(mb_value, 1)
     
     # Calculate individual group sizes
     for key, path in file_type_paths.items():
-        total_size = 0
+        total_group_bytes = 0
         if path.exists():
             if path.is_file():
-                total_size = path.stat().st_size
+                total_group_bytes = path.stat().st_size
             elif path.is_dir():
-                total_size = sum(p.stat().st_size for p in path.rglob('*') if p.is_file() and p.suffix != '.zip')
-        file_group_sizes_mb[key] = round_mb_size(total_size)
+                total_group_bytes = sum(p.stat().st_size for p in path.rglob('*') if p.is_file() and p.suffix != '.zip')
+        file_group_sizes_mb[key] = get_rounded_mb_size(total_group_bytes)
     logging.info(f"File group sizes (MB): {file_group_sizes_mb}")
 
     # Calculate total size from 'texts' and 'metadata' folders
     texts_path = data_path / 'texts'
     metadata_path = data_path / 'metadata'
     
-    total_bytes = 0
+    total_corpus_bytes = 0
     if texts_path.is_dir():
-        total_bytes += sum(p.stat().st_size for p in texts_path.rglob('*') if p.is_file() and p.suffix != '.zip')
+        total_corpus_bytes += sum(p.stat().st_size for p in texts_path.rglob('*') if p.is_file() and p.suffix != '.zip')
     if metadata_path.is_dir():
-        total_bytes += sum(p.stat().st_size for p in metadata_path.rglob('*') if p.is_file() and p.suffix != '.zip')
+        total_corpus_bytes += sum(p.stat().st_size for p in metadata_path.rglob('*') if p.is_file() and p.suffix != '.zip')
 
-    total_corpus_size_mb = round_mb_size(total_bytes)
+    total_corpus_size_mb = get_rounded_mb_size(total_corpus_bytes)
     logging.info(f"Total size calculated: {total_corpus_size_mb} MB")
 
     # Calculate plain text size
@@ -250,7 +247,7 @@ def calculate_all_sizes(file_type_paths: Dict[str, Path], data_path: Path):
     plain_text_bytes = 0
     if plain_text_path.is_dir():
         plain_text_bytes = sum(p.stat().st_size for p in plain_text_path.rglob('*') if p.is_file() and p.suffix != '.zip')
-    plain_text_size_mb = round_mb_size(plain_text_bytes)
+    plain_text_size_mb = get_rounded_mb_size(plain_text_bytes)
     logging.info(f"Plain text size calculated: {plain_text_size_mb} MB")
 
     return file_group_sizes_mb, total_corpus_size_mb, plain_text_size_mb

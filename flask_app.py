@@ -11,7 +11,8 @@ from flask import Flask, request, send_file, render_template, abort
 from utils import (
     find_app_version, find_data_version, find_bundle_version,
     get_geolocation, log_download,
-    load_metadata, process_metadata, get_collection_size, get_normalized_filename, calculate_all_sizes,
+    load_metadata, process_metadata,
+    get_normalized_filename, calculate_all_sizes,
 )
 
 STATIC_FILES_PATH = Path('./static')
