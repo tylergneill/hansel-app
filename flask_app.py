@@ -125,6 +125,11 @@ def download_all():
                     relative_path = file_path.relative_to(DATA_PATH)
                     new_arcname = os.path.join(root_folder_name, relative_path)
                     zf.write(file_path, arcname=new_arcname)
+        
+        version_file_path = DATA_PATH / 'VERSION'
+        if version_file_path.is_file():
+            new_arcname = os.path.join(root_folder_name, 'VERSION')
+            zf.write(version_file_path, arcname=new_arcname)
     
     app.cache[internal_zip_name] = memory_file.getvalue()
     
@@ -201,6 +206,10 @@ def cumulative_download():
                 for file_path in sorted(meta_path.rglob('*')):
                      if file_path.is_file() and file_path.suffix != '.zip':
                         zf.write(file_path, arcname=f"metadata/{file_path.name}")
+
+        version_file_path = DATA_PATH / 'VERSION'
+        if version_file_path.is_file():
+            zf.write(version_file_path, arcname='VERSION')
 
     app.cache[internal_zip_name] = memory_file.getvalue()
 
