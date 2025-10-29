@@ -165,7 +165,7 @@
                 <div class="link-and-caret">
                     <a href="/downloads/all" id="download-all-link">Download all files and metadata</a>
                     <img src="{{ static_files_path }}/web/imgs/dl.png" alt="download" class="download-icon">
-                    <span class="size-estimate">({{ total_size_mb }} MB)</span>
+                    <span class="size-estimate">({{ total_corpus_size_mb }} MB)</span>
                 </div>
             </div>
 
@@ -231,7 +231,7 @@
     </div>
 </div>
 <script>
-const fileGroupSizes = {{ file_group_sizes | tojson | safe }};
+const fileGroupSizes = {{ file_group_sizes_mb | tojson | safe }};
 
 // This script initializes the DataTable with server-side data from Jinja2 templates.
 document.addEventListener('DOMContentLoaded', function() {

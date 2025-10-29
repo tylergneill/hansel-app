@@ -221,8 +221,8 @@ def index():
         metadata=CUSTOM_METADATA,
         rows=CUSTOM_METADATA,
         display_fields=DISPLAY_FIELDS,
-        file_group_sizes=FILE_GROUP_SIZES,
-        total_size_mb=TOTAL_SIZE_MB
+        file_group_sizes_mb=FILE_GROUP_SIZES_MB,
+        total_corpus_size_mb=TOTAL_CORPUS_SIZE_MB
     )
 
 
