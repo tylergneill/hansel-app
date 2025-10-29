@@ -1,6 +1,6 @@
 # HANSEL: Human-Accessible and NLP-ready Sanskrit E-text Library
 
-A companion project to the now-defunct GRETIL.
+A companion project to GRETIL.
 
 HANSEL is a Sanskrit e-text library. 
 It is also a website giving access to that library. 
@@ -61,21 +61,21 @@ This uses the app repo's dummy data.
 
 This uses the complete data in the data repo.
 
-1.  First, find the app version by inspecting the `VERSION` file. (Dev: Designate a new version tag.)
-2.  Next, export the version as an environment variable. For example:
+1.  Export environment variables:
     ```bash
-    export VERSION=0.0.0
+    export IMG_NAME=tylergneill/hansel-app
+    export VERSION=0.4.0
     ```
-3.  The HANSEL app requires a local clone of the `hansel-data` repository. You must set the `LOCAL_DATA_PATH` environment variable to the absolute path of your local `hansel-data` clone. For example:
+2. The `Makefile` expects a local clone of the full `hansel-data` repository at `../hansel-data`. You can override this path by exporting another variable. For example:
     ```bash
-    export LOCAL_DATA_PATH=/Users/tyler/Git/hansel/hansel-data
+    export LOCAL_DATA_PATH=/Users/tyler/Git/hansel-data
     ```
-4. (Dev: Build the image using `docker build . -t tylergneill/hansel-app:{version}`. If using a different image name, adjust in `Makefile` as well.) 
-5. Then, you can run the app using the `make run` command, which uses Docker.
+3. Build the image using `docker build . -t $IMG_NAME:$VERSION`.
+4. Run with the `Makefile`:
     ```bash
     make run
     ```
-5.  Open your browser and navigate to `http://localhost:5030`.
+5.  Open browser and navigate to `http://localhost:5030`.
 
 
 ## Project Structure
@@ -84,7 +84,7 @@ This uses the complete data in the data repo.
 ├── flask_app.py           # Main Flask application
 ├── templates/             # HTML templates
 │   ├── index.html         # Main landing page
-│   ├── table.html         # Alternative landing page
+│   ├── about.html         # About page
 │   └── ...
 ├── static/                # Static assets
 │   ├── data/              # Sanskrit e-texts and metadata (dummy/mount)
@@ -96,18 +96,11 @@ This uses the complete data in the data repo.
 └── ...
 ```
 
-## Data
 
-The Sanskrit e-texts and their corresponding metadata are located in the `static/data` directory.
+# Contributing
 
-The data in this repo is dummy data, for basic local testing purposes.
-When the app runs with Docker, it mounts a different file location to this path,
-effectively overwriting the dummy data in the container.
+Contributions are welcome! Use the contact form on [hansel-library.info](https://hansel-library.info). 
 
-## Contributing
-
-Contributions are welcome! Please feel free to submit a pull request or open an issue.
-More simply, write an email to `hello` at `hansel-library.info`. 
 
 ## License
 
