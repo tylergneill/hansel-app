@@ -2,7 +2,6 @@ import collections
 import json
 import logging
 import os
-import time
 from pathlib import Path
 from typing import Dict, List
 import unicodedata
@@ -201,3 +200,49 @@ def custom_sort_key(word):
 
 def get_normalized_filename(filename, form='NFD'):
     return unicodedata.normalize(form, filename)
+
+
+
+def calculate_all_sizes(file_type_paths: Dict[str, Path], data_path: Path):
+    """
+    Calculates all file group sizes and the total collection size.
+    """
+    logging.info("Calculating all file and group sizes...")
+
+    file_group_sizes = {}
+    total_size_mb = 0
+    plain_text_size_mb = 0
+
+    # Calculate individual group sizes
+    for key, path in file_type_paths.items():
+        total_size = 0
+        if path.exists():
+            if path.is_file():
+                total_size = path.stat().st_size
+            elif path.is_dir():
+                total_size = sum(p.stat().st_size for p in path.rglob('*') if p.is_file() and p.suffix != '.zip')
+        file_group_sizes[key] = round(total_size / (1024 * 1024), 1)
+    logging.info(f"File group sizes (MB): {file_group_sizes}")
+
+    # Calculate total size from 'texts' and 'metadata' folders
+    texts_path = data_path / 'texts'
+    metadata_path = data_path / 'metadata'
+    
+    total_bytes = 0
+    if texts_path.is_dir():
+        total_bytes += sum(p.stat().st_size for p in texts_path.rglob('*') if p.is_file() and p.suffix != '.zip')
+    if metadata_path.is_dir():
+        total_bytes += sum(p.stat().st_size for p in metadata_path.rglob('*') if p.is_file() and p.suffix != '.zip')
+
+    total_size_mb = round(total_bytes / (1024 * 1024), 1)
+    logging.info(f"Total size calculated: {total_size_mb} MB")
+
+    # Calculate plain text size
+    plain_text_path = file_type_paths['txt']
+    plain_text_bytes = 0
+    if plain_text_path.is_dir():
+        plain_text_bytes = sum(p.stat().st_size for p in plain_text_path.rglob('*') if p.is_file() and p.suffix != '.zip')
+    plain_text_size_mb = round(plain_text_bytes / (1024 * 1024), 1)
+    logging.info(f"Plain text size calculated: {plain_text_size_mb} MB")
+
+    return file_group_sizes, total_size_mb, plain_text_size_mb

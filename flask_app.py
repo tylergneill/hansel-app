@@ -5,34 +5,18 @@ from pathlib import Path
 from typing import Dict
 import io
 import zipfile
-from datetime import datetime
 
 from flask import Flask, request, send_file, render_template, abort
 
 from utils import (
     find_app_version, find_data_version, find_bundle_version,
     get_geolocation, log_download,
-    load_metadata, process_metadata, get_collection_size, get_normalized_filename,
+    load_metadata, process_metadata, get_collection_size, get_normalized_filename, calculate_all_sizes,
 )
 
 STATIC_FILES_PATH = Path('./static')
 DATA_PATH = Path(os.getenv('DATA_PATH', str(STATIC_FILES_PATH / 'data')))
 METADATA_PATH = DATA_PATH / 'metadata' / 'transforms'
-RAW_METADATA: Dict = load_metadata(METADATA_PATH)
-CUSTOM_METADATA = process_metadata(RAW_METADATA)
-DISPLAY_FIELDS = ['Title', 'Author', 'Edition', 'Genre', 'Size (kb)', '', '', '']
-NUM_ITEMS = len(CUSTOM_METADATA)
-
-APP_VERSION = find_app_version()
-DATA_VERSION = find_data_version()
-FILENAME_DATE_STR = DATA_VERSION.replace('.', '')
-BUNDLE_VERSION = find_bundle_version()
-
-app = Flask(__name__)
-app.cache = {}  # In-memory cache for generated zip files
-
-# --- Caching and Sizing Logic ---
-
 FILE_TYPE_PATHS = {
     'txt': DATA_PATH / 'texts' / 'project_editions' / 'txt',
     'xml': DATA_PATH / 'texts' / 'project_editions' / 'xml',
@@ -43,69 +27,18 @@ FILE_TYPE_PATHS = {
     'html': DATA_PATH / 'metadata' / 'transforms' / 'html',
     'json': METADATA_PATH / 'metadata.json'
 }
+RAW_METADATA: Dict = load_metadata(METADATA_PATH)
+CUSTOM_METADATA = process_metadata(RAW_METADATA)
+DISPLAY_FIELDS = ['Title', 'Author', 'Edition', 'Genre', 'Size (kb)', '', '', '']
+NUM_ITEMS = len(CUSTOM_METADATA)
 
-LATEST_UPDATE_DATE_STR = ""
-FILE_GROUP_SIZES = {}
-TOTAL_SIZE_MB = 0
+APP_VERSION = find_app_version()
+DATA_VERSION = find_data_version()
+BUNDLE_VERSION = find_bundle_version()
+FILE_GROUP_SIZES, TOTAL_SIZE_MB, PLAIN_TEXT_SIZE_MB = calculate_all_sizes(FILE_TYPE_PATHS, DATA_PATH)
 
-def get_latest_update_date():
-    """
-    Finds the most recent 'Last Updated' date from all metadata items
-    and returns it as a string for use in cache keys.
-    """
-    global LATEST_UPDATE_DATE_STR
-    logging.info("Finding latest update date from metadata for cache invalidation...")
-    
-    latest_date = None
-    
-    for item in CUSTOM_METADATA:
-        date_str = item.get('Last Updated')
-        if date_str:
-            try:
-                current_date = datetime.strptime(date_str, '%Y-%m-%d')
-                if latest_date is None or current_date > latest_date:
-                    latest_date = current_date
-            except ValueError:
-                logging.warning(f"Could not parse date string from metadata: {date_str}")
-                continue
-
-    if latest_date:
-        LATEST_UPDATE_DATE_STR = latest_date.strftime('%Y%m%d')
-    else:
-        LATEST_UPDATE_DATE_STR = time.strftime('%Y%m%d')
-        
-    logging.info(f"Latest update date for cache key: {LATEST_UPDATE_DATE_STR}")
-
-def calculate_all_sizes():
-    """
-    Calculates all file group sizes and the total collection size.
-    """
-    global TOTAL_SIZE_MB, FILE_GROUP_SIZES
-    logging.info("Calculating all file and group sizes...")
-
-    # Calculate individual group sizes
-    for key, path in FILE_TYPE_PATHS.items():
-        total_size = 0
-        if path.exists():
-            if path.is_file():
-                total_size = path.stat().st_size
-            elif path.is_dir():
-                total_size = sum(p.stat().st_size for p in path.rglob('*') if p.is_file() and p.suffix != '.zip')
-        FILE_GROUP_SIZES[key] = round(total_size / (1024 * 1024), 1)
-    logging.info(f"File group sizes (MB): {FILE_GROUP_SIZES}")
-
-    # Calculate total size from 'texts' and 'metadata' folders
-    texts_path = DATA_PATH / 'texts'
-    metadata_path = DATA_PATH / 'metadata'
-    
-    total_bytes = 0
-    if texts_path.is_dir():
-        total_bytes += sum(p.stat().st_size for p in texts_path.rglob('*') if p.is_file() and p.suffix != '.zip')
-    if metadata_path.is_dir():
-        total_bytes += sum(p.stat().st_size for p in metadata_path.rglob('*') if p.is_file() and p.suffix != '.zip')
-
-    TOTAL_SIZE_MB = round(total_bytes / (1024 * 1024), 1)
-    logging.info(f"Total size calculated: {TOTAL_SIZE_MB} MB")
+app = Flask(__name__)
+app.cache = {}  # In-memory cache for generated zip files
 
 # Configure logging
 logging.basicConfig(
@@ -113,10 +46,6 @@ logging.basicConfig(
     level=logging.INFO,
     format="%(asctime)s - %(levelname)s - %(message)s"
 )
-
-# Startup calculations
-get_latest_update_date()
-calculate_all_sizes()
 
 @app.route(f"/{STATIC_FILES_PATH}/<path:filename>")
 def serve_file(filename):
@@ -160,9 +89,9 @@ def download_all():
     """
     Dynamically creates and serves a zip file of the texts and metadata directories.
     """
-    internal_zip_name = f'hansel_all_{LATEST_UPDATE_DATE_STR}.zip'
+    internal_zip_name = f'hansel_all_{DATA_VERSION}.zip'
     
-    user_facing_filename = f"hansel_download_all_{FILENAME_DATE_STR}.zip"
+    user_facing_filename = f"hansel_download_all_{DATA_VERSION}.zip"
     root_folder_name = user_facing_filename.removesuffix('.zip')
 
     if internal_zip_name in app.cache:
@@ -229,13 +158,13 @@ def cumulative_download():
         cache_key_parts.append(f"text-{text_format}")
     cache_key_parts.append(f"meta-{meta_format}")
     cache_key_base = "_".join(cache_key_parts)
-    internal_zip_name = f'hansel_bundle_{cache_key_base}_{LATEST_UPDATE_DATE_STR}.zip'
+    internal_zip_name = f'hansel_bundle_{cache_key_base}_{DATA_VERSION}.zip'
 
     name_parts = ['hansel_download']
     if text_format and text_format != 'none':
         name_parts.append(f"text_{text_format}")
     name_parts.append(f"metadata_{meta_format}")
-    name_parts.append(FILENAME_DATE_STR)
+    name_parts.append(DATA_VERSION)
     user_facing_filename = "_".join(name_parts) + ".zip"
 
     if internal_zip_name in app.cache:
@@ -306,7 +235,7 @@ def about():
         data_version = DATA_VERSION,
         bundle_version = BUNDLE_VERSION,
         num_items = NUM_ITEMS,
-        total_size_mb = TOTAL_SIZE_MB,
+        plain_text_size_mb = PLAIN_TEXT_SIZE_MB,
     )
 
 @app.route("/team")
