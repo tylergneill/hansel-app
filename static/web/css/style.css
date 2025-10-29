@@ -153,9 +153,11 @@ summary {
     border-left-color: #FFA500;
 }
 
-.faq-question {
+.bundle-title {
     font-weight: bold;
     cursor: pointer;
+    color: #006400; /* Medium green */
+    font-size: 1.2em;
 }
 
 .faq-header {
