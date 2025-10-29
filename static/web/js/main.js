@@ -125,7 +125,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 totalSize += fileGroupSizes[metaFormat];
             }
     
-            const sizeText = `(Est. ${totalSize.toFixed(1)} MB)`;
+            const sizeText = `(${totalSize.toFixed(1)} MB)`;
             sizeEstimateSpan.textContent = sizeText;
             sizeContainer.style.display = 'inline';
         }

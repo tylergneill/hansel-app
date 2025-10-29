@@ -35,7 +35,7 @@ NUM_ITEMS = len(CUSTOM_METADATA)
 APP_VERSION = find_app_version()
 DATA_VERSION = find_data_version()
 BUNDLE_VERSION = find_bundle_version()
-FILE_GROUP_SIZES, TOTAL_SIZE_MB, PLAIN_TEXT_SIZE_MB = calculate_all_sizes(FILE_TYPE_PATHS, DATA_PATH)
+FILE_GROUP_SIZES_MB, TOTAL_CORPUS_SIZE_MB, PLAIN_TEXT_SIZE_MB = calculate_all_sizes(FILE_TYPE_PATHS, DATA_PATH)
 
 app = Flask(__name__)
 app.cache = {}  # In-memory cache for generated zip files
