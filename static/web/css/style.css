@@ -153,11 +153,10 @@ summary {
     border-left-color: #FFA500;
 }
 
-.bundle-title {
+.custom-bundle-link {
     font-weight: bold;
     cursor: pointer;
     color: #006400; /* Medium green */
-    font-size: 1.2em;
 }
 
 .faq-header {
@@ -466,14 +465,16 @@ a.icon-link:hover {
 
 /* Hover border for bundle builder and download all links */
 #bundle-container .faq-question,
-#download-all-link {
+#download-all-link,
+.custom-bundle-link {
     padding: 6px 0 6px 6px;
     border-left: 4px solid transparent;
     display: inline-block; /* Ensure padding and border are applied correctly */
 }
 
 #bundle-container .faq-question:hover,
-#download-all-link:hover {
+#download-all-link:hover,
+.custom-bundle-link:hover {
     border-left-color: #FFA500;
 }
 

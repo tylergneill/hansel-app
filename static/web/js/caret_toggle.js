@@ -14,11 +14,11 @@ document.addEventListener("DOMContentLoaded", function() {
         });
     });
 
-    document.querySelectorAll(".faq-question").forEach(question => {
+    document.querySelectorAll(".faq-question, .custom-bundle-link").forEach(question => {
         question.addEventListener("click", function(event) {
             event.preventDefault();
             let li = this.closest(".file-item");
-            let details = li.querySelector("details");
+            let details = this.nextElementSibling;
 
             if (li.classList.contains("open")) {
                 li.classList.remove("open");
