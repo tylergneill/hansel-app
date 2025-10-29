@@ -210,8 +210,6 @@ def calculate_all_sizes(file_type_paths: Dict[str, Path], data_path: Path):
     logging.info("Calculating all file and group sizes...")
 
     file_group_sizes = {}
-    total_size_mb = 0
-    plain_text_size_mb = 0
 
     # Calculate individual group sizes
     for key, path in file_type_paths.items():
@@ -242,7 +240,12 @@ def calculate_all_sizes(file_type_paths: Dict[str, Path], data_path: Path):
     plain_text_bytes = 0
     if plain_text_path.is_dir():
         plain_text_bytes = sum(p.stat().st_size for p in plain_text_path.rglob('*') if p.is_file() and p.suffix != '.zip')
-    plain_text_size_mb = round(plain_text_bytes / (1024 * 1024), 1)
+    value =  plain_text_bytes / (1024 * 1024)
+    temp_plain_text_size_mb = round(value, 1)
+    if temp_plain_text_size_mb == 0 and value > 0:
+        plain_text_size_mb = round(value, 2)
+    else:
+        plain_text_size_mb = temp_plain_text_size_mb
     logging.info(f"Plain text size calculated: {plain_text_size_mb} MB")
 
     return file_group_sizes, total_size_mb, plain_text_size_mb
