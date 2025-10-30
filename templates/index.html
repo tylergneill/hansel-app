@@ -45,6 +45,14 @@
 
             <div id="list-view">
                 <p style="padding-left: 10px;"><em>Arrows&nbsp;</em>(<span class="toggle-caret" style="pointer-events: none; padding: 0px;"></span>&nbsp;&nbsp;)&nbsp;<em>expand for more info.</em>&nbsp;&nbsp;<a href="#" id="expand-all-link">Expand All</a></p>
+                {% set ext_map = {
+                    '.txt': 'Plain-text',
+                    '.doc': 'Word Doc',
+                    '.docx': 'Word Doc',
+                    '.xml': 'XML',
+                    '.html': 'HTML',
+                    '.md': 'Markdown'
+                } %}
                 <ul>
                     {% for item in metadata %}
                     <li class="file-item">
@@ -58,73 +66,75 @@
                             </details>
                         </div>
                         <ul class="extra-links">
+                            <li>
+                                <a href="{{ static_files_path }}/data/metadata/transforms/html/{{ item['Filename Base'] }}.html">
+                                    <img src="{{ static_files_path }}/web/imgs/info.png" alt="metadata" style="height: 20px; margin-left: -6px; margin-right: 8px;">
+                                    Full Metadata - HTML
+                                </a>
+                            </li>
                             {% if item['PDFLinks'] %}
                             <li>
-                                Based on:
                                 <a href="{{ item['PDFLinks'][0]['url'] }}" target="_blank">
-                                    {{ item['Edition'] }}
+                                    <img src="{{ static_files_path }}/web/imgs/edition.jpg" alt="metadata" style="height: 20px; margin-left: -4px; margin-right: 7px;">
+                                    Edition (Printed): {{ item['Edition'] }}
                                 </a>
                             </li>
                             {% endif %}
-                            <li>
-                                <a href="{{ static_files_path }}/data/metadata/transforms/html/{{ item['Filename Base'] }}.html">
-                                    <img src="{{ static_files_path }}/web/imgs/info.png" alt="metadata" style="height: 20px; margin-right: 2px;">
-                                    Full Metadata
-                                </a>
-                            </li>
                             {% if item['Panditya URL'] %}
                             <li>
                                 <a href="{{ item['Panditya URL'] }}" target="_blank" class="icon-link">
-                                    <img src="{{ static_files_path }}/web/imgs/panditya.png" alt="Panditya" style="height: 20px; margin-left: -2px; margin-right: 4px;">
-                                    View on Pāṇḍitya
+                                    <img src="{{ static_files_path }}/web/imgs/panditya.png" alt="Panditya" style="height: 20px; margin-left: -6px; margin-right: 9px;">
+                                    View Network on Pāṇḍitya
                                 </a>
                             </li>
                             {% endif %}
                             <li>
                                 <div style="display: flex; align-items: center;">
-                                    <img src="{{ static_files_path }}/web/imgs/dl.png" alt="download" style="height: 20px; margin-left: 4px; margin-right: 3px;">
+                                    <img src="{{ static_files_path }}/web/imgs/dl.png" alt="download" style="height: 20px; margin-left: 3px; margin-right: 8px;">
                                     <span>Downloads</span>
                                 </div>
                             </li>
-                                <ul style="padding-left: 24px; margin-top: 5px;">
-                                    <li>
-                                        {% set original_filename_ext = item['Original Filename Extension'] %}
-                                        {% set original_filename = item['Filename Base'] ~ original_filename_ext %}
-                                        <a href="{{ static_files_path }}/data/texts/originals/{{ original_filename }}" class="main-link">
-                                            {% if original_filename_ext == '.doc' %}
-                                                <img src="{{ static_files_path }}/web/imgs/doc.png" alt="doc" style="height: 20px; margin-right: 2px;">
-                                            {% elif original_filename_ext == '.xml' %}
-                                                <img src="{{ static_files_path }}/web/imgs/xml.png" alt="xml" style="height: 20px; margin-right: 2px;">
-                                            {% elif original_filename_ext == '.txt' %}
-                                                <img src="{{ static_files_path }}/web/imgs/txt.png" alt="txt" style="height: 20px; margin-right: 2px;">
-                                            {% else %}
-                                                <img src="{{ static_files_path }}/web/imgs/dl.png" alt="download" style="height: 20px; margin-right: 2px;">
-                                            {% endif %}
-                                            Original file ({{ original_filename_ext }})
-                                        </a>
-                                    </li>
-                                    <li>
-                                        {% set txt_filename = item['Filename Base'] ~ '.txt' %}
-                                        <a href="{{ static_files_path }}/data/texts/processed_txt/{{ txt_filename }}" class="main-link">
-                                            <img src="{{ static_files_path }}/web/imgs/txt.png" alt="txt" style="height: 20px; margin-right: 2px;">
-                                            Processed plain-text (<code>.txt</code>)
-                                        </a>
-                                    </li>
-                                    <li>
-                                        {% set xml_filename = item['Filename Base'] ~ '.xml' %}
-                                        <a href="{{ static_files_path }}/data/texts/transforms/xml/{{ xml_filename }}" class="main-link">
-                                            <img src="{{ static_files_path }}/web/imgs/xml.png" alt="xml" style="height: 20px; margin-right: 2px;">
-                                            XML (<code>.xml</code>)
-                                        </a>
-                                    </li>
-                                    <li>
-                                        {% set html_filename = item['Filename Base'] ~ '.html' %}
-                                        <a href="{{ static_files_path }}/data/texts/transforms/html/plain/{{ html_filename }}" class="main-link">
-                                            <img src="{{ static_files_path }}/web/imgs/html.png" alt="html" style="height: 20px; margin-right: 2px;">
-                                            Plain HTML (<code>.html</code>)
-                                        </a>
-                                    </li>
-                                </ul>
+                            <ul style="padding-left: 24px; margin-top: 5px;">
+                                <li>
+                                    {% set original_submission_filename_ext = item['Original Submission Filename Extension'] %}
+                                    {% set readable_ext = ext_map.get(original_submission_filename_ext, original_submission_filename_ext) %}
+                                    {% set original_submission_filename = item['Filename Base'] ~ original_submission_filename_ext %}
+                                    <a href="{{ static_files_path }}/data/texts/original_submissions/{{ original_submission_filename }}" class="main-link">
+                                        {% set ext = original_submission_filename_ext[1:] %}
+                                        {% set icon = ext if ext in ['doc', 'xml', 'txt'] else 'dl' %}
+                                        <img src="{{ static_files_path }}/web/imgs/{{ icon }}.png" alt="{{ 'download' if icon == 'dl' else icon }}" style="height: 20px; margin-left: -6px; margin-right: 8px;">
+                                        Original Submission – {{ readable_ext }}
+                                    </a>
+                                </li>
+                                <li>
+                                    {% set txt_filename = item['Filename Base'] ~ '.txt' %}
+                                    <a href="{{ static_files_path }}/data/texts/project_editions/txt/{{ txt_filename }}" class="main-link">
+                                        <img src="{{ static_files_path }}/web/imgs/txt.png" alt="txt" style="height: 20px; margin-left: -6px; margin-right: 8px;">
+                                        Project Digital Edition - Plain-text
+                                    </a>
+                                </li>
+                                <li>
+                                    {% set xml_filename = item['Filename Base'] ~ '.xml' %}
+                                    <a href="{{ static_files_path }}/data/texts/project_editions/xml/{{ xml_filename }}" class="main-link">
+                                        <img src="{{ static_files_path }}/web/imgs/xml.png" alt="xml" style="height: 20px; margin-left: -6px; margin-right: 8px;">
+                                        Project Digital Edition - XML
+                                    </a>
+                                </li>
+                                <li>
+                                    {% set html_filename = item['Filename Base'] ~ '.html' %}
+                                    <a href="{{ static_files_path }}/data/texts/transforms/html/plain/{{ html_filename }}" class="main-link">
+                                        <img src="{{ static_files_path }}/web/imgs/html.png" alt="html" style="height: 20px; margin-left: -6px; margin-right: 8px;">
+                                        Transform - Plain HTML
+                                    </a>
+                                </li>
+                                <li>
+                                    {% set md_filename = item['Filename Base'] ~ '.md' %}
+                                    <a href="{{ static_files_path }}/data/metadata/markdown/{{ md_filename }}">
+                                        <img src="{{ static_files_path }}/web/imgs/info.png" alt="metadata" style="height: 20px; margin-left: -6px; margin-right: 8px;">
+                                        Full Metadata - Markdown
+                                    </a>
+                                </li>
+                            </ul>
                         </ul>
                     </li>
                     {% endfor %}
@@ -150,70 +160,49 @@
 
         <div id="cumulative-data">
             <h1>Cumulative Downloads</h1>
-            <ul>
-                <li class="file-item">
-                    <div class="link-and-caret">
-                        <a href="{{ static_files_path }}/data/texts/transforms/cumulative/txt.zip">
-                            All plaintext (<code>.zip</code> of <code>.txt</code>)
-                            <img src="{{ static_files_path }}/web/imgs/dl.png" alt="download" title="download" style="height: 25px; margin-bottom: -5px;">
-                        </a>
-                        <details class="caret-details">
-                            <summary class="toggle-caret"></summary>
-                        </details>
-                    </div>
-                    <ul class="extra-links">
-                        <li>
-                            <a href="{{ static_files_path }}/data/texts/transforms/cumulative/originals_misc.zip">
-                                All originals (<code>.zip</code>&nbsp;of miscellaneous filetypes)
-                                &nbsp;<img src="{{ static_files_path }}/web/imgs/dl.png" alt="download" title="download" style="height: 25px; margin-bottom: -5px;">
-                            </a>
-                        </li>
-                        <li>
-                            <a href="{{ static_files_path }}/data/texts/transforms/cumulative/xml.zip">
-                                All XML (<code>.zip</code>&nbsp;of&nbsp;<code>.xml</code>)
-                                &nbsp;<img src="{{ static_files_path }}/web/imgs/dl.png" alt="download" title="download" style="height: 25px; margin-bottom: -5px;">
-                            </a>
-                        </li>
-                        <li>
-                            <a href="{{ static_files_path }}/data/texts/transforms/cumulative/html_plain.zip">
-                                All HTML, plain (<code>.zip</code>&nbsp;of&nbsp;<code>.html</code>)
-                                &nbsp;<img src="{{ static_files_path }}/web/imgs/dl.png" alt="download" title="download" style="height: 25px; margin-bottom: -5px;">
-                            </a>
-                        </li>
-                        <li>
-                            <a href="{{ static_files_path }}/data/texts/transforms/cumulative/html_rich.zip">
-                                All HTML, rich (<code>.zip</code>&nbsp;of&nbsp;<code>.html</code>)
-                                &nbsp;<img src="{{ static_files_path }}/web/imgs/dl.png" alt="download" title="download" style="height: 25px; margin-bottom: -5px;">
-                            </a>
-                        </li>
-                    </ul>
-                </li>
-                <li class="file-item">
-                    <div class="link-and-caret">
-                        <a href="{{ static_files_path }}/data/metadata/transforms/cumulative/metadata_md.zip">
-                            All metadata (<code>.zip</code>&nbsp;of&nbsp;<code>.md</code>)
-                            <img src="{{ static_files_path }}/web/imgs/dl.png" alt="download" title="download" style="height: 25px; margin-bottom: -5px;">
-                        </a>
-                        <details class="caret-details">
-                            <summary class="toggle-caret"></summary>
-                        </details>
-                    </div>
-                    <ul class="extra-links">
-                        <li>
-                            <a href="{{ static_files_path }}/data/metadata/transforms/cumulative/metadata_html.zip">
-                                (<code>.zip</code>&nbsp;of&nbsp;<code>.html</code>)
-                                &nbsp;<img src="{{ static_files_path }}/web/imgs/dl.png" alt="download" title="download" style="height: 25px; margin-bottom: -5px;">
-                            </a>
-                        </li>
-                        <li>
-                            <a href="{{ static_files_path }}/data/metadata/transforms/cumulative/metadata.json">
-                                (single&nbsp;<code>.json</code>)
-                            </a>
-                        </li>
-                    </ul>
+    
+            <div class="file-item">
+                <div class="link-and-caret">
+                    <a href="#" id="download-all-link">Download all texts and metadata in all formats</a>
+                    <img src="{{ static_files_path }}/web/imgs/dl.png" alt="download" class="download-icon">
+                    <span class="size-estimate">({{ total_corpus_size_mb }} MB)</span>
+                </div>
+            </div>
 
-                </li>
-            </ul>
+            <div class="file-item" id="bundle-container">
+                <div class="link-and-caret">
+                    <a href="#" class="custom-bundle-link">Build custom download bundle</a>
+                    <details class="caret-details">
+                        <summary class="toggle-caret"></summary>
+                    </details>
+                </div>
+                <div class="extra-links" style="padding-left: 0;">
+                    <form id="bundleForm" onsubmit="return false">
+                        <fieldset>
+                          <legend>Text format</legend>
+                          <div class="radio-container"><input type="radio" id="text_none" name="text" value="none"><label for="text_none">None (metadata only)</label></div>
+                          <div class="radio-container"><input type="radio" id="text_txt" name="text" value="txt" checked><label for="text_txt">Plain-text (.txt)</label></div>
+                          <div class="radio-container"><input type="radio" id="text_xml" name="text" value="xml"><label for="text_xml">TEI-XML (.xml)</label></div>
+                          <div class="radio-container"><input type="radio" id="text_html_plain" name="text" value="html_plain"><label for="text_html_plain">HTML — Plain</label></div>
+                          <div class="radio-container"><input type="radio" id="text_html_rich" name="text" value="html_rich"><label for="text_html_rich">HTML — Rich</label></div>
+                          <div class="radio-container"><input type="radio" id="text_original" name="text" value="original"><label for="text_original">Original Submission (misc. files)</label></div>
+                        </fieldset>
+    
+                        <fieldset style="margin-top:0.75rem">
+                          <legend>Metadata format</legend>
+                          <div class="radio-container"><input type="radio" id="meta_md" name="meta" value="md" checked><label for="meta_md">Markdown (.md)</label></div>
+                          <div class="radio-container"><input type="radio" id="meta_html" name="meta" value="html"><label for="meta_html">HTML (.html)</label></div>
+                          <div class="radio-container"><input type="radio" id="meta_json" name="meta" value="json"><label for="meta_json">JSON (single file)</label></div>
+                        </fieldset>
+    
+                        <button id="downloadBtn" type="button">Download</button>
+                        <span id="bundle-size-container" style="display: none;">
+                            <img src="{{ static_files_path }}/web/imgs/dl.png" alt="download" class="download-icon">
+                            <span class="size-estimate" id="bundle-size-estimate"></span>
+                        </span>
+                    </form>
+                </div>
+            </div>
         </div>
 
         <br>
@@ -242,6 +231,9 @@
     </div>
 </div>
 <script>
+const fileGroupSizes = {{ file_group_sizes_mb | tojson | safe }};
+
+// This script initializes the DataTable with server-side data from Jinja2 templates.
 document.addEventListener('DOMContentLoaded', function() {
     const listView = document.getElementById('list-view');
     const tableView = document.getElementById('table-view');
@@ -260,10 +252,11 @@ document.addEventListener('DOMContentLoaded', function() {
 
         const staticFilesPath = "{{ static_files_path }}";
         const tableData = {{ rows | tojson | safe }};   // full list of dicts
+        const extMap = {{ ext_map | tojson | safe }};
 
-        function getOriginalFilenameWithExtension(row) {
+        function getOriginalSubmissionFilenameWithExtension(row) {
           const base = row['Filename Base'];
-          const ext = row['Original Filename Extension']
+          const ext = row['Original Submission Filename Extension']
           return `${base}${ext}`;
         }
 
@@ -333,11 +326,12 @@ document.addEventListener('DOMContentLoaded', function() {
                 if (type !== 'display') return data;
                 if (!data) return '';
 
-                const txt_href = `${staticFilesPath}/data/texts/processed_txt/${row['Filename Base']}.txt`;
-                const original_filename = getOriginalFilenameWithExtension(row);
-                const original_href = `${staticFilesPath}/data/texts/originals/${original_filename}`;
-                const original_ext = row['Original Filename Extension'];
-                const xml_href = `${staticFilesPath}/data/texts/transforms/xml/${row['Filename Base']}.xml`;
+                const txt_href = `${staticFilesPath}/data/texts/project_editions/txt/${row['Filename Base']}.txt`;
+                const original_submission_filename = getOriginalSubmissionFilenameWithExtension(row);
+                const original_submission_href = `${staticFilesPath}/data/texts/original_submissions/${original_submission_filename}`;
+                const original_submission_ext = row['Original Submission Filename Extension'];
+                const readableExt = extMap[original_submission_ext] || original_submission_ext;
+                const xml_href = `${staticFilesPath}/data/texts/project_editions/xml/${row['Filename Base']}.xml`;
                 const html_href = `${staticFilesPath}/data/texts/transforms/html/plain/${row['Filename Base']}.html`;
 
                 const imgSrc = `${staticFilesPath}/web/imgs/dl.png`;
@@ -350,7 +344,7 @@ document.addEventListener('DOMContentLoaded', function() {
                             alt="Downloads" style="height: 20px;">
                         </button>
                         <div class="dl-dropdown-menu">
-                            <a href="${original_href}">original file (${original_ext})</a>
+                            <a href="${original_submission_href}">original submission (${readableExt})</a>
                             <a href="${txt_href}">processed .txt</a>
                             <a href="${xml_href}">.xml transform </a>
                             <a href="${html_href}">plain .html transform </a>
@@ -364,91 +358,21 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 
-    viewToggle.addEventListener('change', function() {
-        if (this.checked) {
-            listView.style.display = 'none';
-            tableView.style.display = 'block';
-            if (!$.fn.DataTable.isDataTable('#text_table')) {
-                initializeDataTable();
-            }
-        } else {
-            listView.style.display = 'block';
-            tableView.style.display = 'none';
-        }
-    });
-
-    // dl-dropdown toggle
-    document.addEventListener('click', function(event) {
-        // Close all open dl-dropdowns that were not the one just clicked
-        document.querySelectorAll('.dl-dropdown-menu.show').forEach(function(menu) {
-            if (!menu.closest('.dl-dropdown').contains(event.target)) {
-                menu.classList.remove('show');
+    if (viewToggle) {
+        viewToggle.addEventListener('change', function() {
+            if (this.checked) {
+                listView.style.display = 'none';
+                tableView.style.display = 'block';
+                if (!$.fn.DataTable.isDataTable('#text_table')) {
+                    initializeDataTable();
+                }
+            } else {
+                listView.style.display = 'block';
+                tableView.style.display = 'none';
             }
         });
-
-        // Toggle the clicked dl-dropdown
-        const dlDropdownToggle = event.target.closest('.dl-dropdown-toggle');
-        if (dlDropdownToggle) {
-            event.preventDefault();
-            const dlDropdownMenu = dlDropdownToggle.nextElementSibling;
-            if (dlDropdownMenu) {
-                dlDropdownMenu.classList.toggle('show');
-            }
-        }
-    });
+    }
 });
 </script>
-<style>
-    .view-toggle {
-        display: flex;
-        align-items: center;
-        margin-bottom: 1rem;
-    }
-    .toggle-switch-container {
-        margin-left: 1rem;
-        width: 100px; /* Adjust width as needed */
-    }
-    .switch {
-        position: relative;
-        display: flex;
-        width: 100%;
-        height: 34px;
-        background-color: #ccc;
-        border-radius: 4px;
-        overflow: hidden;
-        cursor: pointer;
-    }
-    .switch input {
-        opacity: 0;
-        width: 0;
-        height: 0;
-        position: absolute;
-    }
-    .switch-text-on, .switch-text-off {
-        flex: 1;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        font-size: 12px;
-        user-select: none;
-        transition: all 0.2s;
-    }
-    .switch input:not(:checked) ~ .switch-text-off {
-        background-color: #113121;
-        color: white;
-    }
-    .switch input:not(:checked) ~ .switch-text-on {
-        background-color: #ccc;
-        color: #333;
-    }
-    .switch input:checked ~ .switch-text-on {
-        background-color: #113121;
-        color: white;
-    }
-    .switch input:checked ~ .switch-text-off {
-        background-color: #ccc;
-        color: #333;
-    }
-</style>
 </body>
 </html>

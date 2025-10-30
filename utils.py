@@ -93,34 +93,33 @@ def get_filename_info(record):
     if 'Filename' not in record:
         raise(f"Filename missing for {record}")
     filename_base = record['Filename']
-    original_filename_extension = record['Original Filetype']
-    return filename_base, original_filename_extension
+    original_submission_filename_extension = record['Original Submission Filetype']
+    return filename_base, original_submission_filename_extension
 
 
 def get_author_info(record):
-    if not('Author' in record or 'Authors' in record):
-        return ''
-    elif 'Author' in record and 'Authors' in record:
-        raise(f"record {record} has both Author and Authors")
-    elif 'Author' in record:
+    if 'Author' in record:
         return record['Author']
-    elif 'Authors' in record:
+    if 'Authors' in record:
         return ', '.join(record['Authors'])
+    if 'Attributed Author' in record:
+        return record['Attributed Author']
+    return ''
 
 
 def get_pandit_author_info(record):
-    if not('Pandit Author' in record or 'Pandit Authors' in record):
-        return ''
-    elif 'Pandit Author' in record and 'Pandit Authors' in record:
-        raise(f"record {record} has both Pandit Author and Pandit Authors")
-    elif 'Pandit Author' in record:
-        return record['Pandit Author']
-    elif 'Pandit Authors' in record:
-        return ','.join([str(a) for a in record['Pandit Authors']])
+    if 'Pandit Author IDs' in record:
+        author_ids = record['Pandit Author IDs']
+        if isinstance(author_ids, list):
+            return ','.join(author_ids)
+        return str(author_ids)
+    if 'Pandit Attributed Author ID' in record:
+        return record['Pandit Attributed Author ID']
+    return ''
 
 def get_panditya_url(record):
     pandit_author = get_pandit_author_info(record)
-    pandit_work = record.get('Pandit Work', '')
+    pandit_work = record.get('Pandit Work ID', '')
     if not(pandit_author or pandit_work):
         return ''
 
@@ -134,8 +133,8 @@ def get_panditya_url(record):
 
 def get_pdf_links(record):
     pdf_links = []
-    if 'PDFs' in record:
-        for pdf_string in record['PDFs']:
+    if 'Edition PDFs' in record:
+        for pdf_string in record['Edition PDFs']:
             if pdf_string.startswith('[') and '](' in pdf_string:
                 parts = pdf_string.split('](')
                 text = parts[0][1:]
@@ -153,34 +152,22 @@ def process_metadata(raw_metadata: Dict[str, Dict]) -> List[Dict]:
     for (key, record) in raw_metadata.items():
         if key == "version":
             continue
-        filename_base, original_filename_extension = get_filename_info(record)
+        filename_base, original_submission_filename_extension = get_filename_info(record)
         panditya_url = get_panditya_url(record)
         pdf_links = get_pdf_links(record)
         metadata_subset.append({
             'Filename Base': filename_base,
-            'Original Filename Extension': original_filename_extension,
+            'Original Submission Filename Extension': original_submission_filename_extension,
             'Title': record['Title'],
             'Author': get_author_info(record),
             'Panditya URL': panditya_url,
-            'Source': record['Source File'],
             'Edition': record['Edition Short'],
-            'Edition Full Info': record['Edition'],
-            'PDFs': '; '.join(record['PDFs']),
             'PDFLinks': pdf_links,
-            'Digitization Notes': record['Digitization Notes'],
-            'Extent': record['Extent'],
             'Size (kb)': record['File Size (KB)'],
             'Genre': ', '.join(record['Genres']),
-            'Structure': record['Structure'],
-            'Translations': record.get('Translations', None),
-            'Additional Notes': record['Additional Notes'],
         })
     sorted_metadata_subset = sorted(metadata_subset, key=lambda x: custom_sort_key(x['Title']))
     return sorted_metadata_subset
-
-
-def get_collection_size(custom_metadata):
-    return round(sum([item['Size (kb)'] for item in custom_metadata]) / 1024, 1)
 
 
 sanskrit_alphabet = [
@@ -210,3 +197,57 @@ def custom_sort_key(word):
 
 def get_normalized_filename(filename, form='NFD'):
     return unicodedata.normalize(form, filename)
+
+
+
+def calculate_all_sizes(file_type_paths: Dict[str, Path], data_path: Path):
+    """
+    Calculates all file group sizes and the total collection size.
+    """
+    logging.info("Calculating all file and group sizes...")
+
+    file_group_sizes_mb = {}
+    
+    def get_rounded_mb_size(bytes_value):
+        """
+        Round to either 1 decimal place or 2.
+        """
+        mb_value = bytes_value / 1024 / 1024
+        if round(mb_value, 1) == 0 and bytes_value > 0:
+            return round(mb_value, 2)
+        else:
+            return round(mb_value, 1)
+    
+    # Calculate individual group sizes
+    for key, path in file_type_paths.items():
+        total_group_bytes = 0
+        if path.exists():
+            if path.is_file():
+                total_group_bytes = path.stat().st_size
+            elif path.is_dir():
+                total_group_bytes = sum(p.stat().st_size for p in path.rglob('*') if p.is_file() and p.suffix != '.zip')
+        file_group_sizes_mb[key] = get_rounded_mb_size(total_group_bytes)
+    logging.info(f"File group sizes (MB): {file_group_sizes_mb}")
+
+    # Calculate total size from 'texts' and 'metadata' folders
+    texts_path = data_path / 'texts'
+    metadata_path = data_path / 'metadata'
+    
+    total_corpus_bytes = 0
+    if texts_path.is_dir():
+        total_corpus_bytes += sum(p.stat().st_size for p in texts_path.rglob('*') if p.is_file() and p.suffix != '.zip')
+    if metadata_path.is_dir():
+        total_corpus_bytes += sum(p.stat().st_size for p in metadata_path.rglob('*') if p.is_file() and p.suffix != '.zip')
+
+    total_corpus_size_mb = get_rounded_mb_size(total_corpus_bytes)
+    logging.info(f"Total size calculated: {total_corpus_size_mb} MB")
+
+    # Calculate plain text size
+    plain_text_path = file_type_paths['txt']
+    plain_text_bytes = 0
+    if plain_text_path.is_dir():
+        plain_text_bytes = sum(p.stat().st_size for p in plain_text_path.rglob('*') if p.is_file() and p.suffix != '.zip')
+    plain_text_size_mb = get_rounded_mb_size(plain_text_bytes)
+    logging.info(f"Plain text size calculated: {plain_text_size_mb} MB")
+
+    return file_group_sizes_mb, total_corpus_size_mb, plain_text_size_mb

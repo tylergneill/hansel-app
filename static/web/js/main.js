@@ -86,4 +86,122 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         }
     }
+
+    // dl-dropdown toggle
+    document.addEventListener('click', function(event) {
+        // Close all open dl-dropdowns that were not the one just clicked
+        document.querySelectorAll('.dl-dropdown-menu.show').forEach(function(menu) {
+            if (!menu.closest('.dl-dropdown').contains(event.target)) {
+                menu.classList.remove('show');
+            }
+        });
+
+        // Toggle the clicked dl-dropdown
+        const dlDropdownToggle = event.target.closest('.dl-dropdown-toggle');
+        if (dlDropdownToggle) {
+            event.preventDefault();
+            const dlDropdownMenu = dlDropdownToggle.nextElementSibling;
+            if (dlDropdownMenu) {
+                dlDropdownMenu.classList.toggle('show');
+            }
+        }
+    });
+
+    const bundleForm = document.getElementById('bundleForm');
+    if (bundleForm) {
+        const downloadBtn = document.getElementById('downloadBtn');
+        const sizeContainer = document.getElementById('bundle-size-container');
+        const sizeEstimateSpan = document.getElementById('bundle-size-estimate');
+        const downloadAllLink = document.getElementById('download-all-link');
+
+        function updateBundleSize() {
+            const textFormat = bundleForm.querySelector('input[name="text"]:checked').value;
+            const metaFormat = bundleForm.querySelector('input[name="meta"]:checked').value;
+
+            let totalSize = 0;
+            if (textFormat !== 'none' && fileGroupSizes[textFormat]) {
+                totalSize += fileGroupSizes[textFormat];
+            }
+            if (fileGroupSizes[metaFormat]) {
+                totalSize += fileGroupSizes[metaFormat];
+            }
+
+            const sizeText = `(${totalSize.toFixed(1)} MB)`;
+            sizeEstimateSpan.textContent = sizeText;
+            sizeContainer.style.display = 'inline';
+        }
+
+        function triggerBundleDownload(text, meta, buttonElement) {
+            const originalButtonText = buttonElement.textContent;
+            buttonElement.textContent = 'Zipping...';
+            buttonElement.disabled = true;
+
+            fetch('/download', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ text, metadata: meta }),
+            })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Network response was not ok.');
+                }
+                const disposition = response.headers.get('content-disposition');
+                let filename = 'hansel-bundle.zip'; // Default filename
+                if (disposition && disposition.indexOf('attachment') !== -1) {
+                    const filenameRegex = /filename[^;=\n]*=((['"]).*?\2|[^;\n]*)/;
+                    const matches = filenameRegex.exec(disposition);
+                    if (matches != null && matches[1]) {
+                        filename = matches[1].replace(/['"]/g, '');
+                    }
+                }
+                return response.blob().then(blob => ({ blob, filename }));
+            })
+            .then(({ blob, filename }) => {
+                const url = window.URL.createObjectURL(blob);
+                const a = document.createElement('a');
+                a.style.display = 'none';
+                a.href = url;
+                a.download = filename;
+                document.body.appendChild(a);
+                a.click();
+                window.URL.revokeObjectURL(url);
+                document.body.removeChild(a);
+
+                // Reset button
+                buttonElement.textContent = originalButtonText;
+                buttonElement.disabled = false;
+            })
+            .catch(error => {
+                console.error('Download failed:', error);
+                buttonElement.textContent = 'Error!';
+                // Revert the button after a delay
+                setTimeout(() => {
+                    buttonElement.textContent = originalButtonText;
+                    buttonElement.disabled = false;
+                }, 2000);
+            });
+        }
+
+        bundleForm.addEventListener('change', updateBundleSize);
+        updateBundleSize(); // Initial calculation
+
+        if (downloadBtn) {
+            downloadBtn.onclick = () => {
+                const text = bundleForm.querySelector('input[name="text"]:checked').value;
+                const meta = bundleForm.querySelector('input[name="meta"]:checked').value;
+                triggerBundleDownload(text, meta, downloadBtn);
+            };
+        }
+
+        if (downloadAllLink) {
+            downloadAllLink.addEventListener('click', (e) => {
+                e.preventDefault();
+                triggerBundleDownload('all', 'all', downloadAllLink);
+            });
+        }
+    }
+
+
 });

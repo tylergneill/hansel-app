@@ -153,9 +153,10 @@ summary {
     border-left-color: #FFA500;
 }
 
-.faq-question {
+.custom-bundle-link {
     font-weight: bold;
     cursor: pointer;
+    color: #006400; /* Medium green */
 }
 
 .faq-header {
@@ -320,4 +321,196 @@ a.icon-link:hover {
 
 .text-green-500 {
     color: green;
+}
+
+/* From index.html */
+.view-toggle {
+    display: flex;
+    align-items: center;
+    margin-bottom: 1rem;
+}
+.toggle-switch-container {
+    margin-left: 1rem;
+    width: 100px; /* Adjust width as needed */
+}
+.switch {
+    position: relative;
+    display: flex;
+    width: 100%;
+    height: 34px;
+    background-color: #ccc;
+    border-radius: 4px;
+    overflow: hidden;
+    cursor: pointer;
+}
+.switch input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+    position: absolute;
+}
+.switch-text-on, .switch-text-off {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 12px;
+    user-select: none;
+    transition: all 0.2s;
+}
+.switch input:not(:checked) ~ .switch-text-off {
+    background-color: #113121;
+    color: white;
+}
+.switch input:not(:checked) ~ .switch-text-on {
+    background-color: #ccc;
+    color: #333;
+}
+.switch input:checked ~ .switch-text-on {
+    background-color: #113121;
+    color: white;
+}
+.switch input:checked ~ .switch-text-off {
+    background-color: #ccc;
+    color: #333;
+}
+
+#cumulative-data .download-description {
+    font-size: 0.95em;
+    font-style: italic;
+    color: #333;
+    margin-bottom: 1.5rem;
+}
+
+#cumulative-data fieldset {
+    border: 1px solid #013220;
+    border-radius: 4px;
+    padding: .8rem 1rem;
+    margin-bottom: 1rem;
+    width: -moz-fit-content;
+    width: fit-content;
+}
+
+#cumulative-data legend {
+    color: #013220;
+    font-weight: bold;
+    font-size: 1.1em;
+    padding: 0 0.5rem;
+}
+
+/* Custom Radio Button Styles */
+.radio-container {
+    display: inline-flex;
+    align-items: center;
+    margin-right: 1.5rem;
+    margin-top: .5rem;
+}
+
+.radio-container label {
+    position: relative;
+    padding-left: 30px; /* Make space for custom radio */
+    cursor: pointer;
+    user-select: none;
+    line-height: 22px; /* Align text vertically */
+}
+
+/* Hide default radio */
+.radio-container input[type="radio"] {
+    display: none; /* Hide it completely */
+}
+
+/* Create custom radio's outer box */
+.radio-container label::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 20px;
+    height: 20px;
+    border: 2px solid #013220;
+    border-radius: 4px;
+    background: #fff;
+    transition: background-color 0.2s ease;
+}
+
+/* Create the inner checkmark */
+.radio-container label::after {
+    content: '';
+    position: absolute;
+    left: 8px;
+    top: 50%;
+    width: 5px;
+    height: 10px;
+    border: solid white;
+    border-width: 0 3px 3px 0;
+    transform: translateY(-60%) rotate(45deg) scale(0);
+    transition: transform 0.15s ease;
+}
+
+/* Change background when checked */
+.radio-container input[type="radio"]:checked + label::before {
+    background-color: #013220;
+}
+
+/* Show the checkmark when checked */
+.radio-container input[type="radio"]:checked + label::after {
+    transform: translateY(-60%) rotate(45deg) scale(1);
+}
+
+/* Hover effect */
+.radio-container label:hover::before {
+    background-color: #f0fff0;
+}
+
+/* Hover border for bundle builder and download all links */
+#bundle-container .faq-question,
+#download-all-link,
+.custom-bundle-link {
+    padding: 6px 0 6px 6px;
+    border-left: 4px solid transparent;
+    display: inline-block; /* Ensure padding and border are applied correctly */
+}
+
+#bundle-container .faq-question:hover,
+#download-all-link:hover,
+.custom-bundle-link:hover {
+    border-left-color: #FFA500;
+}
+
+
+
+#downloadBtn {
+    background-color: #013220;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 1.1em;
+    font-weight: bold;
+    transition: background-color 0.2s ease;
+    margin-top: 1rem;
+}
+
+#downloadBtn:hover, #downloadBtn:focus {
+    background-color: #006400;
+}
+
+#downloadBtn:disabled {
+    background-color: #cccccc;
+    color: #666666;
+    cursor: not-allowed;
+}
+
+.download-icon {
+    height: 25px;
+    margin-bottom: -7px;
+    margin-left: 8px;
+}
+
+.size-estimate {
+    margin-left: 5px;
+    font-size: 0.9em;
+    color: #333;
 }

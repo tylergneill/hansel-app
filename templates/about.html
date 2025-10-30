@@ -37,12 +37,34 @@
                     </div>
                     <ul class="extra-links">
                         <li>
-                            No, HANSEL's focus is on <strong>new or newly modified</strong> material.
+                            No, HANSEL <strong>complements</strong> GRETIL by focusing on <strong>new or newly modified</strong> material.
                             HANSEL has particular requirements of structure and quality that make mass-import of GRETIL impossible.
-                            That said, anyone wishing to improve upon a given GRETIL item can do that on HANSEL. In the meantime, GRETIL continues to exist statically online through its <a href="https://textgridrep.org/project/TGPR-2ba9cb1b-9602-202d-71ce-67e63a29de55" target="_blank">official archive on TextGrid</a>
+                            That said, anyone wishing to improve upon a given GRETIL item can do that with HANSEL.
+                            In the meantime, GRETIL continues to exist statically online through its
+                            <a href="https://textgridrep.org/project/TGPR-2ba9cb1b-9602-202d-71ce-67e63a29de55" target="_blank">official archive on TextGrid</a>
                             (see <a href="https://list.indology.info/pipermail/indology/2025-July/060853.html" target="_blank">post on Indology</a>)
                             and its <a href="https://gretil.sub.uni-goettingen.de/gretil.html" target="_blank">Uni Göttingen site</a>.
                             (When the Uni site eventually goes down, it can be recreated as a mirror.)
+                        </li>
+                    </ul>
+                </li>
+                <li class="file-item" id="faq-compare">
+                    <div class="link-and-caret">
+                        <a href="#" class="faq-question">How does HANSEL compare to other online Sanskrit e-text collections?</a>
+                        <details class="caret-details">
+                            <summary class="toggle-caret"></summary>
+                        </details>
+                    </div>
+                    <ul class="extra-links">
+                        <li>
+                            Like GRETIL, HANSEL is for Sanskrit literature as a whole,
+                            and contributing is as easy as sending an email.
+                            Like SARIT, HANSEL has an explicit data model,
+                            everything is thoroughly versioned using Git and GitHub,
+                            and thorough metadata is required.
+                            Like Muktabodha, the HANSEL corpus is readily available in plain-text for day-to-day use,
+                            and it facilitates search by metadata.
+                            Like DCS, HANSEL anticipates computational applications.
                         </li>
                     </ul>
                 </li>
@@ -55,7 +77,7 @@
                     </div>
                     <ul class="extra-links">
                         <li>
-                            The <a href="/getting_started">getting-started videos</a> should answer most questions. Let me know if not!
+                            The <a href="/getting_started">getting-started videos</a> should answer most questions. Let us know if not!
                             </li>
                     </ul>
                 </li>
@@ -68,28 +90,10 @@
                     </div>
                     <ul class="extra-links">
                         <li>
-                            Just send us a message using the <a href="/contact">contact form</a>.
+                            If it's your first time getting in touch,
+                            send us a message using the <a href="/contact">contact form</a>.
                             Whatever state your project is in,
                             <a href="/team">the library curator</a> will help you from there.</li>
-                    </ul>
-                </li>
-                <li class="file-item" id="faq-compare">
-                    <div class="link-and-caret">
-                        <a href="#" class="faq-question">How does HANSEL compare to other online Sanskrit e-text collections?</a>
-                        <details class="caret-details">
-                            <summary class="toggle-caret"></summary>
-                        </details>
-                    </div>
-                    <ul class="extra-links">
-                        <li>
-                            Like GRETIL, HANSEL is all-purpose and easy to contribute to.
-                            Like SARIT, HANSEL has an explicit data model,
-                            everything is versioned in real-time using git and GitHub,
-                            and thorough metadata is required.
-                            Like Muktabodha, HANSEL's base format is plain text,
-                            but this is then automatically converted to XML and HTML.
-                            Like DCS, HANSEL anticipates computational applications.
-                        </li>
                     </ul>
                 </li>
                 <li class="file-item" id="faq-sustainable">
@@ -100,7 +104,13 @@
                         </details>
                     </div>
                     <ul class="extra-links">
-                        <li>HANSEL is a labor of love by a committed, technically skilled, and financially independent creator. It is unaffiliated, open-source, well documented, and built with standard and inexpensive technologies. <!-- See <a href="/costs">Costs Page</a> for more details. --></li>
+                        <li>
+                            HANSEL’s sustainability rests on several strengths:
+                            it is led by a technically skilled Sanskritist with the time, resources, and commitment to maintain it;
+                            its codebase is open-source, well-documented, and built on standard, low-cost technologies;
+                            and its independence from any single institution ensures long-term flexibility and resilience.
+                            <!-- See <a href="/costs">Costs Page</a> for more details. -->
+                        </li>
                     </ul>
                 </li>
             </ul>
@@ -108,6 +118,7 @@
             <br>
 
             <h2>Backronym and Logo</h2>
+            <p><strong>HANSEL</strong> is the “<strong>H</strong>uman-<strong>A</strong>ccessible and <strong>N</strong>LP-ready <strong>S</strong>anskrit <strong>E</strong>-text <strong>L</strong>ibrary”.</p>
             <ul class="faq-list">
                 <li class="file-item" id="backronym-human-accessible">
                     <div class="link-and-caret">
@@ -159,7 +170,10 @@
             <br>
 
             <h2>Technical</h2>
-            <p>Collection size: {{ num_items }} items ({{ total_size_mb }} MB).</p>
+            <p>
+                <strong>Collection size</strong>: {{ num_items }} items
+                (<span title="IAST plain-text">{{ plain_text_size_mb }} MB*</span>)
+            </p>
             <p>
                 <strong>Web App</strong>: v{{ app_version }}
                 (<a href="https://github.com/tylergneill/hansel-app" target="_blank">GitHub</a>)
@@ -173,7 +187,7 @@
                 (<a href="https://github.com/tylergneill/hansel-data/tree/main/utils" target="_blank">GitHub</a>)
             </p>
             <p>
-                <strong>Stack</strong>: Python (Flask), JavaScript, Docker, Digital Ocean.
+                <strong>Stack</strong>: Python (Flask), JavaScript, Docker, Digital Ocean
             </p>
 
             <p>

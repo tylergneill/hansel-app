@@ -1,0 +1,153 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<TEI xmlns="http://www.tei-c.org/ns/1.0">
+  <teiHeader>
+    <fileDesc>
+      <titleStmt>
+        <title type="main">Śukasaptati, “Textus Simplicior”</title>
+        <title type="sub">A HANSEL edition</title>
+        <respStmt>
+          <persName>Viliam Gostishchev</persName>
+          <resp>Contribution to the digital edition.</resp>
+        </respStmt>
+        <respStmt>
+          <persName>Tyler Neill</persName>
+          <resp>Contribution to the digital edition.</resp>
+        </respStmt>
+      </titleStmt>
+      <publicationStmt>
+        <authority>HANSEL: Human-Accessible NLP-ready Sanskrit E-text Library</authority>
+        <availability status="restricted">
+          <licence>
+            <p>Copyright 2025 Tyler Neill.</p>
+            <p>
+              <ref target="https://creativecommons.org/licenses/by-nc-sa/4.0/" type="licence">
+      Distributed by <ref target="https://hansel-library.info" type="url">HANSEL</ref>
+      under a Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License.
+    </ref>
+            </p>
+            <p>Under this licence, you are free to:
+    <list>
+                <item>Share — copy and redistribute the material in any medium or format.</item>
+                <item>Adapt — remix, transform, and build upon the material.</item>
+              </list>
+            </p>
+            <p>Under the following terms:</p>
+            <p>
+              <list>
+                <item>Attribution — You must give appropriate credit, provide a link to the license, and indicate if changes were made. You may do so in any reasonable manner, but not in any way that suggests the licensor endorses you or your use.</item>
+                <item>NonCommercial — You may not use the material for commercial purposes.</item>
+                <item>ShareAlike — If you remix, transform, or build upon the material, you must distribute your contributions under the same license as the original.</item>
+                <item>No additional restrictions — You may not apply legal terms or technological measures that legally restrict others from doing anything the license permits.</item>
+              </list>
+            </p>
+            <p>See the Creative Commons site for full details.</p>
+            <p>HANSEL assumes no responsibility for unauthorised use that infringes rights.</p>
+          </licence>
+        </availability>
+        <date when="2025-10-22" from="2025" to="2025">October 22, 2025</date>
+      </publicationStmt>
+      <notesStmt>
+        <note>The work's frame story takes place over seventy nights. In the frame, a pet parrot belongs to a young, lonely woman named Prabhāvatī, and he seeks to keep her faithful while her merchant husband, Madanavinoda, is away on business. Each night, when Prabhāvatī is tempted to meet a lover, the clever bird tells her a story meant to dissuade her. After seventy nights of such tales, her husband returns, and she has remained true, bringing the drama to a close. The stories feature clever protagonists who extricate themselves from difficult situations, especially women who outsmart men in episodes involving adultery.</note>
+      </notesStmt>
+      <sourceDesc>
+        <bibl>
+          <title>Die Çukasaptati. Textus Simplicior.</title>
+          <editor>Schmidt, Richard</editor>
+          <imprint>
+            <publisher>Deutsche Morgenländische Gesellschaft</publisher>
+            <pubPlace>Leipzig</pubPlace>
+            <date>1893</date>
+          </imprint>
+        </bibl>
+        <series>
+          <title level="s">Abhandlungen für die Kunde des Morgenlandes</title>
+          <biblScope>Band X, No. 1</biblScope>
+        </series>
+        <note>Band X as a whole (Nos. 1–4) was published in 1897.</note>
+      </sourceDesc>
+    </fileDesc>
+    <encodingDesc>
+      <editorialDecl>
+        <p id="file-creation-method">I (Tyler Neill) produced this HANSEL edition by manually converting the original Word document to plaintext and then automatically adding XML markup. The text still needs a final proofread.</p>
+        <p id="transliteration">
+          The source edition is printed in Devanāgarī; the electronic text uses lossless IAST transliteration.
+          IAST differs slightly from ISO 15919; conversion can be achieved via:
+          <list>
+            <item>
+              <code>ṛ → r̥</code>
+            </item>
+            <item>
+              <code>ḷ → l̥</code>
+            </item>
+            <item>
+              <code>ḻ → ḷ</code>
+            </item>
+            <item>
+              <code>ṃ → ṁ</code>
+            </item>
+            <item>
+              <code>e → ē</code>
+            </item>
+            <item>
+              <code>o → ō</code>
+            </item>
+          </list>
+        </p>
+        <p id="word-division">Roman-like (ity evam, not ityevam)</p>
+        <p id="error-markup">
+          Corrections and uncertainties:
+          <list>
+            <item>Replacement: <choice>
+                <sic>before</sic>
+                <corr>after</corr>
+              </choice>
+            </item>
+            <item>Deletion: <del/>
+            </item>
+            <item>Addition: <supplied/>
+            </item>
+            <item>Unclear: <unclear/>
+            </item>
+          </list>
+        </p>
+        <p id="intermediate-textual-units">Prose paragraphs are enclosed in the normal <tag>p</tag> tags. Verse passages are enclosed in line-group tag <tag>lg</tag>, with one parent <tag>lg</tag> for groups of verses, and verse halves are individually tagged with <tag>l</tag>. <tag>p</tag> and parent <tag>lg</tag> have location markers.</p>
+      </editorialDecl>
+    </encodingDesc>
+    <revisionDesc>
+      <change when="2020–2025">V. Gostishchev: Typed up from edition, intensively proofread and structured.</change>
+      <change when="July 2025" ana="#hansel-contributor">Tyler Neill: Restructured for HANSEL.</change>
+    </revisionDesc>
+  </teiHeader>
+  <text>
+    <body>
+      <div n="1">
+        <pb n="1"/><p xml:id="p1_l1" n="1,1">|| śrīgaṇeśāya namaḥ || <lb n="2"/></p>
+        <lg xml:id="p1_l2" n="1,2">
+          <l>praṇamya śāradāṃ devīṃ divyavijñānaśālinīm |<lb n="3"/></l>
+          <l>vacmi cetovinodārtham uddhāraṃ kīrasaṃmateḥ || 1.1 (= 1) ||<lb n="4"/></l>
+        </lg>
+        <p xml:id="p1_l4" n="1,4">asti candrapuraṃ nāma nagaram | tatra vikramaseno nāma rājā babhūva | <lb n="5"/> tasmin nagare haridatto nāma śreṣṭhī | tasya bhāryā śṛṅgārasundarīnāmnī |  <lb n="6"/> tatputro madanavinodanāmā babhūva | tasya patnī prabhāvatī | sā somadattaśreṣṭhinaḥ  <lb n="7"/> kanyā | madanavinodas tu atīva viṣayāsaktaḥ kuputraḥ  <lb n="8"/> pituḥ śikṣāṃ na śṛṇoti | tasya dyūtamṛgayāveśyāmadyādiṣu atīva āsaktiḥ |  <lb n="9"/> kumārgacāriṇaṃ taṃ kuputraṃ dṛṣṭvā tatpitā haridattaḥ sapatnīkaḥ  <lb n="10"/> atīva duḥkhitaḥ saṃjātaḥ | taṃ haridattaṃ kuputraduḥkhena pīḍitaṃ dṛṣṭvā  <lb n="11"/> tasya sakhā trivikramanāmā dvijaḥ svagṛhato nītinipuṇaṃ śukaṃ sārikāṃ  <lb n="12"/> ca gṛhītvā tadgṛhe gatvā prāha | sakhe haridatta enaṃ śukaṃ sapatnīkaṃ  <lb n="13"/> putravat tvaṃ paripālaya | etatsaṃrakṣaṇena tava duḥkhaṃ dūrībhaviṣyati | haridattas  <lb n="14"/> tu taṃ śukaṃ gṛhītvā putrāya samarpayām āsa | madanavinodena śayanamandire  <pb n="2"/> svarṇapañjarasthaḥ sthāpitaḥ paripoṣitaś ca | athaikadā rahasi  <lb n="2"/> śuko madanaṃ prāha | he sakhe  <lb n="3"/></p>
+        <lg xml:id="p2_l3" n="2,3">
+          <l>pitros te duḥkhinor duḥkhāt pataty aśrucayo bhuvi |<lb n="4"/></l>
+          <l>tena pāpena te vatsa patanaṃ devaśarmavat || 1.2 (= 2) ||<lb n="5"/></l>
+        </lg>
+        <p xml:id="p2_l5" n="2,5">sa prāha | katham etat | śuka āha | asti pañcapuraṃ nāma nagaram | <lb n="6"/> tatra satyaśarmā brāhmaṇaḥ | tadbhāryā dharmaśīlānāmnī putras tu devaśarmā |  <lb n="7"/> sa ca adhītavidyaḥ pitṛpracchannavṛttyā deśāntaraṃ gatvā bhāgīrathītīre  <lb n="8"/> tapaḥ kṛtavān | ekadā sa tapasvī gaṅgātīre japārtham upaviṣṭaḥ | tasmin  <lb n="9"/> kāle kayācit balākayā uḍḍīyamānayā tadaṅgopari purīṣotsargaḥ  <lb n="10"/> kṛtaḥ | sa ca tapasvī krodhākulitanetraḥ yāvad ūrdhvaṃ paśyati tāvat tatkrodhāgninā  <lb n="11"/> bhasmībhūtāṃ balākāṃ bhūmau patitāṃ dṛṣṭvā (balākāṃ dagdhvā)  <lb n="12"/> nārāyaṇadvijagṛhe bhikṣārthaṃ yayau | svabhartṛśuśrūṣāparayā tatpatnyā kopābhiviṣṭo  <lb n="13"/> nirbhartsitaḥ satpakṣihāyam uktaś ca | nāhaṃ balākeva tvatkopasthānam |  <lb n="14"/> sa ca pracchannapātakajñānād bhīto vismitaś ca preṣitaś ca tayā  <pb n="3"/> dharmavyādhapārśve vārāṇasīṃ nagarīṃ yayau | tatra raktāktahastaṃ yamapratibhaṃ  <lb n="2"/> māṃsavikrayaṃ vidadhānaṃ taṃ dṛṣṭvā dṛśām ante sthitaḥ | vyādhena svāgatapraśnapūrvakaṃ  <lb n="3"/> svagṛhaṃ nītvā nijapitarau sabhaktikaṃ bhojayitvā paścāt tasya bhojanaṃ  <lb n="4"/> dattam | tadanantaraṃ sa ca vyādhaṃ jñānakāraṇaṃ papraccha | kathaṃ satī  <lb n="5"/> jñānavatī kathaṃ ca tvaṃ jñānavān | tena vyādhenoktam |  <lb n="6"/></p>
+        <lg type="group" n="3,6" xml:id="p3_l6">
+          <lg>
+            <l>nijānvayapraṇītaṃ yaḥ samyag dharmaṃ niṣevate |<lb n="7"/></l>
+            <l>uttamādhamamadhyeṣu vikāreṣu parāṅmukhaḥ || 1.3 (= 3) ||<lb n="8"/></l>
+          </lg>
+          <lg>
+            <l>sa gṛhī sa muniḥ sādhuḥ sa ca yogī sa dhārmikaḥ |<lb n="9"/></l>
+            <l>pitṛśuśrūṣako nityaṃ jantuḥ sādhāraṇaś ca yaḥ || 1.4 (= 4) ||<lb n="10"/></l>
+          </lg>
+        </lg>
+        <p xml:id="p3_l10" n="3,10">ahaṃ sāpi ca evaṃ jñāninau tvaṃ ca nijapitarau parityajya bhraman mādṛśāṃ <lb n="11"/> na sambhāṣaṇārhaḥ | param atithiṃ matvā jalpitaḥ | evam uktaḥ sa brāhmaṇo  <lb n="12"/> vinayaparaṃ vyādhaṃ papraccha | tenoktam |  <lb n="13"/></p>
+        <lg xml:id="p3_l13" n="3,13">
+          <l>na pūjayanti ye pūjyān mānyān no mānayanti ye |<pb n="4"/></l>
+          <l>jīvanti nindyamānās te mṛtāḥ svargaṃ na yānti ca || 1.5 (= 5) ||<lb n="2"/></l>
+        </lg>
+      </div>
+    </body>
+  </text>
+</TEI>

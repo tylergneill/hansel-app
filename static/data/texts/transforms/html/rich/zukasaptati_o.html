@@ -1,10 +1,11 @@
 <html>
   <head>
     <meta charset="utf-8"/>
-    <title>zukasaptati_o.xml</title>
+    <title>zukasaptati_o</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <link rel="stylesheet" href="components/style.css"/>
     <script src="components/script.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@indic-transliteration/sanscript/sanscript.min.js"></script>
   </head>
   <body>
     <div id="controls-icon">
@@ -29,6 +30,14 @@
         </label>
       </div>
       <div class="toggle-switch-container rich-text-toggle">
+        <label class="toggle-switch">
+          <input type="checkbox" onchange="toggleCorrections(this)"/>
+          <span class="toggle-switch-text">Corrections</span>
+          <span class="toggle-switch-handle"/>
+        </label>
+        <img id="corrections-info-icon" src="components/info.png" class="info-icon" title="Toggles display of corrections, listed at the bottom of the metadata panel."/>
+      </div>
+      <div class="toggle-switch-container rich-text-toggle">
         <label class="switch">
           <input type="checkbox" onchange="toggleLineBreaks(this)"/>
           <span class="switch-text-off">Paragraphs</span>
@@ -38,9 +47,21 @@
       <div class="toggle-switch-container rich-text-toggle">
         <label class="toggle-switch">
           <input type="checkbox" onchange="toggleBreaks(this)"/>
-          <span class="toggle-switch-text">Line breaks</span>
+          <span class="toggle-switch-text">Line/Page breaks</span>
           <span class="toggle-switch-handle"/>
         </label>
+      </div>
+      <div class="toggle-switch-container">
+        <div id="transliteration-controls-container">
+          <span class="toggle-switch-text">ā→आ</span>
+          <div id="transliteration-controls">
+            <select id="transliteration-scheme"/>
+            <label id="toggle-switch-text">
+              <input type="checkbox" id="show-all-schemes-checkbox"/>
+              <span class="toggle-switch-text"> more</span>
+            </label>
+          </div>
+        </div>
       </div>
     </div>
     <div id="top-widgets">
@@ -48,16 +69,51 @@
         <h2>Metadata <span id="metadata-caret">▶</span></h2>
         <ul id="metadata-list">
           <li><b>Title: </b>Śukasaptati, “Textus Ornatior”</li>
-          <li><b>Author: </b>(Unknown)</li>
-          <li><b>Source File: </b>Ambuda website “Proofing” section, extracted page-by-page (CC0 license).</li>
+          <li><b>Pandit Work ID: </b>116327</li>
+          <li><b>Attributed Author: </b>Cintāmaṇi Bhaṭṭa</li>
+          <li><b>Pandit Attributed Author ID: </b>116325</li>
           <li><b>Edition Short: </b>Schmidt 1899</li>
-          <li><b>Edition: </b>Schmidt, Richard. “Der Textus ornatior der Śukasaptati.” 
-Abhandlungen der Philosophisch-Philologischen Classe 
-der Königlich Bayerischen Akademie der Wissenschaften, Band XXI.
-München: Verl. d. K. Akademie, 1899.</li>
-          <li><b>PDFs: </b><ul>
+          <li><b>Edition: </b><ul>
+<li>Editor: Schmidt, Richard</li>
+<li>Title: Der Textus ornatior der Śukasaptati</li>
+<li>Place: München</li>
+<li>Publisher: Verlag der Königlichen Akademie</li>
+<li>Series: Abhandlungen der Philosophisch-Philologischen Classe der Königlich Bayerischen Akademie der Wissenschaften</li>
+<li>Series Part: Band XXI</li>
+<li>Year: 1899</li>
+</ul>
+</li>
+          <li><b>Edition PDFs: </b><ul>
 <li><a href="http://gretil.sub.uni-goettingen.de/gretil_elib/Suk901__Sukasaptati_TextOrnat_ed_Schmidt.pdf">on GRETIL E-Library</a></li>
 <li><a href="https://archive.org/details/sukasaptatitextornatedschmidt/Suk901__Sukasaptati_TextOrnat_ed_Schmidt">on Archive (x2)</a></li>
+</ul>
+</li>
+          <li><b>Extent: </b><ul>
+<li>The complete work is nearly extant except for a few small lacunae.</li>
+<li>The edition contains a complete text of the known work.</li>
+<li>The text fills 66 pages in the edition (pp. 319–384), with no other intervening material.</li>
+</ul>
+</li>
+          <li><b>File Size (KB): </b>275</li>
+          <li><b>Structure: </b>The work consists of seventy stories in a frame story. The frame story's introduction and conclusion are explicitly distinguished by the edition as kathāvatāra (9pp in edition) and kathāvadhi (1p), respectively.</li>
+          <li><b>Work Description: </b>The work's frame story takes place over seventy nights. In the frame, a pet parrot belongs to a young, lonely woman named Prabhāvatī, and he seeks to keep her faithful while her merchant husband, Madanavinoda, is away on business. Each night, when Prabhāvatī is tempted to meet a lover, the clever bird tells her a story meant to dissuade her. After seventy nights of such tales, her husband returns, and she has remained true, bringing the drama to a close. The stories feature clever protagonists who extricate themselves from difficult situations, especially women who outsmart men in episodes involving adultery.</li>
+          <li><b>Genres: </b><ul>
+<li>Kāvya</li>
+<li>Kathā</li>
+</ul>
+</li>
+          <li><b>Translations: </b><ul>
+<li>German, R. Schmidt (ed.), 1899, <a href="http://gretil.sub.uni-goettingen.de/gretil_elib/Suk899__Sukasaptati_TextOrnat_tr_Schmidt.pdf">on GRETIL E-Library</a></li>
+</ul>
+</li>
+          <li><b>Source Collection: </b>Ambuda</li>
+          <li><b>Source File Link: </b>शुकसप्ततिः</li>
+          <li><b>Source File License: </b>CC0</li>
+          <li><b>HANSEL License: </b>CC BY-NC-SA 4.0</li>
+          <li><b>Contributors: </b><ul>
+<li>Suhas Mahesh</li>
+<li>"shivjun1685"</li>
+<li>Tyler Neill</li>
 </ul>
 </li>
           <li><b>Digitization Notes: </b><ul>
@@ -66,30 +122,22 @@ München: Verl. d. K. Akademie, 1899.</li>
 <li>(May–Jul 2025) Tyler Neill: Second OCR and merge with previous corrections, proofread final time, restructured for HANSEL.</li>
 </ul>
 </li>
-          <li><b>Extent: </b><ul>
-<li>Complete (with very small lacunae).</li>
-<li>66pp in edition (pp. 319–384). </li>
-</ul>
-</li>
-          <li><b>File Size (KB): </b>275</li>
-          <li><b>Genres: </b><ul>
-<li>Kāvya</li>
-<li>Kathā</li>
-</ul>
-</li>
-          <li><b>Structure: </b>The work consists of 70 stories in a frame story.
-The frame story's introduction and conclusion are explicitly distinguished 
-as kathāvatāra (9pp in edition) and kathāvadhi (1p).</li>
-          <li><b>Translations: </b><ul>
-<li>German, editor = R. Schmidt, 1899, <a href="http://gretil.sub.uni-goettingen.de/gretil_elib/Suk899__Sukasaptati_TextOrnat_tr_Schmidt.pdf">on GRETIL E-Library</a></li>
-</ul>
-</li>
-          <li>
-            <b>Additional Notes: </b>
-            <ul>
-<li>The <em>Simplicior</em> text is believed to be older than the <em>Ornatior</em>.</li>
-<li>Content improvements have been contributed back to Ambuda.</li>
-</ul>
+          <li><b>File Creation Method: </b>I (Tyler Neill) produced this HANSEL edition by first extracting the text page-by-page from the Ambuda website “Proofing” section. I then ran a PDF of the edition through both Google Cloud Vision OCR (via Skrutable) and Gemini 2.0 Flash (via Dharmamitra). These two OCR outputs were then automatically harmonized using Gemini 2.5 Pro (via direct API and using a custom prompt). This harmonized OCR output was then contrasted against the Ambuda-derived version using Meld and differences were reconciled individually with reference to the PDF. I then fully proofread the text, word by word. Finally, I contributed content improvements back to Ambuda using its page-by-page Proofing interface.</li>
+          <li><b>Text Type: </b>Prose with verse</li>
+          <li><b>Word Division Style: </b>Devanāgarī-like (ityevam, not ity evam)</li>
+          <li><b>Original Submission Last Updated: </b>2025-07-24</li>
+          <li><b>Text Last Updated: </b>2025-09-29</li>
+          <li><b>Metadata Last Updated: </b>2025-10-22</li>
+          <li id="corrections-list-container">
+            <b>Corrections (1) <span class="caret">▶</span></b>
+            <table style="display: none; padding-left: 2em;">
+              <tbody>
+                <tr>
+                  <td style="padding-right: 1em;">p.319, l.1:</td>
+                  <td>ce → je</td>
+                </tr>
+              </tbody>
+            </table>
           </li>
         </ul>
       </div>
@@ -174,12 +222,12 @@ as kathāvatāra (9pp in edition) and kathāvadhi (1p).</li>
       <h2 class="location-marker" id="319,24">p.319, l.24</h2>
       <div class="lg rich-text" style="padding-left: 2em; margin-bottom: 1.3em;">
         <p>uktaṃ ca |</p>
-        <span>mantre tīrthe dvije deve daivajñe bheṣa≤ce≥«je» gurau |<span class="lb rich-text" data-line="25">(p.319, l.25)</span><br class="lb-br rich-text"/></span>
+        <span>mantre tīrthe dvije deve daivajñe bheṣa<span class="correction"><i class="ante-correction" title="pre-correction (post-: je)">ce</i><i class="post-correction" style="display:none;" title="post-correction (pre-: ce)">je</i></span> gurau |<span class="lb rich-text" data-line="25">(p.319, l.25)</span><br class="lb-br rich-text"/></span>
         <span>yādṛśī bhāvanā yatra siddhirbhavati tādṛśī ||<span class="lb rich-text" data-line="26">(p.319, l.26)</span><br class="lb-br rich-text"/></span>
       </div>
       <div class="lg plain-text" style="padding-left: 2em; margin-bottom: 1.3em;">
         <p>uktaṃ ca |</p>
-        <span>mantre tīrthe dvije deve daivajñe bheṣa≤ce≥«je» gurau |</span>
+        <span>mantre tīrthe dvije deve daivajñe bheṣaje gurau |</span>
         <span>yādṛśī bhāvanā yatra siddhirbhavati tādṛśī ||</span>
       </div>
     </div>

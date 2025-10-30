@@ -1,0 +1,170 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<TEI xmlns="http://www.tei-c.org/ns/1.0">
+  <teiHeader>
+    <fileDesc>
+      <titleStmt>
+        <title type="main">Śukasaptati, “Textus Ornatior”</title>
+        <title type="sub">A HANSEL edition</title>
+        <respStmt>
+          <persName>Suhas Mahesh</persName>
+          <resp>Contribution to the digital edition.</resp>
+        </respStmt>
+        <respStmt>
+          <persName>"shivjun1685"</persName>
+          <resp>Contribution to the digital edition.</resp>
+        </respStmt>
+        <respStmt>
+          <persName>Tyler Neill</persName>
+          <resp>Contribution to the digital edition.</resp>
+        </respStmt>
+      </titleStmt>
+      <publicationStmt>
+        <authority>HANSEL: Human-Accessible NLP-ready Sanskrit E-text Library</authority>
+        <availability status="restricted">
+          <licence>
+            <p>Copyright 2025 Tyler Neill.</p>
+            <p>
+              <ref target="https://creativecommons.org/licenses/by-nc-sa/4.0/" type="licence">
+      Distributed by <ref target="https://hansel-library.info" type="url">HANSEL</ref>
+      under a Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License.
+    </ref>
+            </p>
+            <p>Under this licence, you are free to:
+    <list>
+                <item>Share — copy and redistribute the material in any medium or format.</item>
+                <item>Adapt — remix, transform, and build upon the material.</item>
+              </list>
+            </p>
+            <p>Under the following terms:</p>
+            <p>
+              <list>
+                <item>Attribution — You must give appropriate credit, provide a link to the license, and indicate if changes were made. You may do so in any reasonable manner, but not in any way that suggests the licensor endorses you or your use.</item>
+                <item>NonCommercial — You may not use the material for commercial purposes.</item>
+                <item>ShareAlike — If you remix, transform, or build upon the material, you must distribute your contributions under the same license as the original.</item>
+                <item>No additional restrictions — You may not apply legal terms or technological measures that legally restrict others from doing anything the license permits.</item>
+              </list>
+            </p>
+            <p>See the Creative Commons site for full details.</p>
+            <p>HANSEL assumes no responsibility for unauthorised use that infringes rights.</p>
+          </licence>
+        </availability>
+        <date when="2025-10-22" from="2025" to="2025">October 22, 2025</date>
+      </publicationStmt>
+      <notesStmt>
+        <note>The work's frame story takes place over seventy nights. In the frame, a pet parrot belongs to a young, lonely woman named Prabhāvatī, and he seeks to keep her faithful while her merchant husband, Madanavinoda, is away on business. Each night, when Prabhāvatī is tempted to meet a lover, the clever bird tells her a story meant to dissuade her. After seventy nights of such tales, her husband returns, and she has remained true, bringing the drama to a close. The stories feature clever protagonists who extricate themselves from difficult situations, especially women who outsmart men in episodes involving adultery.</note>
+      </notesStmt>
+      <sourceDesc>
+        <bibl>
+          <title>Der Textus ornatior der Śukasaptati</title>
+          <editor>Schmidt, Richard</editor>
+          <imprint>
+            <publisher>Verlag der Königlichen Akademie</publisher>
+            <pubPlace>München</pubPlace>
+            <date>1899</date>
+          </imprint>
+        </bibl>
+        <series>
+          <title level="s">Abhandlungen der Philosophisch-Philologischen Classe der Königlich Bayerischen Akademie der Wissenschaften</title>
+          <biblScope>Band XXI</biblScope>
+        </series>
+        <note/>
+      </sourceDesc>
+    </fileDesc>
+    <encodingDesc>
+      <editorialDecl>
+        <p id="file-creation-method">I (Tyler Neill) produced this HANSEL edition by first extracting the text page-by-page from the Ambuda website “Proofing” section. I then ran a PDF of the edition through both Google Cloud Vision OCR (via Skrutable) and Gemini 2.0 Flash (via Dharmamitra). These two OCR outputs were then automatically harmonized using Gemini 2.5 Pro (via direct API and using a custom prompt). This harmonized OCR output was then contrasted against the Ambuda-derived version using Meld and differences were reconciled individually with reference to the PDF. I then fully proofread the text, word by word. Finally, I contributed content improvements back to Ambuda using its page-by-page Proofing interface.</p>
+        <p id="transliteration">
+          The source edition is printed in Devanāgarī; the electronic text uses lossless IAST transliteration.
+          IAST differs slightly from ISO 15919; conversion can be achieved via:
+          <list>
+            <item>
+              <code>ṛ → r̥</code>
+            </item>
+            <item>
+              <code>ḷ → l̥</code>
+            </item>
+            <item>
+              <code>ḻ → ḷ</code>
+            </item>
+            <item>
+              <code>ṃ → ṁ</code>
+            </item>
+            <item>
+              <code>e → ē</code>
+            </item>
+            <item>
+              <code>o → ō</code>
+            </item>
+          </list>
+        </p>
+        <p id="word-division">Devanāgarī-like (ityevam, not ity evam)</p>
+        <p id="error-markup">
+          Corrections and uncertainties:
+          <list>
+            <item>Replacement: <choice>
+                <sic>before</sic>
+                <corr>after</corr>
+              </choice>
+            </item>
+            <item>Deletion: <del/>
+            </item>
+            <item>Addition: <supplied/>
+            </item>
+            <item>Unclear: <unclear/>
+            </item>
+          </list>
+        </p>
+        <p id="intermediate-textual-units">Prose paragraphs are enclosed in the normal <tag>p</tag> tags. Verse passages are enclosed in line-group tag <tag>lg</tag>, with one parent <tag>lg</tag> for groups of verses, and verse halves are individually tagged with <tag>l</tag>. <tag>p</tag> and parent <tag>lg</tag> have location markers.</p>
+      </editorialDecl>
+    </encodingDesc>
+    <revisionDesc>
+      <change when="Aug 2022" who="Suhas Mahesh (Ambuda user `suhasm`)">Item created, Google Cloud Vision OCR performed.</change>
+      <change when="Mar–May 2023" who="Ambuda user `shivjun1685`">Proofread once.</change>
+      <change when="May–Jul 2025" who="Tyler Neill" ana="#hansel-contributor">Second OCR and merge with previous corrections, proofread final time, restructured for HANSEL.</change>
+    </revisionDesc>
+  </teiHeader>
+  <text>
+    <body>
+      <div n="kathāvatāra">
+        <pb n="319"/><p xml:id="p319_l1" n="319,1">|| śrīgaṇeśāya namaḥ || <lb n="2"/></p>
+        <lg xml:id="p319_l2" n="319,2">
+          <l>sadbhyo yathārhamabhipūjya sapradakṣiṇaṃ praṇāmaṃ nirmāya |<lb n="3"/></l>
+          <l>ātmānaṃ putraviṣayiṇaṃ kartumupakrame medinīnāyakapriyaḥ ||<lb n="4"/></l>
+        </lg>
+        <p xml:id="p319_l4" n="319,4">bho tatrabhavanto bhavantaḥ pratyekaśo bṛhaspatisamānavaibhavāḥ | tarhi mama saṃpattiratiśāyinī | nāhaṃ dhanasya <lb n="5"/> vidyamānasya saṃkhyāṃ kalayāmi | paraṃ tu mama tanayo nāsti | kimatra kāraṇam | tatastaiḥ samastairapi saṃbhūya  <lb n="6"/> jagade | haradatta dattakarṇamākarṇayatu bhavān | sarvaṃ jānīte | tarhyetāvadeva jñānasya kimiti gocarata<lb n="7" break="no"/>yā vidhuro 'si | itare padārthāḥ sarve 'pyudyamādhikaraṇasāmagryā prāduṣkārayituṃ śakyāḥ | paraṃ yaśastathā <lb n="8"/> saṃtatiśca sukṛtasaṃcayavañcanayā na kathaṃcana tadubhayaṃ sādhayituṃ śakyate |  <lb n="9"/></p>
+        <lg xml:id="p319_l9" n="319,9">
+          <head>uktaṃ ca |</head>
+          <l>pañca kāmayate kuntī tatputrāṇāṃ vadhūrapi |<lb n="10"/></l>
+          <l>satīṃ vadati loko 'yaṃ yaśaḥ puṇyairavāpyate ||<lb n="11"/></l>
+        </lg>
+        <p xml:id="p319_l11" n="319,11">manaḥkāṅkṣito manorathastadānīmevāsādyate yadā parameśvare niratiśāyinī bhaktirjāgarti | parameśvarānugrahaṃ <lb n="12"/> vinā na kāpi kāmanā phalāya kalpate |  <lb n="13"/></p>
+        <lg type="group" n="319,13" xml:id="p319_l13">
+          <lg>
+            <head>abhihitaṃ ca |</head>
+            <l>nirantarasukhāpekṣā hṛdaye vartate yadi |<lb n="14"/></l>
+            <l>tyaktvā bhavabhavānbhāvānbhavānīvallabhaṃ bhaja ||<lb n="15"/></l>
+          </lg>
+          <lg>
+            <l>pade pade nidhānāni yojane yojane bilam |<lb n="16"/></l>
+            <l>aprasanne virūpākṣe kutaḥ kṣīreṇa bhojanam ||<lb n="17"/></l>
+          </lg>
+        </lg>
+        <p xml:id="p319_l17" n="319,17">ityabhihite tena haradattena parameśvaraprītiprakarṣodayasiddhaye vividhadānapuṇyarudrajapakoṭihomādi pramukhakarma <lb n="18"/> kartumādadhre | tena sukṛtātiśayena tasya tanayaḥ samajaniṣṭa | tasminputrajanidine haradattaḥ paṭahodghoṣapuraḥsaraṃ  <lb n="19"/> yāvanto yācakāstānadaridrānakārṣīt | arthināmavasarātikramo nātighaṭiṣṭa |  <lb n="20"/></p>
+        <lg xml:id="p319_l20" n="319,20">
+          <head>tathā cābhihitam |</head>
+          <l>putre jāte vyatīpāte saṃkrāntau grahaṇe tathā |<lb n="21"/></l>
+          <l>khalu yajñe vivāhe ca dattaṃ bhavati cākṣayam ||<lb n="22"/></l>
+        </lg>
+        <p xml:id="p319_l22" n="319,22">tanayajanane yatkiṃciddānādi sukṛtaṃ vidhīyate tena śreyasā bālakasyāyurvardhate grahāḥ sugrahā bhavanti <lb n="23"/> sarve 'pyupadravāḥ pradrāvyante |  <lb n="24"/></p>
+        <lg xml:id="p319_l24" n="319,24">
+          <head>uktaṃ ca |</head>
+          <l>mantre tīrthe dvije deve daivajñe bheṣa<choice>
+              <sic>ce</sic>
+              <corr>je</corr>
+            </choice> gurau |<lb n="25"/></l>
+          <l>yādṛśī bhāvanā yatra siddhirbhavati tādṛśī ||<lb n="26"/></l>
+        </lg>
+      </div>
+    </body>
+  </text>
+</TEI>
