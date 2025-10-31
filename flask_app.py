@@ -1,10 +1,12 @@
 import logging
 import os
 import time
+import json
 from pathlib import Path
 from typing import Dict
 import io
 import zipfile
+import xml.etree.ElementTree as ET
 
 from flask import Flask, request, send_file, render_template, abort
 
@@ -84,6 +86,63 @@ def serve_file(filename):
     as_attachment_flag = normalized_filename.lower().endswith(".zip")
 
     return send_file(file_path, as_attachment=as_attachment_flag)
+
+@app.route("/texts/transforms/html/rich/<filename>")
+def view_text(filename):
+    """
+    Render a rich HTML text inside the shared application template so that the
+    UI chrome (toggles, metadata panel, etc.) lives only in the app.
+    Falls back to serving the static file directly if the new context marker
+    is missing to preserve compatibility with older exports.
+    """
+    html_path = FILE_TYPE_PATHS['html_rich'] / filename
+    if not html_path.is_file():
+        abort(404, description="Text not found")
+
+    try:
+        tree = ET.parse(html_path)
+    except ET.ParseError:
+        return send_file(html_path)
+
+    root = tree.getroot()
+    content_elem = root.find(".//div[@id='content']")
+    context_elem = root.find(".//script[@id='hansel-document-context']")
+
+    if content_elem is None or context_elem is None or context_elem.text is None:
+        return send_file(html_path)
+
+    content_html = ET.tostring(content_elem, encoding='unicode')
+
+    try:
+        raw_context = json.loads(context_elem.text)
+    except json.JSONDecodeError:
+        raw_context = {}
+
+    context_defaults = {
+        "title": Path(filename).stem,
+        "toc": [],
+        "toc_available": False,
+        "metadata_html": "",
+        "metadata_available": False,
+        "metadata_entries": [],
+        "corrections": [],
+        "has_corrections": False,
+        "verse_only": False,
+        "includes_plain_variant": False,
+        "no_line_numbers": False,
+    }
+    context = {**context_defaults, **raw_context}
+
+    context_json = json.dumps(context, ensure_ascii=False)
+
+    return render_template(
+        "text_viewer.html",
+        content_html=content_html,
+        context=context,
+        context_json=context_json,
+        static_files_path=STATIC_FILES_PATH,
+        filename=filename,
+    )
 
 @app.route("/download", methods=['POST'])
 def download_bundle():

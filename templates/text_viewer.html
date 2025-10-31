@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>{{ context.title }}</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='web/rich/style.css') }}">
+    {% if context.verse_only %}
+    <link rel="stylesheet" href="{{ url_for('static', filename='web/rich/verse_style.css') }}">
+    {% endif %}
+</head>
+<body class="{% if context.verse_only %}simple-verse-style{% endif %}">
+    <div id="controls-icon">
+        <span></span>
+        <span></span>
+        <span></span>
+    </div>
+
+    <div class="button-container">
+        <div id="close-button-container">&times;</div>
+
+        {% if not context.verse_only %}
+        <div class="toggle-switch-container">
+            <label class="toggle-switch">
+                <input type="checkbox" onchange="toggleLocationMarkers(this)">
+                <span class="toggle-switch-text">Locations</span>
+                <span class="toggle-switch-handle"></span>
+            </label>
+        </div>
+
+        <div class="toggle-switch-container">
+            <label class="toggle-switch">
+                <input type="checkbox" onchange="toggleViewMode(this)">
+                <span class="toggle-switch-text">Search-friendly</span>
+                <span class="toggle-switch-handle"></span>
+            </label>
+        </div>
+
+        <div class="toggle-switch-container rich-text-toggle">
+            <label class="toggle-switch">
+                <input type="checkbox" onchange="toggleCorrections(this)">
+                <span class="toggle-switch-text">Corrections</span>
+                <span class="toggle-switch-handle"></span>
+            </label>
+            <img id="corrections-info-icon"
+                 class="info-icon"
+                 src="{{ url_for('static', filename='web/rich/info.png') }}"
+                 title="Toggles display of corrections, listed at the bottom of the metadata panel.">
+        </div>
+
+        <div class="toggle-switch-container rich-text-toggle">
+            <label class="switch">
+                <input type="checkbox" onchange="toggleLineBreaks(this)">
+                <span class="switch-text-off">Paragraphs</span>
+                <span class="switch-text-on">Lines</span>
+            </label>
+        </div>
+        {% endif %}
+
+        <div class="toggle-switch-container rich-text-toggle">
+            <label class="toggle-switch">
+                <input type="checkbox" onchange="toggleBreaks(this)">
+                <span class="toggle-switch-text">{{ "Page breaks" if context.verse_only else "Line/Page breaks" }}</span>
+                <span class="toggle-switch-handle"></span>
+            </label>
+        </div>
+
+        <div class="toggle-switch-container">
+            <div id="transliteration-controls-container">
+                <span class="toggle-switch-text">ā→आ</span>
+                <div id="transliteration-controls">
+                    <select id="transliteration-scheme"></select>
+                    <label id="toggle-switch-text">
+                        <input type="checkbox" id="show-all-schemes-checkbox">
+                        <span class="toggle-switch-text"> more</span>
+                    </label>
+                </div>
+            </div>
+        </div>
+
+        {% if context.verse_only %}
+        <div class="toggle-switch-container">
+            <label class="toggle-switch">
+                <input type="checkbox" onchange="toggleVerseFormatting(this)">
+                <span class="toggle-switch-text">Verse Styling</span>
+                <span class="toggle-switch-handle"></span>
+            </label>
+        </div>
+
+        <div class="toggle-switch-container verse-format-toggle">
+            <label class="simple-checkbox-label">Verse Spacing</label>
+            <input id="width-slider" type="range" min="0" max="1.6" step="0.4" value="0.8">
+        </div>
+        {% endif %}
+    </div>
+
+    <div id="top-widgets">
+        <div id="metadata">
+            <h2>Metadata <span id="metadata-caret">▶</span></h2>
+            <ul id="metadata-list">
+                {% if context.metadata_entries %}
+                    {% for entry in context.metadata_entries %}
+                        {% if entry.type == 'field' %}
+                            {% set inline_text = entry.inline_text | default('', true) | trim %}
+                            {% set html_fragment = entry.content_html | default('', true) %}
+                            {% set html_text = html_fragment | striptags | replace('&nbsp;', '') | trim %}
+                            {% set has_inline = inline_text != '' %}
+                            {% set has_html = html_text != '' %}
+                            {% if entry.label %}
+                                <li>
+                                    {% if entry.label %}
+                                        <b>{{ entry.label }}{% if has_inline or has_html %}: {% endif %}</b>
+                                    {% endif %}
+                                    {% if has_inline %}
+                                        {{ inline_text }}
+                                    {% endif %}
+                                    {% if has_html %}
+                                        {{ html_fragment | safe }}
+                                    {% endif %}
+                                </li>
+                            {% endif %}
+                        {% elif entry.type == 'corrections' %}
+                            <li id="corrections-list-container">
+                                <b>Corrections ({{ entry.count }}) <span class="caret">▶</span></b>
+                                <table style="display: none; padding-left: 2em;">
+                                    <tbody>
+                                        {% for item in entry.rows %}
+                                        <tr>
+                                            <td style="padding-right: 1em;">p.{{ item.page }}, l.{{ item.line }}:</td>
+                                            <td>
+                                                {% if item.sic == '' and item.corr == ' ' %}
+                                                    space added
+                                                {% elif item.sic == ' ' and item.corr == '' %}
+                                                    space removed
+                                                {% elif item.corr == '' and item.sic != '' %}
+                                                    {{ item.sic }} deleted
+                                                {% elif item.sic == '' and item.corr != '' %}
+                                                    {{ item.corr }} added
+                                                {% else %}
+                                                    {{ item.sic }} → {{ item.corr }}
+                                                {% endif %}
+                                            </td>
+                                        </tr>
+                                        {% endfor %}
+                                    </tbody>
+                                </table>
+                            </li>
+                        {% endif %}
+                    {% endfor %}
+                {% else %}
+                    <li>No metadata available.</li>
+                {% endif %}
+            </ul>
+        </div>
+
+        {% if context.toc_available %}
+        <div id="toc">
+            <h2>Table of Contents <span id="toc-caret">▶</span></h2>
+            <ul id="toc-list">
+                {% for item in context.toc %}
+                <li>
+                    <a href="#{{ item.id }}">§ {{ item.name }} (p.{{ item.page }})</a>
+                </li>
+                {% endfor %}
+            </ul>
+        </div>
+        {% endif %}
+    </div>
+
+    {{ content_html | safe }}
+
+    <script type="application/json" id="hansel-document-context">{{ context_json | safe }}</script>
+    <script src="https://cdn.jsdelivr.net/npm/@indic-transliteration/sanscript/sanscript.min.js"></script>
+    <script src="{{ url_for('static', filename='web/rich/script.js') }}"></script>
+    {% if context.verse_only %}
+    <script src="{{ url_for('static', filename='web/rich/verse_script.js') }}"></script>
+    {% endif %}
+</body>
+</html>

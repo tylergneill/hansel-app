@@ -58,7 +58,7 @@
                     <li class="file-item">
                         <div class="link-and-caret">
                             {% set html_filename = item['Filename Base'] ~ '.html' %}
-                            <a href="{{ static_files_path }}/data/texts/transforms/html/rich/{{ html_filename }}" class="main-link">
+                            <a href="{{ url_for('view_text', filename=html_filename) }}" class="main-link">
                                 {{ item['Title'] ~ (' - ' ~ item['Author'] if item['Author'] else '') }}
                             </a>
                             <details class="caret-details">
@@ -251,6 +251,7 @@ document.addEventListener('DOMContentLoaded', function() {
         $.fn.dataTable.ext.type.order['sanskrit-desc'] = (a, b) => a < b ?  1 : a > b ? -1 : 0;
 
         const staticFilesPath = "{{ static_files_path }}";
+        const readerUrlTemplate = "{{ url_for('view_text', filename='__FILENAME__') }}";
         const tableData = {{ rows | tojson | safe }};   // full list of dicts
         const extMap = {{ ext_map | tojson | safe }};
 
@@ -275,7 +276,8 @@ document.addEventListener('DOMContentLoaded', function() {
               type: 'sanskrit',  // custom sort
               render: (data, type, row) => {
                 if (type !== 'display') return data;   // keep raw text for sort/filter
-                return `<a href="${staticFilesPath}/data/texts/transforms/html/rich/${row['Filename Base']}.html">${data}</a>`;
+                const richHref = readerUrlTemplate.replace('__FILENAME__', `${row['Filename Base']}.html`);
+                return `<a href="${richHref}">${data}</a>`;
               }
             },
             { data: 'Author', type: 'sanskrit' },
