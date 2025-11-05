@@ -4,9 +4,9 @@
     <meta charset="utf-8">
     <title>{{ context.title }}</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="{{ url_for('static', filename='web/rich/style.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='web/css/rich_style.css') }}">
     {% if context.verse_only %}
-    <link rel="stylesheet" href="{{ url_for('static', filename='web/rich/verse_style.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='web/css/rich_verse_style.css') }}">
     {% endif %}
 </head>
 <body class="{% if context.verse_only %}simple-verse-style{% endif %}">
@@ -44,7 +44,7 @@
             </label>
             <img id="corrections-info-icon"
                  class="info-icon"
-                 src="{{ url_for('static', filename='web/rich/info.png') }}"
+                 src="{{ url_for('static', filename='web/imgs/info.png') }}"
                  title="Toggles display of corrections, listed at the bottom of the metadata panel.">
         </div>
 
@@ -175,9 +175,9 @@
 
     <script type="application/json" id="hansel-document-context">{{ context_json | safe }}</script>
     <script src="https://cdn.jsdelivr.net/npm/@indic-transliteration/sanscript/sanscript.min.js"></script>
-    <script src="{{ url_for('static', filename='web/rich/script.js') }}"></script>
+    <script src="{{ url_for('static', filename='web/js/rich_script.js') }}"></script>
     {% if context.verse_only %}
-    <script src="{{ url_for('static', filename='web/rich/verse_script.js') }}"></script>
+    <script src="{{ url_for('static', filename='web/js/rich_verse_script.js') }}"></script>
     {% endif %}
 </body>
 </html>
