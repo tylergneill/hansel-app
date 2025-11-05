@@ -35,7 +35,7 @@ function toggleLocationMarkers(checkbox) { document.getElementById("content").cl
 
 function toggleButtonContainer() {
     const buttonContainer = document.querySelector('.toggles-widget-container');
-    const mobileIcon = document.getElementById('controls-icon');
+    const mobileIcon = document.getElementById('toggles-widget-icon');
     buttonContainer.classList.toggle('expanded');
     if (buttonContainer.classList.contains('expanded')) {
         mobileIcon.style.display = 'none';
@@ -70,7 +70,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
         metadataButton.addEventListener('click', () => togglePanel('metadata-panel'));
     }
 
-    const mobileControlsIcon = document.getElementById('controls-icon');
+    const mobileControlsIcon = document.getElementById('toggles-widget-icon');
     if (mobileControlsIcon) {
         mobileControlsIcon.addEventListener('click', toggleButtonContainer);
     }
