@@ -45,6 +45,22 @@ function toggleViewMode(checkbox) {
         richTextToggles.forEach(toggle => toggle.style.display = 'flex');
     }
 }
+
+function toggleCorrections(checkbox) {
+    const content = document.getElementById('content');
+    if (!content) return;
+
+    const anteCorrectionElements = content.querySelectorAll('.ante-correction');
+    const postCorrectionElements = content.querySelectorAll('.post-correction');
+
+    if (checkbox.checked) { // Show post-correction
+        anteCorrectionElements.forEach(el => el.style.display = 'none');
+        postCorrectionElements.forEach(el => el.style.display = 'inline');
+    } else { // Show ante-correction (default)
+        anteCorrectionElements.forEach(el => el.style.display = 'inline');
+        postCorrectionElements.forEach(el => el.style.display = 'none');
+    }
+}
 function toggleLineBreaks(checkbox) { document.getElementById("content").classList.toggle("show-line-breaks", checkbox.checked); }
 
 function toggleLocationMarkers(checkbox) { document.getElementById("content").classList.toggle("hide-location-markers"); }
