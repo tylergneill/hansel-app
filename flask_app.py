@@ -119,9 +119,7 @@ def view_text(filename):
     context_defaults = {
         "title": Path(filename).stem,
         "toc": [],
-        "toc_available": False,
         "metadata_html": "",
-        "metadata_available": False,
         "metadata_entries": [],
         "corrections": [],
         "has_corrections": False,

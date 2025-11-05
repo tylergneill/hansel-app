@@ -3,14 +3,30 @@ function togglePanel(panelId) {
     const panel = document.getElementById(panelId);
     if (!panel) return;
 
+    const mobileIcon = document.getElementById('toggles-widget-icon');
+    const isTargetCurrentlyOpen = panel.style.display === 'block';
+
+    // First, close all panels
     const allPanels = document.querySelectorAll('.panel');
     allPanels.forEach(p => {
-        if (p.id !== panelId) {
-            p.style.display = 'none';
-        }
+        p.style.display = 'none';
     });
 
-    panel.style.display = panel.style.display === 'block' ? 'none' : 'block';
+    // Now, handle the target panel and the icon
+    if (isTargetCurrentlyOpen) {
+        // If the panel we clicked to toggle was already open, we just keep it closed.
+        panel.style.display = 'none';
+        if (mobileIcon) mobileIcon.style.display = 'block'; // Always show icon when all panels are closed
+    } else {
+        // If the panel was closed, we open it.
+        panel.style.display = 'block';
+        // And only hide the icon if the toggles-widget itself was the one opened.
+        if (panelId === 'toggles-widget') {
+            if (mobileIcon) mobileIcon.style.display = 'none';
+        } else {
+            if (mobileIcon) mobileIcon.style.display = 'block';
+        }
+    }
 }
 
 function toggleViewMode(checkbox) {
@@ -33,37 +49,21 @@ function toggleLineBreaks(checkbox) { document.getElementById("content").classLi
 
 function toggleLocationMarkers(checkbox) { document.getElementById("content").classList.toggle("hide-location-markers"); }
 
-function toggleButtonContainer() {
-    const buttonContainer = document.querySelector('.toggles-widget-container');
-    const mobileIcon = document.getElementById('toggles-widget-icon');
-    buttonContainer.classList.toggle('expanded');
-    if (buttonContainer.classList.contains('expanded')) {
-        mobileIcon.style.display = 'none';
-    } else {
-        mobileIcon.style.display = 'block';
-    }
-}
+function alignAndToggleTocPanel() {
+    const tocButton = document.getElementById('toc-button');
+    const tocPanel = document.getElementById('toc-panel');
+    if (!tocButton || !tocPanel) return;
 
-function toggleCorrections(checkbox) {
-    const content = document.getElementById('content');
-    if (!content) return;
+    const rect = tocButton.getBoundingClientRect();
+    tocPanel.style.top = `${rect.top}px`;
 
-    const anteCorrectionElements = content.querySelectorAll('.ante-correction');
-    const postCorrectionElements = content.querySelectorAll('.post-correction');
-
-    if (checkbox.checked) { // Show post-correction
-        anteCorrectionElements.forEach(el => el.style.display = 'none');
-        postCorrectionElements.forEach(el => el.style.display = 'inline');
-    } else { // Show ante-correction (default)
-        anteCorrectionElements.forEach(el => el.style.display = 'inline');
-        postCorrectionElements.forEach(el => el.style.display = 'none');
-    }
+    togglePanel('toc-panel');
 }
 
 document.addEventListener('DOMContentLoaded', (event) => {
     const tocButton = document.getElementById('toc-button');
     if (tocButton) {
-        tocButton.addEventListener('click', () => togglePanel('toc-panel'));
+        tocButton.addEventListener('click', alignAndToggleTocPanel);
     }
     const metadataButton = document.getElementById('metadata-button');
     if (metadataButton) {
@@ -72,11 +72,11 @@ document.addEventListener('DOMContentLoaded', (event) => {
 
     const mobileControlsIcon = document.getElementById('toggles-widget-icon');
     if (mobileControlsIcon) {
-        mobileControlsIcon.addEventListener('click', toggleButtonContainer);
+        mobileControlsIcon.addEventListener('click', () => togglePanel('toggles-widget'));
     }
     const closeButton = document.getElementById('toggles-widget-close-button');
     if (closeButton) {
-        closeButton.addEventListener('click', toggleButtonContainer);
+        closeButton.addEventListener('click', () => togglePanel('toggles-widget'));
     }
 
     const correctionsListItem = document.getElementById('corrections-list-container');

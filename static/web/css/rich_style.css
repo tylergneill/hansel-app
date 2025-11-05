@@ -40,12 +40,19 @@ body.simple-view .rich-text { display: none; }
     z-index: 1002;
 }
 
+
+#toggles-widget {
+    top: 40px;
+    right: 5%;
+    min-width: 200px;
+}
+
 #toc-widget-container {
-    transform-origin: 0 0;
     position: fixed;
     top: 40%;
     left: 0;
-    transform: rotate(-90deg);
+    transform: translateY(-50%) rotate(-90deg);
+    transform-origin: 0 0;
     z-index: 1002;
 }
 
@@ -53,7 +60,7 @@ body.simple-view .rich-text { display: none; }
     background-color: #e79f3a;
     color: #113121;
     border: none;
-    padding: 8px 16px;
+    padding: 12px 16px;
     border-radius: 0 0 5px 5px;
     cursor: pointer;
     font-weight: bold;
@@ -87,18 +94,18 @@ body.simple-view .rich-text { display: none; }
     top: 30px;
     left: 50%;
     transform: translateX(-50%);
-    width: 60%;
+    width: 80%;
     max-height: 400px;
     overflow-y: auto;
+    padding-left: 20px;
 }
 
 #toc-panel {
-    transform-origin: 0 0;
-    top: 20%;
-    left: 32px;
+    left: 30px;
     width: 300px;
     max-height: 400px;
     overflow-y: auto;
+    padding-left: 20px;
 }
 
 #toc-list {
@@ -111,6 +118,13 @@ body.simple-view .rich-text { display: none; }
 }
 #metadata-list ul {
     padding-left: 20px;
+}
+
+#metadata-list li {
+}
+
+#metadata-list > li:not(#corrections-list-container) {
+    margin-bottom: 10px;
 }
 
 #corrections-container {

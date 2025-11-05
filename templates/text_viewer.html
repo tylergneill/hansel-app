@@ -16,7 +16,7 @@
         <span></span>
     </div>
 
-    <div class="toggles-widget-container">
+    <div id="toggles-widget" class="toggles-widget-container panel">
         <div id="toggles-widget-close-button">&times;</div>
 
         {% if not context.verse_only %}
@@ -94,6 +94,16 @@
         {% endif %}
     </div>
 
+    <div id="border-widgets">
+        <div id="metadata-widget-container">
+            <button id="metadata-button">Metadata</button>
+        </div>
+
+        <div id="toc-widget-container">
+            <button id="toc-button">Table of Contents</button>
+        </div>
+    </div>
+
     <div id="metadata-panel" class="panel">
         <ul id="metadata-list">
             {% if context.metadata_entries %}
@@ -159,18 +169,6 @@
             </li>
             {% endfor %}
         </ul>
-    </div>
-
-    <div id="border-widgets">
-        <div id="metadata-widget-container">
-            <button id="metadata-button">Metadata</button>
-        </div>
-
-        {% if context.toc_available %}
-        <div id="toc-widget-container">
-            <button id="toc-button">Table of Contents</button>
-        </div>
-        {% endif %}
     </div>
 
     {{ content_html | safe }}
