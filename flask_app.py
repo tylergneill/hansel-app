@@ -95,28 +95,26 @@ def view_text(filename):
     Falls back to serving the static file directly if the new context marker
     is missing to preserve compatibility with older exports.
     """
-    html_path = FILE_TYPE_PATHS['html_rich'] / filename
-    if not html_path.is_file():
+    # The HTML file contains the content, the JSON file contains the context.
+    # Both are named after the original XML file.
+    base_name = Path(filename).stem
+    html_path = FILE_TYPE_PATHS['html_rich'] / f"{base_name}.html"
+    json_path = FILE_TYPE_PATHS['html_rich'] / f"{base_name}.json"
+
+    if not html_path.is_file() or not json_path.is_file():
         abort(404, description="Text not found")
 
+    # Read the HTML content
+    with open(html_path, 'r', encoding='utf-8') as f:
+        content_html = f.read()
+
+    # Read the JSON context
     try:
-        tree = ET.parse(html_path)
-    except ET.ParseError:
-        return send_file(html_path)
-
-    root = tree.getroot()
-    content_elem = root.find(".//div[@id='content']")
-    context_elem = root.find(".//script[@id='hansel-document-context']")
-
-    if content_elem is None or context_elem is None or context_elem.text is None:
-        return send_file(html_path)
-
-    content_html = ET.tostring(content_elem, encoding='unicode')
-
-    try:
-        raw_context = json.loads(context_elem.text)
-    except json.JSONDecodeError:
-        raw_context = {}
+        with open(json_path, 'r', encoding='utf-8') as f:
+            raw_context = json.load(f)
+    except (FileNotFoundError, json.JSONDecodeError) as e:
+        logging.error(f"Error loading or parsing context JSON for {filename}: {e}")
+        raw_context = {} # Fallback to empty context
 
     context_defaults = {
         "title": Path(filename).stem,
