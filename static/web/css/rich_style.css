@@ -416,3 +416,16 @@ h1, h2, h3, h4, h5, h6 {
 #transliteration-scheme {
     margin-right: 5px;
 }
+
+#home-button {
+    position: fixed;
+    top: 0px;
+    left: 0px;
+    z-index: 1003;
+}
+
+#home-button img {
+    width: 35px;
+    height: auto;
+    border: 3px solid rgb(231, 159, 58);
+}
