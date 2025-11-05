@@ -16,8 +16,8 @@
         <span></span>
     </div>
 
-    <div class="button-container">
-        <div id="close-button-container">&times;</div>
+    <div class="toggles-widget-container">
+        <div id="toggles-widget-close-button">&times;</div>
 
         {% if not context.verse_only %}
         <div class="toggle-switch-container">
@@ -94,75 +94,79 @@
         {% endif %}
     </div>
 
-    <div id="top-widgets">
-        <div id="metadata">
-            <h2>Metadata <span id="metadata-caret">▶</span></h2>
-            <ul id="metadata-list">
-                {% if context.metadata_entries %}
-                    {% for entry in context.metadata_entries %}
-                        {% if entry.type == 'field' %}
-                            {% set inline_text = entry.inline_text | default('', true) | trim %}
-                            {% set html_fragment = entry.content_html | default('', true) %}
-                            {% set html_text = html_fragment | striptags | replace('&nbsp;', '') | trim %}
-                            {% set has_inline = inline_text != '' %}
-                            {% set has_html = html_text != '' %}
-                            {% if entry.label %}
-                                <li>
-                                    {% if entry.label %}
-                                        <b>{{ entry.label }}{% if has_inline or has_html %}: {% endif %}</b>
-                                    {% endif %}
-                                    {% if has_inline %}
-                                        {{ inline_text }}
-                                    {% endif %}
-                                    {% if has_html %}
-                                        {{ html_fragment | safe }}
-                                    {% endif %}
+    <div id="border-widgets">
+        <div id="metadata-widget-container">
+            <button id="metadata-button">Metadata</button>
+            <div id="metadata-panel" class="panel">
+                <ul id="metadata-list">
+                    {% if context.metadata_entries %}
+                        {% for entry in context.metadata_entries %}
+                            {% if entry.type == 'field' %}
+                                {% set inline_text = entry.inline_text | default('', true) | trim %}
+                                {% set html_fragment = entry.content_html | default('', true) %}
+                                {% set html_text = html_fragment | striptags | replace('&nbsp;', '') | trim %}
+                                {% set has_inline = inline_text != '' %}
+                                {% set has_html = html_text != '' %}
+                                {% if entry.label %}
+                                    <li>
+                                        {% if entry.label %}
+                                            <b>{{ entry.label }}{% if has_inline or has_html %}: {% endif %}</b>
+                                        {% endif %}
+                                        {% if has_inline %}
+                                            {{ inline_text }}
+                                        {% endif %}
+                                        {% if has_html %}
+                                            {{ html_fragment | safe }}
+                                        {% endif %}
+                                    </li>
+                                {% endif %}
+                            {% elif entry.type == 'corrections' %}
+                                <li id="corrections-list-container">
+                                    <b>Corrections ({{ entry.count }}) <span class="caret">▶</span></b>
+                                    <table style="display: none; padding-left: 2em;">
+                                        <tbody>
+                                            {% for item in entry.rows %}
+                                            <tr>
+                                                <td style="padding-right: 1em;">p.{{ item.page }}, l.{{ item.line }}:</td>
+                                                <td>
+                                                    {% if item.sic == '' and item.corr == ' ' %}
+                                                        space added
+                                                    {% elif item.sic == ' ' and item.corr == '' %}
+                                                        space removed
+                                                    {% elif item.corr == '' and item.sic != '' %}
+                                                        {{ item.sic }} deleted
+                                                    {% elif item.sic == '' and item.corr != '' %}
+                                                        {{ item.corr }} added
+                                                    {% else %}
+                                                        {{ item.sic }} → {{ item.corr }}
+                                                    {% endif %}
+                                                </td>
+                                            </tr>
+                                            {% endfor %}
+                                        </tbody>
+                                    </table>
                                 </li>
                             {% endif %}
-                        {% elif entry.type == 'corrections' %}
-                            <li id="corrections-list-container">
-                                <b>Corrections ({{ entry.count }}) <span class="caret">▶</span></b>
-                                <table style="display: none; padding-left: 2em;">
-                                    <tbody>
-                                        {% for item in entry.rows %}
-                                        <tr>
-                                            <td style="padding-right: 1em;">p.{{ item.page }}, l.{{ item.line }}:</td>
-                                            <td>
-                                                {% if item.sic == '' and item.corr == ' ' %}
-                                                    space added
-                                                {% elif item.sic == ' ' and item.corr == '' %}
-                                                    space removed
-                                                {% elif item.corr == '' and item.sic != '' %}
-                                                    {{ item.sic }} deleted
-                                                {% elif item.sic == '' and item.corr != '' %}
-                                                    {{ item.corr }} added
-                                                {% else %}
-                                                    {{ item.sic }} → {{ item.corr }}
-                                                {% endif %}
-                                            </td>
-                                        </tr>
-                                        {% endfor %}
-                                    </tbody>
-                                </table>
-                            </li>
-                        {% endif %}
-                    {% endfor %}
-                {% else %}
-                    <li>No metadata available.</li>
-                {% endif %}
-            </ul>
+                        {% endfor %}
+                    {% else %}
+                        <li>No metadata available.</li>
+                    {% endif %}
+                </ul>
+            </div>
         </div>
 
         {% if context.toc_available %}
-        <div id="toc">
-            <h2>Table of Contents <span id="toc-caret">▶</span></h2>
-            <ul id="toc-list">
-                {% for item in context.toc %}
-                <li>
-                    <a href="#{{ item.id }}">§ {{ item.name }} (p.{{ item.page }})</a>
-                </li>
-                {% endfor %}
-            </ul>
+        <div id="toc-widget-container">
+            <button id="toc-button">ToC</button>
+            <div id="toc-panel" class="panel">
+                <ul id="toc-list">
+                    {% for item in context.toc %}
+                    <li>
+                        <a href="#{{ item.id }}">§ {{ item.name }} (p.{{ item.page }})</a>
+                    </li>
+                    {% endfor %}
+                </ul>
+            </div>
         </div>
         {% endif %}
     </div>
