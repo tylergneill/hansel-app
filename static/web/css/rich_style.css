@@ -44,7 +44,8 @@ body.simple-view .rich-text { display: none; }
 #toggles-widget {
     top: 40px;
     right: 5%;
-    min-width: 200px;
+    min-width: 220px;
+    padding-top: 40px;
 }
 
 #toc-widget-container {
@@ -233,7 +234,7 @@ h1, h2, h3, h4, h5, h6 {
     display: flex;
     justify-content: center;
     align-items: center;
-    font-size: 12px;
+    font-size: 14px;
     user-select: none;
     transition: all 0.2s;
 }
@@ -280,7 +281,16 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 #toggles-widget-icon {
-    display: block;
+    position: fixed;
+    top: 40px;
+    right: 5%;
+    cursor: pointer;
+    z-index: 1001;
+    background-color: white;
+    padding: 5px;
+    border: 3px solid white;
+    border-radius: 5px;
+    outline: 3px solid rgb(231, 159, 58);
 }
 
 #toggles-widget-icon span {
@@ -299,25 +309,17 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 #toggles-widget-close-button {
-    position: absolute;
-    bottom: -5px;
-    right: 5px;
-    font-size: 2em;
-    cursor: pointer;
-    z-index: 2;
-}
-
-#toggles-widget-icon {
     position: fixed;
-    top: 50px;
-    right: 5%;
+    top: 35px; /* Almost match the icon */
+    right: 5%; /* Match the icon */
+    width: 49px; /* Match the icon's total width (33 + 5*2 + 3*2) */
+    height: 49px; /* Match the icon's total height */
+    font-size: 2.5em;
+    line-height: 1.2; /* Vertically center the '×' */
+    text-align: center; /* Horizontally center the '×' */
     cursor: pointer;
-    z-index: 1001;
-    background-color: white;
-    padding: 5px;
-    border: 3px solid white;
-    border-radius: 5px;
-    outline: 3px solid rgb(231, 159, 58);
+    z-index: 1002; /* Must be above the panel it closes */
+    color: #113121;
 }
 
 .toggles-widget-container.expanded {
@@ -330,6 +332,9 @@ h1, h2, h3, h4, h5, h6 {
     }
     #toggles-widget-icon {
         right: 15%;
+    }
+    #toggles-widget-close-button {
+        right: 15%; /* Match the icon in media query */
     }
     #metadata, #toc {
         width: 75%;
@@ -364,7 +369,7 @@ h1, h2, h3, h4, h5, h6 {
   justify-content: center;
   align-items: center;
   color: #333;
-  font-size: 14px;
+  font-size: 12px;
   transition: color .2s;
 }
 
@@ -410,11 +415,16 @@ h1, h2, h3, h4, h5, h6 {
 #transliteration-controls {
     display: flex;
     align-items: center;
-    margin-left: auto;
+    margin-left: 20px; /* Changed from auto */
+}
+
+#toggle-switch-text {
+    display: flex;
+    align-items: center;
 }
 
 #transliteration-scheme {
-    margin-right: 5px;
+    margin-right: 15px;
 }
 
 #home-button {
