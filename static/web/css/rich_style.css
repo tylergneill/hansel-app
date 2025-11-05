@@ -166,6 +166,10 @@ body.simple-view .rich-text { display: none; }
     transition: max-height 0.5s ease-in;
 }
 
+h1, h2, h3, h4, h5, h6 {
+    scroll-margin-top: 40px;
+}
+
 #toc-list li {
     margin-bottom: 5px;
     padding: 5px 0;
