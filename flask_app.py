@@ -140,6 +140,21 @@ def view_text(filename):
         filename=filename,
     )
 
+@app.route('/view_metadata/<filename>')
+def view_metadata(filename):
+    # Construct the path to the HTML file
+    file_path = METADATA_PATH / 'html' / filename
+    if not file_path.is_file():
+        return "File not found", 404
+
+    with open(file_path, 'r', encoding='utf-8') as f:
+        content_html = f.read()
+
+    return render_template(
+        'metadata_viewer.html',
+        content_html=content_html
+    )
+
 @app.route("/download", methods=['POST'])
 def download_bundle():
     """

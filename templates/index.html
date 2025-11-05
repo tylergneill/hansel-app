@@ -67,7 +67,7 @@
                         </div>
                         <ul class="extra-links">
                             <li>
-                                <a href="{{ static_files_path }}/data/metadata/transforms/html/{{ item['Filename Base'] }}.html">
+                                <a href="{{ url_for('view_metadata', filename=item['Filename Base'] ~ '.html') }}">
                                     <img src="{{ static_files_path }}/web/imgs/info.png" alt="metadata" style="height: 20px; margin-left: -6px; margin-right: 8px;">
                                     Full Metadata - HTML
                                 </a>
