@@ -218,14 +218,32 @@ def download_bundle():
             zf.write(version_file_path, arcname=arcname)
 
         if is_full_bundle:
-            # Add all texts and metadata
-            for dir_path in [DATA_PATH / 'texts', DATA_PATH / 'metadata']:
+            # Define the specific text directories to include
+            text_dirs_to_include = {
+                DATA_PATH / 'texts' / 'original_submissions': None,  # Include all files
+                DATA_PATH / 'texts' / 'project_editions' / 'txt': ['.txt'],
+                DATA_PATH / 'texts' / 'project_editions' / 'xml': ['.xml'],
+                DATA_PATH / 'texts' / 'transforms' / 'html' / 'plain': ['.html'],
+            }
+
+            # Add specified text files
+            for dir_path, extensions in text_dirs_to_include.items():
                 if dir_path.is_dir():
                     for file_path in dir_path.rglob('*'):
-                        if file_path.is_file() and file_path.suffix != '.zip':
-                            relative_path = file_path.relative_to(DATA_PATH)
-                            new_arcname = os.path.join(root_folder_name, relative_path)
-                            zf.write(file_path, arcname=new_arcname)
+                        if file_path.is_file():
+                            if extensions is None or file_path.suffix in extensions:
+                                relative_path = file_path.relative_to(DATA_PATH)
+                                new_arcname = os.path.join(root_folder_name, relative_path)
+                                zf.write(file_path, arcname=new_arcname)
+
+            # Add all metadata
+            meta_dir = DATA_PATH / 'metadata'
+            if meta_dir.is_dir():
+                for file_path in meta_dir.rglob('*'):
+                    if file_path.is_file() and file_path.suffix != '.zip':
+                        relative_path = file_path.relative_to(DATA_PATH)
+                        new_arcname = os.path.join(root_folder_name, relative_path)
+                        zf.write(file_path, arcname=new_arcname)
         else:
             # Add selected text format
             if text_format and text_format != 'none':
