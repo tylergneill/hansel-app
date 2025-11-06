@@ -103,10 +103,11 @@ body.simple-view .rich-text { display: none; }
 
 #toc-panel {
     left: 30px;
-    width: 300px;
+    width: max-content;
     max-height: 400px;
     overflow-y: auto;
     padding-left: 20px;
+    padding-right: 60px;
 }
 
 #toc-list {
