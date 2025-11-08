@@ -1,35 +1,48 @@
 function toggleBreaks(checkbox) { document.getElementById("content").classList.toggle("show-breaks", checkbox.checked); }
-function toggleToc() { document.getElementById('toc').classList.toggle('expanded'); }
-function toggleMetadata() { document.getElementById('metadata').classList.toggle('expanded'); }
+function togglePanel(panelId) {
+    const panel = document.getElementById(panelId);
+    if (!panel) return;
+
+    const mobileIcon = document.getElementById('toggles-widget-icon');
+    const isTargetCurrentlyOpen = panel.style.display === 'block';
+
+    // First, close all panels
+    const allPanels = document.querySelectorAll('.panel');
+    allPanels.forEach(p => {
+        p.style.display = 'none';
+    });
+
+    // Now, handle the target panel and the icon
+    if (isTargetCurrentlyOpen) {
+        // If the panel we clicked to toggle was already open, we just keep it closed.
+        panel.style.display = 'none';
+        if (mobileIcon) mobileIcon.style.display = 'block'; // Always show icon when all panels are closed
+    } else {
+        // If the panel was closed, we open it.
+        panel.style.display = 'block';
+        // And only hide the icon if the toggles-widget itself was the one opened.
+        if (panelId === 'toggles-widget') {
+            if (mobileIcon) mobileIcon.style.display = 'none';
+        } else {
+            if (mobileIcon) mobileIcon.style.display = 'block';
+        }
+    }
+}
 
 function toggleViewMode(checkbox) {
     document.body.classList.toggle('simple-view', checkbox.checked);
-    const toc = document.getElementById('toc');
-    const metadata = document.getElementById('metadata');
+    const tocWidget = document.getElementById('toc-widget-container');
+    const metadataWidget = document.getElementById('metadata-widget-container');
     const richTextToggles = document.querySelectorAll('.rich-text-toggle');
 
     if (checkbox.checked) {
-        if(toc) toc.style.display = 'none';
-        if(metadata) metadata.style.display = 'none';
+        if(tocWidget) tocWidget.style.display = 'none';
+        if(metadataWidget) metadataWidget.style.display = 'none';
         richTextToggles.forEach(toggle => toggle.style.display = 'none');
     } else {
-        if(toc) toc.style.display = 'block';
-        if(metadata) metadata.style.display = 'block';
+        if(tocWidget) tocWidget.style.display = 'block';
+        if(metadataWidget) metadataWidget.style.display = 'block';
         richTextToggles.forEach(toggle => toggle.style.display = 'flex');
-    }
-}
-function toggleLineBreaks(checkbox) { document.getElementById("content").classList.toggle("show-line-breaks", checkbox.checked); }
-
-function toggleLocationMarkers(checkbox) { document.getElementById("content").classList.toggle("hide-location-markers"); }
-
-function toggleButtonContainer() {
-    const buttonContainer = document.querySelector('.button-container');
-    const mobileIcon = document.getElementById('controls-icon');
-    buttonContainer.classList.toggle('expanded');
-    if (buttonContainer.classList.contains('expanded')) {
-        mobileIcon.style.display = 'none';
-    } else {
-        mobileIcon.style.display = 'block';
     }
 }
 
@@ -48,20 +61,38 @@ function toggleCorrections(checkbox) {
         postCorrectionElements.forEach(el => el.style.display = 'none');
     }
 }
+function toggleLineBreaks(checkbox) { document.getElementById("content").classList.toggle("show-line-breaks", checkbox.checked); }
+
+function toggleLocationMarkers(checkbox) { document.getElementById("content").classList.toggle("hide-location-markers"); }
+
+function alignAndToggleTocPanel() {
+    const tocButton = document.getElementById('toc-button');
+    const tocPanel = document.getElementById('toc-panel');
+    if (!tocButton || !tocPanel) return;
+
+    const rect = tocButton.getBoundingClientRect();
+    tocPanel.style.top = `${rect.top}px`;
+
+    togglePanel('toc-panel');
+}
 
 document.addEventListener('DOMContentLoaded', (event) => {
-    const tocHeader = document.querySelector('#toc h2');
-    if (tocHeader) { tocHeader.addEventListener('click', toggleToc); }
-    const metadataHeader = document.querySelector('#metadata h2');
-    if (metadataHeader) { metadataHeader.addEventListener('click', toggleMetadata); }
-
-    const mobileControlsIcon = document.getElementById('controls-icon');
-    if (mobileControlsIcon) {
-        mobileControlsIcon.addEventListener('click', toggleButtonContainer);
+    const tocButton = document.getElementById('toc-button');
+    if (tocButton) {
+        tocButton.addEventListener('click', alignAndToggleTocPanel);
     }
-    const closeButton = document.getElementById('close-button-container');
+    const metadataButton = document.getElementById('metadata-button');
+    if (metadataButton) {
+        metadataButton.addEventListener('click', () => togglePanel('metadata-panel'));
+    }
+
+    const mobileControlsIcon = document.getElementById('toggles-widget-icon');
+    if (mobileControlsIcon) {
+        mobileControlsIcon.addEventListener('click', () => togglePanel('toggles-widget'));
+    }
+    const closeButton = document.getElementById('toggles-widget-close-button');
     if (closeButton) {
-        closeButton.addEventListener('click', toggleButtonContainer);
+        closeButton.addEventListener('click', () => togglePanel('toggles-widget'));
     }
 
     const correctionsListItem = document.getElementById('corrections-list-container');
@@ -80,11 +111,11 @@ document.addEventListener('DOMContentLoaded', (event) => {
     const infoIcon = document.getElementById('corrections-info-icon');
     if (infoIcon) {
         infoIcon.addEventListener('click', () => {
-            const metadataPanel = document.getElementById('metadata');
+            const metadataPanel = document.getElementById('metadata-panel');
             const correctionsListContainer = document.getElementById('corrections-list-container');
 
             if (metadataPanel) {
-                metadataPanel.classList.add('expanded');
+                togglePanel('metadata-panel');
             }
 
             if (correctionsListContainer) {

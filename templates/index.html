@@ -58,7 +58,7 @@
                     <li class="file-item">
                         <div class="link-and-caret">
                             {% set html_filename = item['Filename Base'] ~ '.html' %}
-                            <a href="{{ static_files_path }}/data/texts/transforms/html/rich/{{ html_filename }}" class="main-link">
+                            <a href="{{ url_for('view_text', filename=html_filename) }}" class="main-link">
                                 {{ item['Title'] ~ (' - ' ~ item['Author'] if item['Author'] else '') }}
                             </a>
                             <details class="caret-details">
@@ -67,7 +67,7 @@
                         </div>
                         <ul class="extra-links">
                             <li>
-                                <a href="{{ static_files_path }}/data/metadata/transforms/html/{{ item['Filename Base'] }}.html">
+                                <a href="{{ url_for('view_metadata', filename=item['Filename Base'] ~ '.html') }}">
                                     <img src="{{ static_files_path }}/web/imgs/info.png" alt="metadata" style="height: 20px; margin-left: -6px; margin-right: 8px;">
                                     Full Metadata - HTML
                                 </a>
@@ -181,17 +181,16 @@
                         <fieldset>
                           <legend>Text format</legend>
                           <div class="radio-container"><input type="radio" id="text_none" name="text" value="none"><label for="text_none">None (metadata only)</label></div>
-                          <div class="radio-container"><input type="radio" id="text_txt" name="text" value="txt" checked><label for="text_txt">Plain-text (.txt)</label></div>
-                          <div class="radio-container"><input type="radio" id="text_xml" name="text" value="xml"><label for="text_xml">TEI-XML (.xml)</label></div>
-                          <div class="radio-container"><input type="radio" id="text_html_plain" name="text" value="html_plain"><label for="text_html_plain">HTML — Plain</label></div>
-                          <div class="radio-container"><input type="radio" id="text_html_rich" name="text" value="html_rich"><label for="text_html_rich">HTML — Rich</label></div>
-                          <div class="radio-container"><input type="radio" id="text_original" name="text" value="original"><label for="text_original">Original Submission (misc. files)</label></div>
+                          <div class="radio-container"><input type="radio" id="text_txt" name="text" value="txt" checked><label for="text_txt">Plain-text</label></div>
+                          <div class="radio-container"><input type="radio" id="text_xml" name="text" value="xml"><label for="text_xml">TEI-XML</label></div>
+                          <div class="radio-container"><input type="radio" id="text_html_plain" name="text" value="html_plain"><label for="text_html_plain">Plain HTML</label></div>
+                          <div class="radio-container"><input type="radio" id="text_original" name="text" value="original"><label for="text_original">Original Submissions (misc. filetypes)</label></div>
                         </fieldset>
     
                         <fieldset style="margin-top:0.75rem">
                           <legend>Metadata format</legend>
-                          <div class="radio-container"><input type="radio" id="meta_md" name="meta" value="md" checked><label for="meta_md">Markdown (.md)</label></div>
-                          <div class="radio-container"><input type="radio" id="meta_html" name="meta" value="html"><label for="meta_html">HTML (.html)</label></div>
+                          <div class="radio-container"><input type="radio" id="meta_md" name="meta" value="md" checked><label for="meta_md">Markdown</label></div>
+                          <div class="radio-container"><input type="radio" id="meta_html" name="meta" value="html"><label for="meta_html">HTML</label></div>
                           <div class="radio-container"><input type="radio" id="meta_json" name="meta" value="json"><label for="meta_json">JSON (single file)</label></div>
                         </fieldset>
     
@@ -212,16 +211,16 @@
         <div id="more-info">
 
             <p>
-                See
+                See the
                 <a href="about" style="font-size: 1.2em;">About Page</a>
                 to learn more.
 
             </p>
 
             <p>
-                Visit
+                See the
                 <a href="contact" style="font-size: 1.2em;">Contact Page</a>
-                to <strong>contribute</strong>! Also give feedback or ask questions.
+                to <strong>contribute</strong>! Also to give feedback or ask questions.
             <p>
 
             </p>
@@ -251,6 +250,7 @@ document.addEventListener('DOMContentLoaded', function() {
         $.fn.dataTable.ext.type.order['sanskrit-desc'] = (a, b) => a < b ?  1 : a > b ? -1 : 0;
 
         const staticFilesPath = "{{ static_files_path }}";
+        const readerUrlTemplate = "{{ url_for('view_text', filename='__FILENAME__') }}";
         const tableData = {{ rows | tojson | safe }};   // full list of dicts
         const extMap = {{ ext_map | tojson | safe }};
 
@@ -275,7 +275,8 @@ document.addEventListener('DOMContentLoaded', function() {
               type: 'sanskrit',  // custom sort
               render: (data, type, row) => {
                 if (type !== 'display') return data;   // keep raw text for sort/filter
-                return `<a href="${staticFilesPath}/data/texts/transforms/html/rich/${row['Filename Base']}.html">${data}</a>`;
+                const richHref = readerUrlTemplate.replace('__FILENAME__', `${row['Filename Base']}.html`);
+                return `<a href="${richHref}">${data}</a>`;
               }
             },
             { data: 'Author', type: 'sanskrit' },

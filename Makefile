@@ -1,13 +1,23 @@
-# for local run with full data
-# first, build image for correct platform
-# second, ensure corresponding IMG_NAME and VERSION env vars are exported
 LOCAL_DATA_PATH = $(shell realpath $(dir $(lastword $(MAKEFILE_LIST)))../hansel-data)
-# third, export LOCAL_DATA_PATH env (only if different from above)
+# (or export LOCAL_DATA_PATH env var if different from above)
 
+# for temporary local builds with full data
 run:
+	docker build . -t hansel-dev:debug
 	docker run \
 	  --rm \
 	  -it \
 	  -p 5030:5030 \
 	  -v $(LOCAL_DATA_PATH):/app/static/data \
-	  $(IMG_NAME):$(VERSION)
+	  --name hasel-dev \
+	  hansel-dev:debug
+
+# for official stg and prod builds uploaded to Docker Hub
+# to use: VERSION={version} make run-official
+run-official:
+	docker run \
+	  --rm \
+	  -it \
+	  -p 5030:5030 \
+	  -v $(LOCAL_DATA_PATH):/app/static/data \
+	  tylergneill/hansel-app:$(VERSION)

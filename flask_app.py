@@ -1,10 +1,12 @@
 import logging
 import os
 import time
+import json
 from pathlib import Path
 from typing import Dict
 import io
 import zipfile
+import xml.etree.ElementTree as ET
 
 from flask import Flask, request, send_file, render_template, abort
 
@@ -85,6 +87,74 @@ def serve_file(filename):
 
     return send_file(file_path, as_attachment=as_attachment_flag)
 
+@app.route("/texts/transforms/html/rich/<filename>")
+def view_text(filename):
+    """
+    Render a rich HTML text inside the shared application template so that the
+    UI chrome (toggles, metadata panel, etc.) lives only in the app.
+    Falls back to serving the static file directly if the new context marker
+    is missing to preserve compatibility with older exports.
+    """
+    # The HTML file contains the content, the JSON file contains the context.
+    # Both are named after the original XML file.
+    base_name = Path(filename).stem
+    html_path = FILE_TYPE_PATHS['html_rich'] / f"{base_name}.html"
+    json_path = FILE_TYPE_PATHS['html_rich'] / f"{base_name}.json"
+
+    if not html_path.is_file() or not json_path.is_file():
+        abort(404, description="Text not found")
+
+    # Read the HTML content
+    with open(html_path, 'r', encoding='utf-8') as f:
+        content_html = f.read()
+
+    # Read the JSON context
+    try:
+        with open(json_path, 'r', encoding='utf-8') as f:
+            raw_context = json.load(f)
+    except (FileNotFoundError, json.JSONDecodeError) as e:
+        logging.error(f"Error loading or parsing context JSON for {filename}: {e}")
+        raw_context = {} # Fallback to empty context
+
+    context_defaults = {
+        "title": Path(filename).stem,
+        "toc": [],
+        "metadata_html": "",
+        "metadata_entries": [],
+        "corrections": [],
+        "has_corrections": False,
+        "verse_only": False,
+        "includes_plain_variant": False,
+        "no_line_numbers": False,
+    }
+    context = {**context_defaults, **raw_context}
+
+    context_json = json.dumps(context, ensure_ascii=False)
+
+    return render_template(
+        "text_viewer.html",
+        content_html=content_html,
+        context=context,
+        context_json=context_json,
+        static_files_path=STATIC_FILES_PATH,
+        filename=filename,
+    )
+
+@app.route('/view_metadata/<filename>')
+def view_metadata(filename):
+    # Construct the path to the HTML file
+    file_path = METADATA_PATH / 'html' / filename
+    if not file_path.is_file():
+        return "File not found", 404
+
+    with open(file_path, 'r', encoding='utf-8') as f:
+        content_html = f.read()
+
+    return render_template(
+        'metadata_viewer.html',
+        content_html=content_html
+    )
+
 @app.route("/download", methods=['POST'])
 def download_bundle():
     """
@@ -148,14 +218,32 @@ def download_bundle():
             zf.write(version_file_path, arcname=arcname)
 
         if is_full_bundle:
-            # Add all texts and metadata
-            for dir_path in [DATA_PATH / 'texts', DATA_PATH / 'metadata']:
+            # Define the specific text directories to include
+            text_dirs_to_include = {
+                DATA_PATH / 'texts' / 'original_submissions': None,  # Include all files
+                DATA_PATH / 'texts' / 'project_editions' / 'txt': ['.txt'],
+                DATA_PATH / 'texts' / 'project_editions' / 'xml': ['.xml'],
+                DATA_PATH / 'texts' / 'transforms' / 'html' / 'plain': ['.html'],
+            }
+
+            # Add specified text files
+            for dir_path, extensions in text_dirs_to_include.items():
                 if dir_path.is_dir():
                     for file_path in dir_path.rglob('*'):
-                        if file_path.is_file() and file_path.suffix != '.zip':
-                            relative_path = file_path.relative_to(DATA_PATH)
-                            new_arcname = os.path.join(root_folder_name, relative_path)
-                            zf.write(file_path, arcname=new_arcname)
+                        if file_path.is_file():
+                            if extensions is None or file_path.suffix in extensions:
+                                relative_path = file_path.relative_to(DATA_PATH)
+                                new_arcname = os.path.join(root_folder_name, relative_path)
+                                zf.write(file_path, arcname=new_arcname)
+
+            # Add all metadata
+            meta_dir = DATA_PATH / 'metadata'
+            if meta_dir.is_dir():
+                for file_path in meta_dir.rglob('*'):
+                    if file_path.is_file() and file_path.suffix != '.zip':
+                        relative_path = file_path.relative_to(DATA_PATH)
+                        new_arcname = os.path.join(root_folder_name, relative_path)
+                        zf.write(file_path, arcname=new_arcname)
         else:
             # Add selected text format
             if text_format and text_format != 'none':
