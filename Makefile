@@ -9,7 +9,7 @@ run:
 	  -it \
 	  -p 5030:5030 \
 	  -v $(LOCAL_DATA_PATH):/app/static/data \
-	  --name hasel-dev \
+	  --name hansel-dev \
 	  hansel-dev:debug
 
 # for official stg and prod builds uploaded to Docker Hub
