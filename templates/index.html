@@ -26,8 +26,8 @@
                 <br class="hide-on-mobile-br">
                 This website will help you to
                 <a href="/getting_started#download">download</a>,
-                <a href="/getting_started#read">read</a>, and
-                <a href="/getting_started#contribute">contribute</a> texts.
+                <a href="/getting_started#contribute">contribute</a>, and
+                <a href="/getting_started#read">read</a> texts.
             </p>
         </div>
 
@@ -160,18 +160,10 @@
 
         <div id="cumulative-data">
             <h1>Cumulative Downloads</h1>
-    
-            <div class="file-item">
-                <div class="link-and-caret">
-                    <a href="#" id="download-all-link">Download all texts and metadata in all formats</a>
-                    <img src="{{ static_files_path }}/web/imgs/dl.png" alt="download" class="download-icon">
-                    <span class="size-estimate">({{ total_corpus_size_mb }} MB)</span>
-                </div>
-            </div>
 
             <div class="file-item" id="bundle-container">
                 <div class="link-and-caret">
-                    <a href="#" class="custom-bundle-link">Build custom download bundle</a>
+                    <a href="#" class="custom-bundle-link">Build custom download</a>
                     <details class="caret-details">
                         <summary class="toggle-caret"></summary>
                     </details>
@@ -202,6 +194,15 @@
                     </form>
                 </div>
             </div>
+
+            <div class="file-item">
+                <div class="link-and-caret">
+                    <a href="#" id="download-all-link">Download all texts and metadata in all formats</a>
+                    <img src="{{ static_files_path }}/web/imgs/dl.png" alt="download" class="download-icon">
+                    <span class="size-estimate">({{ total_corpus_size_mb }} MB)</span>
+                </div>
+            </div>
+
         </div>
 
         <br>
