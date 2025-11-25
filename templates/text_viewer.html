@@ -69,19 +69,6 @@
             </label>
         </div>
 
-        <div class="toggle-switch-container">
-            <div id="transliteration-controls-container">
-                <span class="toggle-switch-text">ā→आ</span>
-                <div id="transliteration-controls">
-                    <select id="transliteration-scheme"></select>
-                    <label id="toggle-switch-text">
-                        <input type="checkbox" id="show-all-schemes-checkbox">
-                        <span class="toggle-switch-text"> more</span>
-                    </label>
-                </div>
-            </div>
-        </div>
-
         {% if context.verse_only %}
         <div class="toggle-switch-container">
             <label class="toggle-switch">
@@ -96,6 +83,20 @@
             <input id="width-slider" type="range" min="0" max="1.6" step="0.4" value="0.8">
         </div>
         {% endif %}
+
+        <div class="toggle-switch-container">
+            <div id="transliteration-controls-container">
+                <span class="toggle-switch-text">ā→आ</span>
+                <div id="transliteration-controls">
+                    <select id="transliteration-scheme"></select>
+                    <label id="toggle-switch-text">
+                        <input type="checkbox" id="show-all-schemes-checkbox">
+                        <span class="toggle-switch-text"> more</span>
+                    </label>
+                </div>
+            </div>
+        </div>
+
     </div>
 
     <div id="border-widgets">
