@@ -46,7 +46,7 @@
 
                 <div>
                     <label for="message">Message</label>
-                    <textarea name="message" id="message" required rows="8"></textarea>
+                    <textarea name="message" id="message" required rows="8">Hello,&#10;&#10;I have a half-completed digitization of ... that I would like to add to HANSEL. The file is attached as a Word doc, along with portion of the edition PDF. I'm not familiar with license options.&#10;&#10;Dhanyavaad,&#10;Lakshman</textarea>
                 </div>
 
                 <div>
@@ -103,6 +103,32 @@
         const fromNameInput = document.querySelector('input[name="from_name"]');
         if (name && email && fromNameInput) {
             fromNameInput.value = `${name} <${email}>`;
+        }
+    });
+
+    const message = document.getElementById('message');
+    message.classList.add('placeholder');
+    const initialValue = message.value;
+    let userHasTyped = false;
+
+    message.addEventListener('focus', function() {
+        if (message.value === initialValue && !userHasTyped) {
+            message.value = '';
+            message.classList.remove('placeholder');
+        }
+    });
+
+    message.addEventListener('input', function() {
+        userHasTyped = true;
+        message.classList.remove('placeholder');
+    });
+
+    message.addEventListener('blur', function() {
+        if (message.value === '' && !userHasTyped) {
+            message.value = initialValue;
+            message.classList.add('placeholder');
+        } else if (message.value === '') {
+            // User has typed and cleared the field, so we don't restore the placeholder
         }
     });
 </script>

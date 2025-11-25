@@ -514,3 +514,7 @@ a.icon-link:hover {
     font-size: 0.9em;
     color: #333;
 }
+
+.placeholder {
+    color: #6c757d;
+}
