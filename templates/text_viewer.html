@@ -33,18 +33,6 @@
         </div>
 
         <div class="toggle-switch-container rich-text-toggle">
-            <label class="toggle-switch">
-                <input type="checkbox" onchange="toggleCorrections(this)">
-                <span class="toggle-switch-text">Corrections</span>
-                <span class="toggle-switch-handle"></span>
-            </label>
-            <img id="corrections-info-icon"
-                 class="info-icon"
-                 src="{{ url_for('static', filename='web/imgs/info.png') }}"
-                 title="Toggles display of corrections, listed at the bottom of the metadata panel.">
-        </div>
-
-        <div class="toggle-switch-container rich-text-toggle">
             <label class="switch">
                 <input type="checkbox" onchange="toggleLineBreaks(this)">
                 <span class="toggle-switch-text switch-text-off">Paragraphs</span>
@@ -59,6 +47,18 @@
                 <span class="toggle-switch-text">{{ "Page breaks" if context.verse_only else "Line/Page breaks" }}</span>
                 <span class="toggle-switch-handle"></span>
             </label>
+        </div>
+
+        <div class="toggle-switch-container rich-text-toggle">
+            <label class="toggle-switch">
+                <input type="checkbox" onchange="toggleCorrections(this)">
+                <span class="toggle-switch-text">Corrections</span>
+                <span class="toggle-switch-handle"></span>
+            </label>
+            <img id="corrections-info-icon"
+                 class="info-icon"
+                 src="{{ url_for('static', filename='web/imgs/info.png') }}"
+                 title="Toggles display of corrections, listed at the bottom of the metadata panel.">
         </div>
 
         <div class="toggle-switch-container">
