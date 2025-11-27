@@ -177,7 +177,6 @@
 
     {{ content_html | safe }}
 
-    <script type="application/json" id="hansel-document-context">{{ context_json | safe }}</script>
     <script src="https://cdn.jsdelivr.net/npm/@indic-transliteration/sanscript/sanscript.min.js"></script>
     <script src="{{ url_for('static', filename='web/js/rich_script.js') }}"></script>
     {% if context.verse_only %}
