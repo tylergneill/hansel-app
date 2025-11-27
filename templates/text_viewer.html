@@ -182,5 +182,78 @@
     {% if context.verse_only %}
     <script src="{{ url_for('static', filename='web/js/rich_verse_script.js') }}"></script>
     {% endif %}
+
+    {% if context.pdf_page_mapping %}
+    <script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const mapping = {{ context.pdf_page_mapping | tojson | safe }};
+        if (mapping && mapping.url && mapping.offsets) {
+            const url = mapping.url;
+            const offsets = mapping.offsets.sort((a, b) => a[0] - b[0]); // sort by edition page
+
+            const pageLabels = document.querySelectorAll('a.pb-label');
+
+            let pageNumberRegex;
+
+            // Simple regexes for known URL patterns
+            const archiveOrgRegex = /(.*\/page\/n)(\d+)(\/mode\/.*)/;
+            const googleBooksRegex = /(.*&pg=GBS\.PP)(\d+)(.*)/;
+            const hathiTrustRegex = /(.*&seq=)(\d+)(.*)/;
+
+            if (archiveOrgRegex.test(url)) {
+                pageNumberRegex = archiveOrgRegex;
+            } else if (googleBooksRegex.test(url)) {
+                pageNumberRegex = googleBooksRegex;
+            } else if (hathiTrustRegex.test(url)) {
+                pageNumberRegex = hathiTrustRegex;
+            }
+
+            // Fallback: try to find a number at the end of the URL or in a page= param
+            if (!pageNumberRegex) {
+                // case: page=123
+                if (/[?&]page=\d+/.test(url)) {
+                    pageNumberRegex = /(.*[?&]page=)(\d+)(.*)/;
+                }
+                // case: /page/123
+                else if (/\/page\/\d+/.test(url)) {
+                    pageNumberRegex = /(.*\/page\/)(\d+)(.*)/;
+                }
+                 // case: ends with a number
+                else if (/\d+$/.test(url)) {
+                    pageNumberRegex = /^(.*?)(\d+)$/;
+                }
+            }
+
+            pageLabels.forEach(label => {
+                const editionPageStr = label.dataset.page;
+                if (!editionPageStr) return;
+                
+                const editionPage = parseInt(editionPageStr, 10);
+                if (isNaN(editionPage)) return;
+
+                // Find the correct offset rule
+                let applicableOffset = [0, 0]; // default to no offset
+                for (const offset of offsets) {
+                    if (offset[0] <= editionPage) {
+                        applicableOffset = offset;
+                    } else {
+                        break; // since offsets is sorted
+                    }
+                }
+                
+                const offsetDelta = applicableOffset[1] - applicableOffset[0];
+                const pdfPage = editionPage + offsetDelta;
+
+                if (pageNumberRegex) {
+                    const finalUrl = url.replace(pageNumberRegex, `$1${pdfPage}$3`);
+                    label.href = finalUrl;
+                } else {
+                    label.href = url; // fallback
+                }
+            });
+        }
+    });
+    </script>
+    {% endif %}
 </body>
 </html>
