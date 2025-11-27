@@ -7,7 +7,10 @@ h1, h2, h3, h4, h5, h6 {
     scroll-margin-top: 40px;
 }
 
-.pb-label, .lb-label { display: none; }
+.pb-label, .lb-label {
+    display: none;
+    text-decoration: none;
+}
 .show-breaks .pb-label,
 .show-breaks .lb-label {
     display: inline;
