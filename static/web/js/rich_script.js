@@ -188,13 +188,20 @@ document.addEventListener('DOMContentLoaded', (event) => {
     }
 
     function transliterate(targetScheme) {
+        const reapplyCorrections = () => {
+            const correctionsToggle = document.querySelector('input[onchange="toggleCorrections(this)"]');
+            if (correctionsToggle) toggleCorrections(correctionsToggle);
+        };
+
         if (targetScheme === 'iast') {
             contentDiv.innerHTML = originalContent;
+            reapplyCorrections();
             return;
         }
 
         if (transliteratedContent[targetScheme]) {
             contentDiv.innerHTML = transliteratedContent[targetScheme];
+            reapplyCorrections();
             return;
         }
 
@@ -204,13 +211,21 @@ document.addEventListener('DOMContentLoaded', (event) => {
         const walker = document.createTreeWalker(tempDiv, NodeFilter.SHOW_TEXT, null, false);
         let node;
         while(node = walker.nextNode()) {
-            if (/[āīūṛṝḷḹṃḥñṭḍṇśṣĀĪŪṚṜḶḸṂḤÑṬḌṆŚṢ]/.test(node.nodeValue)) {
+            const parent = node.parentElement;
+            if (parent.classList.contains('lb-label') || 
+                parent.classList.contains('pb-label') || 
+                parent.classList.contains('location-marker')) {
+                continue;
+            }
+
+            if (node.nodeValue && node.nodeValue.trim().length > 0) {
                 node.nodeValue = Sanscript.t(node.nodeValue, 'iast', targetScheme);
             }
         }
         
         transliteratedContent[targetScheme] = tempDiv.innerHTML;
         contentDiv.innerHTML = tempDiv.innerHTML;
+        reapplyCorrections();
     }
 
     transliterationSchemeSelect.addEventListener('change', (e) => {
