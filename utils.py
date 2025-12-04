@@ -234,8 +234,9 @@ def calculate_all_sizes(file_type_paths: Dict[str, Path], data_path: Path):
     metadata_path = data_path / 'metadata'
     
     total_corpus_bytes = 0
+    rich_html_path = texts_path / 'transforms' / 'html' / 'rich'
     if texts_path.is_dir():
-        total_corpus_bytes += sum(p.stat().st_size for p in texts_path.rglob('*') if p.is_file() and p.suffix != '.zip')
+        total_corpus_bytes += sum(p.stat().st_size for p in texts_path.rglob('*') if p.is_file() and p.suffix != '.zip' and not str(p).startswith(str(rich_html_path)))
     if metadata_path.is_dir():
         total_corpus_bytes += sum(p.stat().st_size for p in metadata_path.rglob('*') if p.is_file() and p.suffix != '.zip')
 
