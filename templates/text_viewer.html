@@ -32,10 +32,19 @@
             </label>
         </div>
 
-        <div class="toggle-switch-container">
+        <div class="toggle-switch-container rich-text-toggle">
+            <label class="switch">
+                <input type="checkbox" onchange="toggleLineBreaks(this)">
+                <span class="toggle-switch-text switch-text-off">Paragraphs</span>
+                <span class="toggle-switch-text switch-text-on">Lines</span>
+            </label>
+        </div>
+        {% endif %}
+
+        <div class="toggle-switch-container rich-text-toggle">
             <label class="toggle-switch">
-                <input type="checkbox" onchange="toggleViewMode(this)">
-                <span class="toggle-switch-text">Search-friendly</span>
+                <input type="checkbox" onchange="toggleBreaks(this)">
+                <span class="toggle-switch-text">{{ "Page breaks" if context.verse_only else "Line/Page breaks" }}</span>
                 <span class="toggle-switch-handle"></span>
             </label>
         </div>
@@ -52,34 +61,12 @@
                  title="Toggles display of corrections, listed at the bottom of the metadata panel.">
         </div>
 
-        <div class="toggle-switch-container rich-text-toggle">
-            <label class="switch">
-                <input type="checkbox" onchange="toggleLineBreaks(this)">
-                <span class="switch-text-off">Paragraphs</span>
-                <span class="switch-text-on">Lines</span>
-            </label>
-        </div>
-        {% endif %}
-
-        <div class="toggle-switch-container rich-text-toggle">
+        <div class="toggle-switch-container">
             <label class="toggle-switch">
-                <input type="checkbox" onchange="toggleBreaks(this)">
-                <span class="toggle-switch-text">{{ "Page breaks" if context.verse_only else "Line/Page breaks" }}</span>
+                <input type="checkbox" onchange="toggleViewMode(this)">
+                <span class="toggle-switch-text">Search-friendly</span>
                 <span class="toggle-switch-handle"></span>
             </label>
-        </div>
-
-        <div class="toggle-switch-container">
-            <div id="transliteration-controls-container">
-                <span class="toggle-switch-text">ā→आ</span>
-                <div id="transliteration-controls">
-                    <select id="transliteration-scheme"></select>
-                    <label id="toggle-switch-text">
-                        <input type="checkbox" id="show-all-schemes-checkbox">
-                        <span class="toggle-switch-text"> more</span>
-                    </label>
-                </div>
-            </div>
         </div>
 
         {% if context.verse_only %}
@@ -96,6 +83,20 @@
             <input id="width-slider" type="range" min="0" max="1.6" step="0.4" value="0.8">
         </div>
         {% endif %}
+
+        <div class="toggle-switch-container">
+            <div id="transliteration-controls-container">
+                <span class="toggle-switch-text">ā→आ</span>
+                <div id="transliteration-controls">
+                    <select id="transliteration-scheme"></select>
+                    <label id="toggle-switch-text">
+                        <input type="checkbox" id="show-all-schemes-checkbox">
+                        <span class="toggle-switch-text"> more</span>
+                    </label>
+                </div>
+            </div>
+        </div>
+
     </div>
 
     <div id="border-widgets">

@@ -224,10 +224,6 @@ body::after {
 }
 .switch-text-on, .switch-text-off {
     flex: 1;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    font-size: 14px;
     user-select: none;
     transition: all 0.2s;
 }
