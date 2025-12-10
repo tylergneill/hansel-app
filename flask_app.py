@@ -8,7 +8,7 @@ import io
 import zipfile
 import xml.etree.ElementTree as ET
 
-from flask import Flask, request, send_file, render_template, abort
+from flask import Flask, request, send_file, render_template, abort, send_from_directory
 
 from utils import (
     find_app_version, find_data_version, find_bundle_version,
@@ -49,6 +49,10 @@ logging.basicConfig(
     level=logging.INFO,
     format="%(asctime)s - %(levelname)s - %(message)s"
 )
+
+@app.route('/robots.txt')
+def robots():
+    return send_from_directory(app.static_folder, 'robots.txt')
 
 @app.route(f"/{STATIC_FILES_PATH}/<path:filename>")
 def serve_file(filename):
