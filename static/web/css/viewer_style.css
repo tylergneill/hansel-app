@@ -71,10 +71,7 @@ body::after {
 #metadata-button::after, #toc-button::after {
     content: ' ▼';
     font-size: 0.8em;
-}
-
-#toc-button::after {
-    content: ' ▶';
+    margin-left: 8px;
 }
 
 .panel {
