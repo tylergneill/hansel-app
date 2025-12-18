@@ -81,6 +81,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 }
             }
             
+            // eslint-disable-next-line no-unused-vars
             function clearFileList() {
                 fileList.innerHTML = '';
             }
@@ -106,6 +107,8 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         }
     });
+
+    /* global fileGroupSizes */
 
     const bundleForm = document.getElementById('bundleForm');
     if (bundleForm) {

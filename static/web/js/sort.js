@@ -25,4 +25,5 @@ function saKey(str) {
     .replace(/./g, ch => String(saWeight[ch] || 999).padStart(3, '0'));
     // "āi"  →  "002011"  (for table above)
 }
+window.saKey = saKey;
 

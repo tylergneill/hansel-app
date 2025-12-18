@@ -1,4 +1,8 @@
+/* global Sanscript */
+
 function toggleBreaks(checkbox) { document.getElementById("content").classList.toggle("show-breaks", checkbox.checked); }
+window.toggleBreaks = toggleBreaks;
+
 function togglePanel(panelId) {
     const panel = document.getElementById(panelId);
     if (!panel) return;
@@ -28,6 +32,7 @@ function togglePanel(panelId) {
         }
     }
 }
+window.togglePanel = togglePanel;
 
 function toggleViewMode(checkbox) {
     document.body.classList.toggle('simple-view', checkbox.checked);
@@ -45,6 +50,7 @@ function toggleViewMode(checkbox) {
         richTextToggles.forEach(toggle => toggle.style.display = 'flex');
     }
 }
+window.toggleViewMode = toggleViewMode;
 
 function toggleCorrections(checkbox) {
     const content = document.getElementById('content');
@@ -61,9 +67,13 @@ function toggleCorrections(checkbox) {
         postCorrectionElements.forEach(el => el.style.display = 'none');
     }
 }
-function toggleLineBreaks(checkbox) { document.getElementById("content").classList.toggle("show-line-breaks", checkbox.checked); }
+window.toggleCorrections = toggleCorrections;
 
-function toggleLocationMarkers(checkbox) { document.getElementById("content").classList.toggle("hide-location-markers"); }
+function toggleLineBreaks(checkbox) { document.getElementById("content").classList.toggle("show-line-breaks", checkbox.checked); }
+window.toggleLineBreaks = toggleLineBreaks;
+
+function toggleLocationMarkers() { document.getElementById("content").classList.toggle("hide-location-markers"); }
+window.toggleLocationMarkers = toggleLocationMarkers;
 
 function alignAndToggleTocPanel() {
     const tocButton = document.getElementById('toc-button');
@@ -76,7 +86,7 @@ function alignAndToggleTocPanel() {
     togglePanel('toc-panel');
 }
 
-document.addEventListener('DOMContentLoaded', (event) => {
+document.addEventListener('DOMContentLoaded', () => {
     const tocButton = document.getElementById('toc-button');
     if (tocButton) {
         tocButton.addEventListener('click', alignAndToggleTocPanel);
@@ -256,7 +266,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
 
         const walker = document.createTreeWalker(tempDiv, NodeFilter.SHOW_TEXT, null, false);
         let node;
-        while(node = walker.nextNode()) {
+        while ((node = walker.nextNode())) {
             const parent = node.parentElement;
             if (parent.classList.contains('lb-label') || 
                 parent.classList.contains('pb-label') || 
