@@ -139,7 +139,13 @@
                                 <tbody>
                                     {% for item in entry.rows %}
                                     <tr>
-                                        <td style="padding-right: 1em;">p.{{ item.page }}, l.{{ item.line }}:</td>
+                                        <td style="padding-right: 1em;">
+                                            {% if item.verse %}
+                                                <span class="correction-link" data-verse="{{ item.verse }}">v. {{ item.verse }}{{ item.verse_part }}</span>:
+                                            {% else %}
+                                                <span class="correction-link" data-page="{{ item.page }}" data-line="{{ item.line }}" data-location-id="{{ item.location_id }}">p. {{ item.page }}, l. {{ item.line }}</span>:
+                                            {% endif %}
+                                        </td>
                                         <td>
                                             {% if item.sic == '' and item.corr == ' ' %}
                                                 space added

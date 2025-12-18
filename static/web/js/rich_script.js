@@ -135,6 +135,52 @@ document.addEventListener('DOMContentLoaded', (event) => {
         });
     }
 
+    // Navigation for correction entries
+    if (correctionsListItem) {
+        correctionsListItem.addEventListener('click', (e) => {
+            const link = e.target.closest('.correction-link');
+            if (link) {
+                let target = null;
+                
+                console.log('Correction click:', link.dataset);
+
+                if (link.dataset.verse) {
+                    const targetId = 'v' + link.dataset.verse.replace(/\./g, '-');
+                    target = document.getElementById(targetId);
+                } else if (link.dataset.locationId && link.dataset.locationId !== 'None') {
+                    target = document.getElementById(link.dataset.locationId);
+                }
+
+                // Minimal fallback: try finding a pb-label for this page
+                if (!target && link.dataset.page) {
+                    target = document.querySelector(`.pb-label[data-page="${link.dataset.page}"]`);
+                    console.log('Fallback to page label:', target);
+                }
+
+                if (target) {
+                    // Ensure target is visible if hidden
+                    if (getComputedStyle(target).display === 'none') {
+                        if (target.tagName === 'H1' || target.tagName === 'H2' || target.tagName === 'DIV' || target.tagName === 'P') {
+                            target.style.display = 'block';
+                        } else {
+                            target.style.display = 'inline';
+                        }
+                    }
+
+                    target.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                    target.classList.add('highlight-correction');
+                    setTimeout(() => target.classList.remove('highlight-correction'), 2000);
+                    
+                    // Close metadata panel if open
+                    const metadataPanel = document.getElementById('metadata-panel');
+                    if (metadataPanel && metadataPanel.style.display === 'block') {
+                        togglePanel('metadata-panel');
+                    }
+                }
+            }
+        });
+    }
+
     // Transliteration logic
     const transliterationSchemeSelect = document.getElementById('transliteration-scheme');
     const showAllSchemesCheckbox = document.getElementById('show-all-schemes-checkbox');

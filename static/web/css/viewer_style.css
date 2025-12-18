@@ -413,3 +413,19 @@ body::after {
     height: auto;
     border: 3px solid rgb(231, 159, 58);
 }
+
+.correction-link {
+    cursor: pointer;
+    text-decoration: underline;
+    color: #1a73e8;
+}
+
+.correction-link:hover {
+    color: #174ea6;
+}
+
+.highlight-correction {
+    background-color: #fffde7;
+    outline: 2px solid #ffd600;
+    transition: background-color 2s, outline 2s;
+}
