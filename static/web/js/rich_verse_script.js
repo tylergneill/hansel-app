@@ -5,8 +5,9 @@ function toggleVerseFormatting(checkbox) {
         sliderToggle.style.display = checkbox.checked ? 'block' : 'none';
     }
 }
+window.toggleVerseFormatting = toggleVerseFormatting;
 
-document.addEventListener('DOMContentLoaded', (event) => {
+document.addEventListener('DOMContentLoaded', () => {
     const slider = document.getElementById('width-slider');
     if (slider) {
         const handleSliderChange = (value) => {
