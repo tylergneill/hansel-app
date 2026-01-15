@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {% include 'components/head_shared.html' %}
+    <title>HANSEL - Progress</title>
+</head>
+<body>
+<div id="content">
+    {% from 'components/sidenav.html' import sidenav %}
+    {% set nav_links = [
+        {'url': '/', 'text': 'Back Home'}
+    ] %}
+    {{ sidenav(nav_links) }}
+
+    <div class="main">
+
+        <div id="about">
+
+            <h1>Progress</h1>
+
+<!--            <ul class="toc">-->
+<!--                <li><a href="#changes-in-progress">Changes In-Progress</a></li>-->
+<!--                <li><a href="#latest-completed-changes">Latest Completed Changes</a></li>-->
+<!--                <li><a href="#more-completed-changes">More Completed Changes</a></li>-->
+<!--            </ul>-->
+
+            <h2 id="changes-in-progress">Changes In-Progress</h2>
+            <ul class="spaced-list">
+                <li>22 Dec 2025: Vākyapadīya-Prameyasaṃgraha (1981) submitted for addition by C. Li</li>
+                <li>23 Dec 2025: Kṛṣṇamitra's Prabodha-Candrodaya (2009) submitted for addition by M. Kapstein</li>
+                <li>5–9 Jan 2026: Bhagavadajjuka (2009) submitted for addition by R. Steiner, M. Straube, C. Ferstl</li>
+                <li>(internal): Nyāyabhūṣaṇa (1968) selected for incorporation from Pramāṇa NLP</li>
+            </ul>
+
+            <h2 id="latest-completed-changes">Latest Completed Changes</h2>
+            <ul class="spaced-list">
+                <li>19 Dec 2025: HANSEL <a href="https://list.indology.info/pipermail/indology/2025-December/061513.html">launched</a> with 4 items</li>
+            </ul>
+
+<!--            <h2 id="more-completed-changes">More Completed Changes</h2>-->
+<!--            <ul>-->
+<!--                <li>blah</li>-->
+<!--            </ul>-->
+
+        </div>
+    </div>
+</div>
+</body>
+</html>
