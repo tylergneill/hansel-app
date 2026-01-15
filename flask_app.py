@@ -307,6 +307,10 @@ def about():
         plain_text_size_mb = PLAIN_TEXT_SIZE_MB,
     )
 
+@app.route("/progress")
+def progress():
+    return render_template("progress.html")
+
 @app.route("/team")
 def team():
     return render_template("team.html")
