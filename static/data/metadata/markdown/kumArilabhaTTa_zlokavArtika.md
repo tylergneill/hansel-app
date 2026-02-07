@@ -28,7 +28,16 @@ Dvārikādāsa Śāstrī 1978
 
 # Edition PDFs
 
-- [on Archive (missing a few pages)](https://archive.org/details/SlokavarttikaNyayaratnakara/mode/2up)
+- [on Archive (missing a few pages)](https://archive.org/details/SlokavarttikaNyayaratnakara/page/n29/mode/2up)
+
+# PDF Page Offset
+
+- 3 → 29
+- 232 → 257
+- 381 → 405
+- 446 → 468
+- 495 → 516
+- 607 → 627
 
 # Extent
 
@@ -74,7 +83,7 @@ Dvārikādāsa Śāstrī 1978
 
 # Work Description
 
-xyz
+Ślokavārttika is one of the foundational texts of classical Indian philosophy, especially for understanding how Sanskrit intellectuals argued about knowledge, language, and authority. In it, Kumārila argues that Vedic language is a reliable means for knowing what human beings ought to do, not because of the intention of any human or divine author, but because of stable, conventional relations inherent in language itself. Though formally a commentary on parts of Jaimini’s Mīmāṃsāsūtra, the work functions less as explanation than as intertextual polemic, sharpening debates with Buddhists, Naiyāyikas, and rival Mīmāṃsakas in tightly compressed verse. For getting started with this notoriously difficult text, the most reliable English-language resources are the Stanford Encyclopedia of Philosophy articles on Mīmāṃsā and Testimony (śabda), together with John Taber’s essays on Kumārila and svataḥ prāmāṇya.
 
 # Genres
 
@@ -103,7 +112,7 @@ CC BY-NC-SA 4.0
 
 - (Date unknown) H. Krasser: Created.
 - (2017–2021) Tyler Neill: Supplied missing _Arthāpattipariccheda_ (5.8), restructured for Pramāṇa NLP collection.
-- (2025) Tyler Neill: Added page numbers for HANSEL structure.
+- (2025) Tyler Neill: Added page numbers for HANSEL structure, corrected about 150 unmetrical verses.
 
 # File Creation Method
 
@@ -115,7 +124,7 @@ Numbered verse
 
 # Word Division Style
 
-Roman-like (ity evam, not ityevam)
+Roman-like (ity evam, not ityevam), but inconsistent
 
 # Original Submission Last Updated
 
@@ -123,8 +132,8 @@ Roman-like (ity evam, not ityevam)
 
 # Text Last Updated
 
-2025-09-29
+2025-12-17
 
 # Metadata Last Updated 
 
-2025-10-22
+2025-12-17

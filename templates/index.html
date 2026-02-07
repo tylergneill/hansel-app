@@ -134,6 +134,19 @@
                                         Full Metadata - Markdown
                                     </a>
                                 </li>
+                                {% if item['Additional Files'] %}
+                                    {% for file in item['Additional Files'] %}
+                                    <li>
+                                        <a href="{{ file['url'] }}" class="main-link">
+                                            {% set ext = file['filetype'][1:] if file['filetype'] else '' %}
+                                            {% set icon = ext if ext in ['doc', 'xml', 'txt'] else 'dl' %}
+                                            <img src="{{ static_files_path }}/web/imgs/{{ icon }}.png" alt="{{ icon }}" style="height: 20px; margin-left: -6px; margin-right: 8px;">
+                                            {{ file['text'] }}
+                                            {% if file['description'] %} - {{ file['description'] }}{% endif %}
+                                        </a>
+                                    </li>
+                                    {% endfor %}
+                                {% endif %}
                             </ul>
                         </ul>
                     </li>
@@ -334,6 +347,14 @@ document.addEventListener('DOMContentLoaded', function() {
                 const xml_href = `${staticFilesPath}/data/texts/project_editions/xml/${row['Filename Base']}.xml`;
                 const html_href = `${staticFilesPath}/data/texts/transforms/html/plain/${row['Filename Base']}.html`;
 
+                let additionalFilesHtml = '';
+                if (row['Additional Files'] && row['Additional Files'].length > 0) {
+                     row['Additional Files'].forEach(f => {
+                         const fType = f.filetype ? ` (${f.filetype})` : '';
+                         additionalFilesHtml += `<a href="${f.url}">${f.text}${fType}</a>`;
+                     });
+                }
+
                 const imgSrc = `${staticFilesPath}/web/imgs/dl.png`;
 
                 return `
@@ -348,6 +369,7 @@ document.addEventListener('DOMContentLoaded', function() {
                             <a href="${txt_href}">processed .txt</a>
                             <a href="${xml_href}">.xml transform </a>
                             <a href="${html_href}">plain .html transform </a>
+                            ${additionalFilesHtml}
                         </div>
                     </div>
                 `;

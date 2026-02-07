@@ -26,6 +26,10 @@ Schmidt 1893
 - [1897 Band X on Archive (DLI & public.resource.org)](https://archive.org/details/dli.ministry.08828/page/n9/mode/2up)
 - 1893 Band X, No. 1 (improved by V. Gostishchev) on Archive, to be uploaded soon...
 
+# PDF Page Offset
+
+-  1 → 19
+
 # Extent
 
 - The complete work is nearly extant except for a few small lacunae.
@@ -85,6 +89,10 @@ Prose with verse
 
 Roman-like (ity evam, not ityevam)
 
+# Additional Files
+
+- [Bibliography](miscellaneous/zukasaptati_s_translation_bibliography.doc): Overview of translations by V. Gostishchev 
+
 # Additional Notes
 
 - Indian editions (e.g. Ramakant Tripathi, Vārāṇasī, 1966, basis of the GRETIL text) are based on this _Simplicior_ text by Schmidt.
@@ -102,4 +110,4 @@ Roman-like (ity evam, not ityevam)
 
 # Metadata Last Updated 
 
-2025-10-22
+2026-02-03

@@ -165,6 +165,7 @@ def process_metadata(raw_metadata: Dict[str, Dict]) -> List[Dict]:
             'PDFLinks': pdf_links,
             'Size (kb)': record['File Size (KB)'],
             'Genre': ', '.join(record['Genres']),
+            'Additional Files': record.get('Additional Files', [])
         })
     sorted_metadata_subset = sorted(metadata_subset, key=lambda x: custom_sort_key(x['Title']))
     return sorted_metadata_subset

@@ -6,7 +6,6 @@ from pathlib import Path
 from typing import Dict
 import io
 import zipfile
-import xml.etree.ElementTree as ET
 
 from flask import Flask, request, send_file, render_template, abort, send_from_directory
 
