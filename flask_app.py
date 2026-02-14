@@ -134,6 +134,8 @@ def view_text(filename):
         "has_verses": False,
         "has_location_markers": False,
         "no_line_numbers": False,
+        "drama": False,
+        "has_chaya": False,
     }
     context = {**context_defaults, **raw_context}
     context["title"] = DISPLAY_TITLES.get(base_name, context["title"])

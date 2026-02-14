@@ -157,7 +157,12 @@ function toggleLocationMarkers() {
         document.getElementById("content").classList.toggle("hide-location-markers");
     });
 }
+
+function toggleLocationMarkers() { document.getElementById("content").classList.toggle("hide-location-markers"); }
 window.toggleLocationMarkers = toggleLocationMarkers;
+
+function toggleChaya(checkbox) { document.getElementById("content").classList.toggle("hide-chaya", !checkbox.checked); }
+window.toggleChaya = toggleChaya;
 
 function alignAndToggleTocPanel() {
     const tocButton = document.getElementById('toc-button');
