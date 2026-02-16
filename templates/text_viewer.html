@@ -6,11 +6,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="{{ url_for('static', filename='web/css/viewer_style.css') }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='web/css/rich_content_style.css') }}">
-    {% if context.verse_only %}
+    {% if context.has_verses %}
     <link rel="stylesheet" href="{{ url_for('static', filename='web/css/rich_verse_style.css') }}">
     {% endif %}
 </head>
-<body class="{% if context.verse_only %}simple-verse-style{% endif %}">
+<body class="{% if context.has_verses %}simple-verse-style{% endif %}">
     <a href="/" id="home-button">
         <img src="{{ url_for('static', filename='web/imgs/logo.png') }}" alt="Home">
     </a>
@@ -23,7 +23,7 @@
     <div id="toggles-widget" class="toggles-widget-container panel">
         <div id="toggles-widget-close-button">&times;</div>
 
-        {% if not context.verse_only %}
+        {% if context.has_location_markers %}
         <div class="toggle-switch-container">
             <label class="toggle-switch">
                 <input type="checkbox" onchange="toggleLocationMarkers(this)">
@@ -44,7 +44,7 @@
         <div class="toggle-switch-container rich-text-toggle">
             <label class="toggle-switch">
                 <input type="checkbox" onchange="toggleBreaks(this)">
-                <span class="toggle-switch-text">{{ "Page breaks" if context.verse_only else "Line/Page breaks" }}</span>
+                <span class="toggle-switch-text">Line/Page breaks</span>
                 <span class="toggle-switch-handle"></span>
             </label>
         </div>
@@ -69,7 +69,7 @@
             </label>
         </div>
 
-        {% if context.verse_only %}
+        {% if context.has_verses %}
         <div class="toggle-switch-container">
             <label class="toggle-switch">
                 <input type="checkbox" onchange="toggleVerseFormatting(this)">
@@ -80,7 +80,7 @@
 
         <div class="toggle-switch-container verse-format-toggle">
             <label class="simple-checkbox-label">Verse Spacing</label>
-            <input id="width-slider" type="range" min="0" max="1.6" step="0.4" value="0.8">
+            <input id="width-slider" type="range" min="0.4" max="1.6" step="0.4" value="0.8">
         </div>
         {% endif %}
 
@@ -186,7 +186,7 @@
 
     <script src="https://cdn.jsdelivr.net/npm/@indic-transliteration/sanscript/sanscript.min.js"></script>
     <script src="{{ url_for('static', filename='web/js/rich_script.js') }}"></script>
-    {% if context.verse_only %}
+    {% if context.has_verses %}
     <script src="{{ url_for('static', filename='web/js/rich_verse_script.js') }}"></script>
     {% endif %}
 

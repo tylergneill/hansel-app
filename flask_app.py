@@ -126,8 +126,9 @@ def view_text(filename):
         "metadata_entries": [],
         "corrections": [],
         "has_corrections": False,
-        "verse_only": False,
-        "includes_plain_variant": False,
+        "has_verses": False,
+        "has_location_markers": False,
+        "condensed_verse_format": False,
         "no_line_numbers": False,
     }
     context = {**context_defaults, **raw_context}

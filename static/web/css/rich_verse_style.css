@@ -10,6 +10,10 @@ body:not(.simple-verse-style) .verse {
   margin-bottom: var(--verse-spacing, 0.8em);
 }
 
+body:not(.simple-verse-style) .verse .lg {
+  padding-left: 0;
+}
+
 body.no-verse-padding:not(.simple-verse-style) .verse {
   padding-top: 0;
   padding-bottom: 0;
@@ -31,6 +35,12 @@ body:not(.simple-verse-style) .padas {
 
 .padas > li {
   line-height: 1.4;
+}
+
+.lg-head {
+  list-style: none;
+  margin: 0 0 0.3em 0;
+  padding: 0;
 }
 
 input[type=range] {
