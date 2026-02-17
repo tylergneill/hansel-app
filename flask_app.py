@@ -128,7 +128,6 @@ def view_text(filename):
         "has_corrections": False,
         "has_verses": False,
         "has_location_markers": False,
-        "condensed_verse_format": False,
         "no_line_numbers": False,
     }
     context = {**context_defaults, **raw_context}
