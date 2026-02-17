@@ -105,6 +105,20 @@ document.addEventListener('DOMContentLoaded', () => {
         closeButton.addEventListener('click', () => togglePanel('toggles-widget'));
     }
 
+    // Close panels when clicking outside
+    document.addEventListener('click', (e) => {
+        const openPanel = document.querySelector('.panel[style*="display: block"]');
+        if (!openPanel) return;
+
+        const clickedInsidePanel = e.target.closest('.panel');
+        const clickedToggle = e.target.closest('#metadata-button, #toc-button, #toggles-widget-icon, #toggles-widget-close-button');
+        if (!clickedInsidePanel && !clickedToggle) {
+            openPanel.style.display = 'none';
+            const mobileIcon = document.getElementById('toggles-widget-icon');
+            if (mobileIcon) mobileIcon.style.display = 'block';
+        }
+    });
+
     const correctionsListItem = document.getElementById('corrections-list-container');
     if (correctionsListItem) {
         const title = correctionsListItem.querySelector('b');
