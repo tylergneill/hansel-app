@@ -6,7 +6,7 @@
 
 body:not(.simple-verse-style) .verse {
   position: relative;
-  padding: 0rem .75rem;
+  padding: var(--verse-line-spacing, 0) .75rem;
   margin-left: 2em;
   margin-bottom: var(--verse-spacing, 0);
 }
@@ -28,6 +28,18 @@ body:not(.simple-verse-style) .padas {
   list-style: none;
   margin: 0;
   padding: 0;
+}
+
+body:not(.simple-verse-style) .padas > li + li {
+  margin-top: var(--verse-line-spacing, 0);
+}
+
+body:not(.simple-verse-style) .verse .lg {
+  line-height: var(--verse-line-height, 1.2);
+}
+
+body:not(.simple-verse-style) .padas > li {
+  line-height: var(--verse-line-height, 1.2);
 }
 
 .padas > li {

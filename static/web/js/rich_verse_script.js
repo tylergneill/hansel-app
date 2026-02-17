@@ -12,6 +12,8 @@ document.addEventListener('DOMContentLoaded', () => {
     if (slider) {
         const handleSliderChange = (value) => {
             document.documentElement.style.setProperty('--verse-spacing', value + 'em');
+            document.documentElement.style.setProperty('--verse-line-spacing', 0.1 + (parseFloat(value) * 0.25) + 'em');
+            document.documentElement.style.setProperty('--verse-line-height', 1.2 + parseFloat(value) * 0.5);
             if (parseFloat(value) === 0) {
                 document.body.classList.add('no-verse-padding');
             } else {
