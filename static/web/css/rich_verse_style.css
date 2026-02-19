@@ -70,3 +70,7 @@ body.simple-verse-style .padas {
   list-style-type: none;
   padding-left: 0;
 }
+
+body.simple-verse-style .verse .lg {
+  padding-left: 0;
+}
