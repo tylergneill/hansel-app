@@ -91,6 +91,14 @@ document.addEventListener('DOMContentLoaded', () => {
     if (tocButton) {
         tocButton.addEventListener('click', alignAndToggleTocPanel);
     }
+    const tocList = document.getElementById('toc-list');
+    if (tocList) {
+        tocList.addEventListener('click', (e) => {
+            if (e.target.closest('a')) {
+                togglePanel('toc-panel');
+            }
+        });
+    }
     const metadataButton = document.getElementById('metadata-button');
     if (metadataButton) {
         metadataButton.addEventListener('click', () => togglePanel('metadata-panel'));
