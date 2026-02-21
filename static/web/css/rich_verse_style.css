@@ -46,10 +46,21 @@ body:not(.simple-verse-style) .padas > li {
   line-height: 1.4;
 }
 
+.lg.plain-text {
+  padding-top: 0.2em;
+  padding-bottom: 0.2em;
+  margin-bottom: 0.4em;
+  line-height: var(--verse-line-height, 1.2);
+}
+
 .lg-head {
   list-style: none;
   margin: 0 0 0.3em 0;
   padding: 0;
+}
+
+.lg.plain-text > .lg-head {
+  margin-left: -2em;
 }
 
 input[type=range] {

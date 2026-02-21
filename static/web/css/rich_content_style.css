@@ -2,6 +2,8 @@
 .rich-text { display: block; }
 body.simple-view .plain-text { display: block; }
 body.simple-view .rich-text { display: none; }
+body.simple-view .location-marker.rich-text,
+body.simple-view .milestone.rich-text { display: block; }
 
 h1, h2, h3, h4, h5, h6 {
     scroll-margin-top: 40px;
@@ -31,6 +33,8 @@ h1, h2, h3, h4, h5, h6 {
 .show-line-breaks .hyphen { display: inline; }
 .show-line-breaks .lb-br, .show-line-breaks .pb-br { display: block; }
 
-#content.hide-location-markers .location-marker {
+#content.hide-location-markers .location-marker,
+#content.hide-location-markers .milestone,
+#content.hide-location-markers .milestone-verse {
     display: none;
 }
