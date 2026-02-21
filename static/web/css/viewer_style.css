@@ -47,7 +47,7 @@ body::after {
 
 #toc-widget-container {
     position: fixed;
-    top: 40%;
+    top: 250px;
     left: 0;
     transform: translateY(-50%) rotate(-90deg);
     transform-origin: 0 0;
