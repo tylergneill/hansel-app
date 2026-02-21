@@ -47,10 +47,7 @@ body:not(.simple-verse-style) .padas > li {
 }
 
 .lg.plain-text {
-  padding-top: 0.2em;
-  padding-bottom: 0.2em;
   margin-bottom: 0.4em;
-  line-height: var(--verse-line-height, 1.2);
 }
 
 .lg-head {
