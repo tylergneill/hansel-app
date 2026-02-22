@@ -14,13 +14,10 @@
 const STABLE_ANCHOR_SELECTOR = 'h1, h2, h3, li.verse, p:not(.rich-text):not(.plain-text)';
 const DEFAULT_ANCHOR_SELECTOR = 'h1, h2, h3, p, li, div.lg, div.section-head';
 
-function withScrollPreservation(action, selector) {
-    const content = document.getElementById('content');
-    if (!content) { action(); return; }
-
-    const candidates = content.querySelectorAll(selector || DEFAULT_ANCHOR_SELECTOR);
+function findAnchor(candidates) {
     let anchor = null;
     let anchorOffset = 0;
+    let wasHidden = false;
 
     for (const el of candidates) {
         const rect = el.getBoundingClientRect();
@@ -29,13 +26,45 @@ function withScrollPreservation(action, selector) {
             anchorOffset = rect.top;
             break;
         }
+        // If element is near viewport scroll position but hidden (e.g. a
+        // location marker with display:none), temporarily reveal it to measure.
+        if (rect.height === 0 && getComputedStyle(el).display === 'none') {
+            el.style.display = 'block';
+            const revealedRect = el.getBoundingClientRect();
+            if (revealedRect.top >= -50 && revealedRect.height > 0) {
+                anchor = el;
+                anchorOffset = revealedRect.top;
+                wasHidden = true;
+                el.style.display = '';
+                break;
+            }
+            el.style.display = '';
+        }
     }
+
+    return { anchor, anchorOffset, wasHidden };
+}
+
+function withScrollPreservation(action, selector) {
+    const content = document.getElementById('content');
+    if (!content) { action(); return; }
+
+    const candidates = content.querySelectorAll(selector || DEFAULT_ANCHOR_SELECTOR);
+    const { anchor, anchorOffset, wasHidden } = findAnchor(candidates);
 
     action();
 
     if (anchor) {
-        const newRect = anchor.getBoundingClientRect();
-        window.scrollBy(0, newRect.top - anchorOffset);
+        // If the anchor was hidden before, temporarily show it again to measure
+        if (wasHidden && getComputedStyle(anchor).display === 'none') {
+            anchor.style.display = 'block';
+            const newRect = anchor.getBoundingClientRect();
+            window.scrollBy(0, newRect.top - anchorOffset);
+            anchor.style.display = '';
+        } else {
+            const newRect = anchor.getBoundingClientRect();
+            window.scrollBy(0, newRect.top - anchorOffset);
+        }
     }
 }
 
