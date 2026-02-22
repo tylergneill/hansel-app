@@ -274,6 +274,9 @@ document.addEventListener('DOMContentLoaded', function() {
 
         dataTable = $('#text_table').DataTable({
           data: tableData,
+          paging: false,
+          searching: false,
+          info: false,
           columnDefs: [
             {
               "targets": [5, 6, 7],  // Metadata, Panditya, download columns
