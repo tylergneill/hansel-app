@@ -16,11 +16,11 @@ body:not(.simple-verse-style) .verse .lg {
 }
 
 
-body:not(.simple-verse-style) .verse:nth-child(odd) {
+body:not(.simple-verse-style):not(.simple-view) .verse:nth-child(odd) {
   background: hsl(0 0% 90%);
 }
 
-body:not(.simple-verse-style) .verse:nth-child(even) {
+body:not(.simple-verse-style):not(.simple-view) .verse:nth-child(even) {
   background: hsl(0 0% 95%);
 }
 
