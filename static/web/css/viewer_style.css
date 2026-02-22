@@ -7,8 +7,7 @@ body {
     position: relative;
 }
 
-body::before {
-    content: '';
+#border-top {
     position: fixed;
     top: 0;
     left: 0;
@@ -18,8 +17,7 @@ body::before {
     z-index: 1001;
 }
 
-body::after {
-    content: '';
+#border-left {
     position: fixed;
     top: 0;
     left: 0;

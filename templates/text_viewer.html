@@ -11,6 +11,8 @@
     {% endif %}
 </head>
 <body class="{% if context.has_verses %}simple-verse-style{% endif %}">
+    <div id="border-top"></div>
+    <div id="border-left"></div>
     <a href="/" id="home-button">
         <img src="{{ url_for('static', filename='web/imgs/logo.png') }}" alt="Home">
     </a>
