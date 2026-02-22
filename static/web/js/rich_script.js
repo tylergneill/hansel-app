@@ -415,4 +415,48 @@ document.addEventListener('DOMContentLoaded', () => {
     if (savedScheme !== 'iast') {
         transliterate(savedScheme);
     }
+
+    // Font size controls
+    const FONT_SIZE_STEP = 2;
+    const FONT_SIZE_MIN = 10;
+    const FONT_SIZE_MAX = 30;
+    const FONT_SIZE_DEFAULT = 16;
+
+    function getBaseFontSize() {
+        return parseFloat(getComputedStyle(document.documentElement).fontSize) || FONT_SIZE_DEFAULT;
+    }
+
+    function setFontSize(size) {
+        size = Math.max(FONT_SIZE_MIN, Math.min(FONT_SIZE_MAX, size));
+        contentDiv.style.fontSize = size + 'px';
+        localStorage.setItem('hanselFontSize', size);
+    }
+
+    const savedFontSize = localStorage.getItem('hanselFontSize');
+    if (savedFontSize) {
+        contentDiv.style.fontSize = savedFontSize + 'px';
+    }
+
+    const decreaseBtn = document.getElementById('font-size-decrease');
+    const increaseBtn = document.getElementById('font-size-increase');
+    const resetBtn = document.getElementById('font-size-reset');
+
+    if (decreaseBtn) {
+        decreaseBtn.addEventListener('click', () => {
+            const current = parseFloat(contentDiv.style.fontSize) || getBaseFontSize();
+            setFontSize(current - FONT_SIZE_STEP);
+        });
+    }
+    if (increaseBtn) {
+        increaseBtn.addEventListener('click', () => {
+            const current = parseFloat(contentDiv.style.fontSize) || getBaseFontSize();
+            setFontSize(current + FONT_SIZE_STEP);
+        });
+    }
+    if (resetBtn) {
+        resetBtn.addEventListener('click', () => {
+            contentDiv.style.fontSize = '';
+            localStorage.removeItem('hanselFontSize');
+        });
+    }
 });

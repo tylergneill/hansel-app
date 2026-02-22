@@ -378,6 +378,43 @@ body {
     vertical-align: middle;
 }
 
+#font-size-controls {
+    display: flex;
+    align-items: center;
+    width: 100%;
+}
+
+#font-size-buttons {
+    display: flex;
+    margin-left: auto;
+    gap: 4px;
+}
+
+#font-size-buttons button {
+    width: 30px;
+    height: 30px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    background-color: #f5f5f5;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: bold;
+    color: #333;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+    line-height: 1;
+}
+
+#font-size-buttons button:hover {
+    background-color: #e0e0e0;
+}
+
+#font-size-reset {
+    font-size: 13px !important;
+}
+
 #transliteration-controls-container {
     display: flex;
     align-items: center;
