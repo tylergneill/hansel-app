@@ -31,6 +31,11 @@ FILE_TYPE_PATHS = {
 }
 RAW_METADATA: Dict = load_metadata(METADATA_PATH)
 CUSTOM_METADATA = process_metadata(RAW_METADATA)
+DISPLAY_TITLES = {
+    record['Filename']: record['Title']
+    for record in RAW_METADATA.values()
+    if isinstance(record, dict) and 'Filename' in record and 'Title' in record
+}
 DISPLAY_FIELDS = ['Title', 'Author', 'Edition', 'Genre', 'Size (kb)', '', '', '']
 NUM_ITEMS = len(CUSTOM_METADATA)
 
@@ -120,7 +125,7 @@ def view_text(filename):
         raw_context = {} # Fallback to empty context
 
     context_defaults = {
-        "title": Path(filename).stem,
+        "title": DISPLAY_TITLES.get(base_name, base_name),
         "toc": [],
         "metadata_html": "",
         "metadata_entries": [],
@@ -131,6 +136,7 @@ def view_text(filename):
         "no_line_numbers": False,
     }
     context = {**context_defaults, **raw_context}
+    context["title"] = DISPLAY_TITLES.get(base_name, context["title"])
 
     context_json = json.dumps(context, ensure_ascii=False)
 
@@ -153,9 +159,13 @@ def view_metadata(filename):
     with open(file_path, 'r', encoding='utf-8') as f:
         content_html = f.read()
 
+    base_name = Path(filename).stem
+    display_title = DISPLAY_TITLES.get(base_name, base_name)
+
     return render_template(
         'metadata_viewer.html',
-        content_html=content_html
+        content_html=content_html,
+        title=display_title
     )
 
 @app.route("/download", methods=['POST'])
