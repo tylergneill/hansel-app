@@ -147,7 +147,7 @@
                         {% endif %}
                     {% elif entry.type == 'corrections' %}
                         <li id="corrections-list-container">
-                            <b>Corrections ({{ entry.count }}) <span class="caret">▶</span></b>
+                            <b>Corrections ({{ entry.count }}) <span class="caret collapsed">▼</span></b>
                             <table style="display: none; padding-left: 2em;">
                                 <tbody>
                                     {% for item in entry.rows %}

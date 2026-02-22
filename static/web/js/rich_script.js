@@ -220,7 +220,7 @@ document.addEventListener('DOMContentLoaded', () => {
             const caret = title.querySelector('.caret');
             const isHidden = table.style.display === 'none';
             table.style.display = isHidden ? 'table' : 'none';
-            caret.textContent = isHidden ? '▼' : '▶';
+            caret.classList.toggle('collapsed', !isHidden);
         });
     }
 
@@ -241,7 +241,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 
                 // Expand the corrections list
                 table.style.display = 'table';
-                caret.textContent = '▼';
+                caret.classList.remove('collapsed');
 
                 // Wait for animations to finish before scrolling
                 setTimeout(() => {

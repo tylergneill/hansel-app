@@ -102,6 +102,14 @@ body {
     padding-right: 60px;
 }
 
+.caret {
+    display: inline-block;
+    transition: transform 0.2s ease;
+}
+.caret.collapsed {
+    transform: rotate(-90deg);
+}
+
 #toc-list {
     list-style: none;
     padding-left: 0;
