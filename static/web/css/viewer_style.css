@@ -80,7 +80,7 @@ body {
     border: 3px solid rgb(231, 159, 58);
     border-radius: 5px;
     padding: 10px;
-    z-index: 1001;
+    z-index: 1003;
 }
 
 #metadata-panel {
