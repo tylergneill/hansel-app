@@ -148,11 +148,11 @@
                     {% elif entry.type == 'corrections' %}
                         <li id="corrections-list-container">
                             <b>Corrections ({{ entry.count }}) <span class="caret collapsed">▼</span></b>
-                            <table style="display: none; padding-left: 2em;">
+                            <table style="display: none; padding-left: 0.5em;">
                                 <tbody>
                                     {% for item in entry.rows %}
                                     <tr>
-                                        <td style="padding-right: 1em;">
+                                        <td style="padding-right: 0.5em; white-space: nowrap;">
                                             {% if item.verse %}
                                                 <span class="correction-link" data-verse="{{ item.verse }}">v. {{ item.verse }}{{ item.verse_part }}</span>:
                                             {% else %}
