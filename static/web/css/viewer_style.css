@@ -5,6 +5,8 @@ body {
     padding-left: 50px;
     padding-right: 30px;
     position: relative;
+    -webkit-text-size-adjust: 100%; /* Prevent iOS text inflation on rotation */
+    text-size-adjust: 100%;
 }
 
 #border-top {
