@@ -1,6 +1,49 @@
 /* global Sanscript */
 
-function toggleBreaks(checkbox) { document.getElementById("content").classList.toggle("show-breaks", checkbox.checked); }
+/**
+ * Preserve scroll position across a toggle action.
+ * Finds a visible reference element, records its viewport offset,
+ * runs the action, then scrolls to restore the element's position.
+ *
+ * @param {Function} action - The toggle action to perform.
+ * @param {string} [selector] - CSS selector for anchor candidates.
+ *   Defaults to a broad set including div.lg. For toggles that swap
+ *   .rich-text/.plain-text elements (search-friendly), pass
+ *   STABLE_ANCHOR_SELECTOR to avoid anchoring on elements that get hidden.
+ */
+const STABLE_ANCHOR_SELECTOR = 'h1, h2, h3, li.verse, p:not(.rich-text):not(.plain-text)';
+const DEFAULT_ANCHOR_SELECTOR = 'h1, h2, h3, p, li, div.lg, div.section-head';
+
+function withScrollPreservation(action, selector) {
+    const content = document.getElementById('content');
+    if (!content) { action(); return; }
+
+    const candidates = content.querySelectorAll(selector || DEFAULT_ANCHOR_SELECTOR);
+    let anchor = null;
+    let anchorOffset = 0;
+
+    for (const el of candidates) {
+        const rect = el.getBoundingClientRect();
+        if (rect.top >= -50 && rect.height > 0) {
+            anchor = el;
+            anchorOffset = rect.top;
+            break;
+        }
+    }
+
+    action();
+
+    if (anchor) {
+        const newRect = anchor.getBoundingClientRect();
+        window.scrollBy(0, newRect.top - anchorOffset);
+    }
+}
+
+function toggleBreaks(checkbox) {
+    withScrollPreservation(() => {
+        document.getElementById("content").classList.toggle("show-breaks", checkbox.checked);
+    });
+}
 window.toggleBreaks = toggleBreaks;
 
 function togglePanel(panelId) {
@@ -35,44 +78,56 @@ function togglePanel(panelId) {
 window.togglePanel = togglePanel;
 
 function toggleViewMode(checkbox) {
-    document.body.classList.toggle('simple-view', checkbox.checked);
-    const tocWidget = document.getElementById('toc-widget-container');
-    const metadataWidget = document.getElementById('metadata-widget-container');
-    const richTextToggles = document.querySelectorAll('.rich-text-toggle');
+    withScrollPreservation(() => {
+        document.body.classList.toggle('simple-view', checkbox.checked);
+        const tocWidget = document.getElementById('toc-widget-container');
+        const metadataWidget = document.getElementById('metadata-widget-container');
+        const richTextToggles = document.querySelectorAll('.rich-text-toggle');
 
-    if (checkbox.checked) {
-        if(tocWidget) tocWidget.style.display = 'none';
-        if(metadataWidget) metadataWidget.style.display = 'none';
-        richTextToggles.forEach(toggle => toggle.style.display = 'none');
-    } else {
-        if(tocWidget) tocWidget.style.display = 'block';
-        if(metadataWidget) metadataWidget.style.display = 'block';
-        richTextToggles.forEach(toggle => toggle.style.display = 'flex');
-    }
+        if (checkbox.checked) {
+            if(tocWidget) tocWidget.style.display = 'none';
+            if(metadataWidget) metadataWidget.style.display = 'none';
+            richTextToggles.forEach(toggle => toggle.style.display = 'none');
+        } else {
+            if(tocWidget) tocWidget.style.display = 'block';
+            if(metadataWidget) metadataWidget.style.display = 'block';
+            richTextToggles.forEach(toggle => toggle.style.display = 'flex');
+        }
+    }, STABLE_ANCHOR_SELECTOR);
 }
 window.toggleViewMode = toggleViewMode;
 
 function toggleCorrections(checkbox) {
-    const content = document.getElementById('content');
-    if (!content) return;
+    withScrollPreservation(() => {
+        const content = document.getElementById('content');
+        if (!content) return;
 
-    const anteCorrectionElements = content.querySelectorAll('.ante-correction');
-    const postCorrectionElements = content.querySelectorAll('.post-correction');
+        const anteCorrectionElements = content.querySelectorAll('.ante-correction');
+        const postCorrectionElements = content.querySelectorAll('.post-correction');
 
-    if (checkbox.checked) { // Show post-correction
-        anteCorrectionElements.forEach(el => el.style.display = 'none');
-        postCorrectionElements.forEach(el => el.style.display = 'inline');
-    } else { // Show ante-correction (default)
-        anteCorrectionElements.forEach(el => el.style.display = 'inline');
-        postCorrectionElements.forEach(el => el.style.display = 'none');
-    }
+        if (checkbox.checked) { // Show post-correction
+            anteCorrectionElements.forEach(el => el.style.display = 'none');
+            postCorrectionElements.forEach(el => el.style.display = 'inline');
+        } else { // Show ante-correction (default)
+            anteCorrectionElements.forEach(el => el.style.display = 'inline');
+            postCorrectionElements.forEach(el => el.style.display = 'none');
+        }
+    });
 }
 window.toggleCorrections = toggleCorrections;
 
-function toggleLineBreaks(checkbox) { document.getElementById("content").classList.toggle("show-line-breaks", checkbox.checked); }
+function toggleLineBreaks(checkbox) {
+    withScrollPreservation(() => {
+        document.getElementById("content").classList.toggle("show-line-breaks", checkbox.checked);
+    });
+}
 window.toggleLineBreaks = toggleLineBreaks;
 
-function toggleLocationMarkers() { document.getElementById("content").classList.toggle("hide-location-markers"); }
+function toggleLocationMarkers() {
+    withScrollPreservation(() => {
+        document.getElementById("content").classList.toggle("hide-location-markers");
+    });
+}
 window.toggleLocationMarkers = toggleLocationMarkers;
 
 function alignAndToggleTocPanel() {
