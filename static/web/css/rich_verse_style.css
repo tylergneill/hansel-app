@@ -6,21 +6,22 @@
 
 body:not(.simple-verse-style) .verse {
   position: relative;
-  padding: .5rem .75rem;
-  margin-bottom: var(--verse-spacing, 0.8em);
+  padding: var(--verse-line-spacing, 0) .75rem;
+  margin-left: 2em;
+  margin-bottom: var(--verse-spacing, 0);
 }
 
-body.no-verse-padding:not(.simple-verse-style) .verse {
-  padding-top: 0;
-  padding-bottom: 0;
+body:not(.simple-verse-style) .verse .lg {
+  padding-left: 0;
 }
 
-body:not(.simple-verse-style) .verse:nth-child(odd) {
-  background: hsl(220 20% 97%);
+
+body:not(.simple-verse-style):not(.simple-view) .verse:nth-child(odd) {
+  background: hsl(0 0% 90%);
 }
 
-body:not(.simple-verse-style) .verse:nth-child(even) {
-  background: hsl(220 20% 93%);
+body:not(.simple-verse-style):not(.simple-view) .verse:nth-child(even) {
+  background: hsl(0 0% 95%);
 }
 
 body:not(.simple-verse-style) .padas {
@@ -29,8 +30,34 @@ body:not(.simple-verse-style) .padas {
   padding: 0;
 }
 
+body:not(.simple-verse-style) .padas > li + li {
+  margin-top: var(--verse-line-spacing, 0);
+}
+
+body:not(.simple-verse-style) .verse .lg {
+  line-height: var(--verse-line-height, 1.2);
+}
+
+body:not(.simple-verse-style) .padas > li {
+  line-height: var(--verse-line-height, 1.2);
+}
+
 .padas > li {
   line-height: 1.4;
+}
+
+.lg.plain-text {
+  margin-bottom: 0.4em;
+}
+
+.lg-head {
+  list-style: none;
+  margin: 0 0 0.3em 0;
+  padding: 0;
+}
+
+.lg.plain-text > .lg-head {
+  margin-left: -2em;
 }
 
 input[type=range] {
@@ -43,10 +70,15 @@ body.simple-verse-style .verses {
 }
 
 body.simple-verse-style .verse {
+  margin-left: 2em;
   margin-bottom: 0.4em;
 }
 
 body.simple-verse-style .padas {
   list-style-type: none;
+  padding-left: 0;
+}
+
+body.simple-verse-style .verse .lg {
   padding-left: 0;
 }

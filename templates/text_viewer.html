@@ -4,13 +4,16 @@
     <meta charset="utf-8">
     <title>HANSEL - {{ context.title }}</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="{{ url_for('static', filename='web/imgs/logo.png') }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='web/css/viewer_style.css') }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='web/css/rich_content_style.css') }}">
-    {% if context.verse_only %}
+    {% if context.has_verses %}
     <link rel="stylesheet" href="{{ url_for('static', filename='web/css/rich_verse_style.css') }}">
     {% endif %}
 </head>
-<body class="{% if context.verse_only %}simple-verse-style{% endif %}">
+<body class="{% if context.has_verses %}simple-verse-style{% endif %}">
+    <div id="border-top"></div>
+    <div id="border-left"></div>
     <a href="/" id="home-button">
         <img src="{{ url_for('static', filename='web/imgs/logo.png') }}" alt="Home">
     </a>
@@ -23,11 +26,11 @@
     <div id="toggles-widget" class="toggles-widget-container panel">
         <div id="toggles-widget-close-button">&times;</div>
 
-        {% if not context.verse_only %}
+        {% if context.has_location_markers %}
         <div class="toggle-switch-container">
             <label class="toggle-switch">
                 <input type="checkbox" onchange="toggleLocationMarkers(this)">
-                <span class="toggle-switch-text">Locations</span>
+                <span class="toggle-switch-text">Location Info</span>
                 <span class="toggle-switch-handle"></span>
             </label>
         </div>
@@ -36,7 +39,7 @@
             <label class="switch">
                 <input type="checkbox" onchange="toggleLineBreaks(this)">
                 <span class="toggle-switch-text switch-text-off">Paragraphs</span>
-                <span class="toggle-switch-text switch-text-on">Lines</span>
+                <span class="toggle-switch-text switch-text-on">Line-by-line</span>
             </label>
         </div>
         {% endif %}
@@ -44,7 +47,7 @@
         <div class="toggle-switch-container rich-text-toggle">
             <label class="toggle-switch">
                 <input type="checkbox" onchange="toggleBreaks(this)">
-                <span class="toggle-switch-text">{{ "Page breaks" if context.verse_only else "Line/Page breaks" }}</span>
+                <span class="toggle-switch-text">Line/Page-break Info</span>
                 <span class="toggle-switch-handle"></span>
             </label>
         </div>
@@ -69,8 +72,8 @@
             </label>
         </div>
 
-        {% if context.verse_only %}
-        <div class="toggle-switch-container">
+        {% if context.has_verses %}
+        <div class="toggle-switch-container rich-text-toggle">
             <label class="toggle-switch">
                 <input type="checkbox" onchange="toggleVerseFormatting(this)">
                 <span class="toggle-switch-text">Verse Styling</span>
@@ -78,11 +81,22 @@
             </label>
         </div>
 
-        <div class="toggle-switch-container verse-format-toggle">
+        <div class="toggle-switch-container rich-text-toggle verse-format-toggle">
             <label class="simple-checkbox-label">Verse Spacing</label>
-            <input id="width-slider" type="range" min="0" max="1.6" step="0.4" value="0.8">
+            <input id="width-slider" type="range" min="0" max="1.6" step="0.4" value="0.4">
         </div>
         {% endif %}
+
+        <div class="toggle-switch-container">
+            <div id="font-size-controls">
+                <span class="toggle-switch-text">Font Size</span>
+                <div id="font-size-buttons">
+                    <button id="font-size-decrease" title="Decrease font size">&minus;</button>
+                    <button id="font-size-reset" title="Reset font size">A</button>
+                    <button id="font-size-increase" title="Increase font size">+</button>
+                </div>
+            </div>
+        </div>
 
         <div class="toggle-switch-container">
             <div id="transliteration-controls-container">
@@ -134,12 +148,12 @@
                         {% endif %}
                     {% elif entry.type == 'corrections' %}
                         <li id="corrections-list-container">
-                            <b>Corrections ({{ entry.count }}) <span class="caret">▶</span></b>
-                            <table style="display: none; padding-left: 2em;">
+                            <b>Corrections ({{ entry.count }}) <span class="caret collapsed">▼</span></b>
+                            <table style="display: none; padding-left: 0.5em;">
                                 <tbody>
                                     {% for item in entry.rows %}
                                     <tr>
-                                        <td style="padding-right: 1em;">
+                                        <td style="padding-right: 0.5em; white-space: nowrap;">
                                             {% if item.verse %}
                                                 <span class="correction-link" data-verse="{{ item.verse }}">v. {{ item.verse }}{{ item.verse_part }}</span>:
                                             {% else %}
@@ -186,7 +200,7 @@
 
     <script src="https://cdn.jsdelivr.net/npm/@indic-transliteration/sanscript/sanscript.min.js"></script>
     <script src="{{ url_for('static', filename='web/js/rich_script.js') }}"></script>
-    {% if context.verse_only %}
+    {% if context.has_verses %}
     <script src="{{ url_for('static', filename='web/js/rich_verse_script.js') }}"></script>
     {% endif %}
 

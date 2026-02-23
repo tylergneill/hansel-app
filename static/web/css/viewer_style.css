@@ -5,10 +5,11 @@ body {
     padding-left: 50px;
     padding-right: 30px;
     position: relative;
+    -webkit-text-size-adjust: 100%; /* Prevent iOS text inflation on rotation */
+    text-size-adjust: 100%;
 }
 
-body::before {
-    content: '';
+#border-top {
     position: fixed;
     top: 0;
     left: 0;
@@ -18,8 +19,7 @@ body::before {
     z-index: 1001;
 }
 
-body::after {
-    content: '';
+#border-left {
     position: fixed;
     top: 0;
     left: 0;
@@ -47,7 +47,7 @@ body::after {
 
 #toc-widget-container {
     position: fixed;
-    top: 40%;
+    top: 250px;
     left: 0;
     transform: translateY(-50%) rotate(-90deg);
     transform-origin: 0 0;
@@ -82,7 +82,7 @@ body::after {
     border: 3px solid rgb(231, 159, 58);
     border-radius: 5px;
     padding: 10px;
-    z-index: 1001;
+    z-index: 1003;
 }
 
 #metadata-panel {
@@ -102,6 +102,14 @@ body::after {
     overflow-y: auto;
     padding-left: 20px;
     padding-right: 60px;
+}
+
+.caret {
+    display: inline-block;
+    transition: transform 0.2s ease;
+}
+.caret.collapsed {
+    transform: rotate(-90deg);
 }
 
 #toc-list {
@@ -168,16 +176,15 @@ body::after {
 }
 
 .toggles-widget-container {
-    position: sticky;
+    position: fixed;
     top: 40px;
     right: 5%;
-    z-index: 1000;
+    z-index: 1001;
     border: 3px solid rgb(231, 159, 58);
     padding: 10px;
     border-radius: 5px;
     background-color: rgba(255, 255, 255);
     min-width: 200px;
-    float: right;
     display: none;
 }
 
@@ -379,6 +386,43 @@ body::after {
     height: 16px; 
     margin-left: 8px; 
     vertical-align: middle;
+}
+
+#font-size-controls {
+    display: flex;
+    align-items: center;
+    width: 100%;
+}
+
+#font-size-buttons {
+    display: flex;
+    margin-left: auto;
+    gap: 4px;
+}
+
+#font-size-buttons button {
+    width: 30px;
+    height: 30px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    background-color: #f5f5f5;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: bold;
+    color: #333;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+    line-height: 1;
+}
+
+#font-size-buttons button:hover {
+    background-color: #e0e0e0;
+}
+
+#font-size-reset {
+    font-size: 13px !important;
 }
 
 #transliteration-controls-container {
