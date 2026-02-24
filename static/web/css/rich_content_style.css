@@ -46,6 +46,7 @@ h1, h2, h3, h4, h5, h6 {
 .stage-direction { font-style: italic; }
 .stage-direction::before { content: "("; }
 .stage-direction::after { content: ")"; }
-.chaya::before { content: " ("; }
+.chaya { display: block; font-style: italic; }
+.chaya::before { content: "("; }
 .chaya::after { content: ")"; }
 .hide-chaya .chaya { display: none; }
