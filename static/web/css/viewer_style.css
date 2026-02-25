@@ -186,6 +186,8 @@ body {
     background-color: rgba(255, 255, 255);
     min-width: 200px;
     display: none;
+    transform: translateZ(0); /* GPU layer prevents iOS scroll jank */
+    -webkit-transform: translateZ(0);
 }
 
 .toggles-widget-container button {
@@ -291,9 +293,9 @@ body {
 }
 
 #toggles-widget-close-button {
-    position: fixed;
-    top: 35px; /* Almost match the icon */
-    right: 5%; /* Match the icon */
+    position: absolute;
+    top: -8px; /* 5px above panel outer top, minus 3px top border */
+    right: -3px; /* Align with panel outer right edge, past 3px right border */
     width: 49px; /* Match the icon's total width (33 + 5*2 + 3*2) */
     height: 49px; /* Match the icon's total height */
     font-size: 2.5em;
@@ -315,8 +317,8 @@ body {
     #toggles-widget-icon {
         right: 15%;
     }
-    #toggles-widget-close-button {
-        right: 15%; /* Match the icon in media query */
+    #toggles-widget {
+        right: 15%; /* Match the icon; close button follows automatically (position: absolute) */
     }
     #metadata, #toc {
         width: 75%;
