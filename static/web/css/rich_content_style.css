@@ -43,8 +43,6 @@ h1, h2, h3, h4, h5, h6 {
 .speaker { font-weight: bold; display: block; margin-top: 0.8em; }
 .speaker::after { content: " \2014"; } /* em-dash */
 .stage-direction { font-style: italic; }
-.stage-direction::before { content: "("; }
-.stage-direction::after { content: ")"; }
 .chaya { display: block; font-style: italic; }
 .chaya::before { content: "("; }
 .chaya::after { content: ")"; }
