@@ -74,12 +74,12 @@ def test_content_div_has_text(page, base_url, stem):
 
 
 # --------------------------------------------------------------------------- #
-# Toggle: Line/Page-break Info (show-breaks)
+# Toggle: Page- & Line-break Info (show-breaks)
 # --------------------------------------------------------------------------- #
 
 @pytest.mark.visual
 def test_toggle_breaks_shows_labels(page, base_url):
-    """Toggling 'Line/Page-break Info' makes .pb-label and .lb-label visible."""
+    """Toggling 'Page- & Line-break Info' makes .pb-label and .lb-label visible."""
     _open_viewer(page, base_url, STANDARD_TEXT)
 
     # Before toggle: break labels are hidden

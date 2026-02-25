@@ -49,7 +49,7 @@
         <div class="toggle-switch-container rich-text-toggle">
             <label class="toggle-switch">
                 <input type="checkbox" onchange="toggleBreaks(this)">
-                <span class="toggle-switch-text">Line/Page-break Info</span>
+                <span class="toggle-switch-text">{% if context.has_line_breaks %}Page- & Line-break Info{% else %}Page-break Info{% endif %}</span>
                 <span class="toggle-switch-handle"></span>
             </label>
         </div>
