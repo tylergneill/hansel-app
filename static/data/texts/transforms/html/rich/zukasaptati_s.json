@@ -5,6 +5,351 @@
             "name": "1",
             "page": "1",
             "id": "1"
+        },
+        {
+            "name": "2",
+            "page": "9",
+            "id": "2"
+        },
+        {
+            "name": "3",
+            "page": "11",
+            "id": "3"
+        },
+        {
+            "name": "4",
+            "page": "14",
+            "id": "4"
+        },
+        {
+            "name": "5",
+            "page": "18",
+            "id": "5"
+        },
+        {
+            "name": "6",
+            "page": "24",
+            "id": "6"
+        },
+        {
+            "name": "7",
+            "page": "31",
+            "id": "7"
+        },
+        {
+            "name": "8",
+            "page": "36",
+            "id": "8"
+        },
+        {
+            "name": "9",
+            "page": "38",
+            "id": "9"
+        },
+        {
+            "name": "10",
+            "page": "43",
+            "id": "10"
+        },
+        {
+            "name": "11",
+            "page": "44",
+            "id": "11"
+        },
+        {
+            "name": "12",
+            "page": "51",
+            "id": "12"
+        },
+        {
+            "name": "13",
+            "page": "52",
+            "id": "13"
+        },
+        {
+            "name": "14",
+            "page": "53",
+            "id": "14"
+        },
+        {
+            "name": "15",
+            "page": "56",
+            "id": "15"
+        },
+        {
+            "name": "16",
+            "page": "60",
+            "id": "16"
+        },
+        {
+            "name": "17",
+            "page": "61",
+            "id": "17"
+        },
+        {
+            "name": "18",
+            "page": "64",
+            "id": "18"
+        },
+        {
+            "name": "19",
+            "page": "65",
+            "id": "19"
+        },
+        {
+            "name": "20",
+            "page": "67",
+            "id": "20"
+        },
+        {
+            "name": "21",
+            "page": "69",
+            "id": "21"
+        },
+        {
+            "name": "22",
+            "page": "74",
+            "id": "22"
+        },
+        {
+            "name": "23",
+            "page": "75",
+            "id": "23"
+        },
+        {
+            "name": "24",
+            "page": "89",
+            "id": "24"
+        },
+        {
+            "name": "25",
+            "page": "91",
+            "id": "25"
+        },
+        {
+            "name": "26",
+            "page": "92",
+            "id": "26"
+        },
+        {
+            "name": "27",
+            "page": "94",
+            "id": "27"
+        },
+        {
+            "name": "28",
+            "page": "96",
+            "id": "28"
+        },
+        {
+            "name": "29",
+            "page": "97",
+            "id": "29"
+        },
+        {
+            "name": "30",
+            "page": "98",
+            "id": "30"
+        },
+        {
+            "name": "31",
+            "page": "100",
+            "id": "31"
+        },
+        {
+            "name": "32",
+            "page": "102",
+            "id": "32"
+        },
+        {
+            "name": "33",
+            "page": "103",
+            "id": "33"
+        },
+        {
+            "name": "34",
+            "page": "107",
+            "id": "34"
+        },
+        {
+            "name": "35",
+            "page": "108",
+            "id": "35"
+        },
+        {
+            "name": "36",
+            "page": "110",
+            "id": "36"
+        },
+        {
+            "name": "37",
+            "page": "112",
+            "id": "37"
+        },
+        {
+            "name": "38",
+            "page": "114",
+            "id": "38"
+        },
+        {
+            "name": "39",
+            "page": "116",
+            "id": "39"
+        },
+        {
+            "name": "40",
+            "page": "119",
+            "id": "40"
+        },
+        {
+            "name": "41",
+            "page": "121",
+            "id": "41"
+        },
+        {
+            "name": "42",
+            "page": "125",
+            "id": "42"
+        },
+        {
+            "name": "43",
+            "page": "128",
+            "id": "43"
+        },
+        {
+            "name": "44",
+            "page": "130",
+            "id": "44"
+        },
+        {
+            "name": "45",
+            "page": "131",
+            "id": "45"
+        },
+        {
+            "name": "46",
+            "page": "134",
+            "id": "46"
+        },
+        {
+            "name": "47",
+            "page": "137",
+            "id": "47"
+        },
+        {
+            "name": "48",
+            "page": "138",
+            "id": "48"
+        },
+        {
+            "name": "49",
+            "page": "141",
+            "id": "49"
+        },
+        {
+            "name": "50",
+            "page": "143",
+            "id": "50"
+        },
+        {
+            "name": "51",
+            "page": "145",
+            "id": "51"
+        },
+        {
+            "name": "52",
+            "page": "146",
+            "id": "52"
+        },
+        {
+            "name": "53",
+            "page": "151",
+            "id": "53"
+        },
+        {
+            "name": "54",
+            "page": "153",
+            "id": "54"
+        },
+        {
+            "name": "55",
+            "page": "155",
+            "id": "55"
+        },
+        {
+            "name": "56",
+            "page": "157",
+            "id": "56"
+        },
+        {
+            "name": "57",
+            "page": "158",
+            "id": "57"
+        },
+        {
+            "name": "58",
+            "page": "166",
+            "id": "58"
+        },
+        {
+            "name": "59",
+            "page": "167",
+            "id": "59"
+        },
+        {
+            "name": "60",
+            "page": "173",
+            "id": "60"
+        },
+        {
+            "name": "61",
+            "page": "174",
+            "id": "61"
+        },
+        {
+            "name": "62",
+            "page": "179",
+            "id": "62"
+        },
+        {
+            "name": "63",
+            "page": "183",
+            "id": "63"
+        },
+        {
+            "name": "64",
+            "page": "184",
+            "id": "64"
+        },
+        {
+            "name": "65",
+            "page": "186",
+            "id": "65"
+        },
+        {
+            "name": "66",
+            "page": "187",
+            "id": "66"
+        },
+        {
+            "name": "67",
+            "page": "190",
+            "id": "67"
+        },
+        {
+            "name": "68",
+            "page": "194",
+            "id": "68"
+        },
+        {
+            "name": "69",
+            "page": "196",
+            "id": "69"
+        },
+        {
+            "name": "70",
+            "page": "197",
+            "id": "70"
         }
     ],
     "metadata_entries": [
@@ -37,6 +382,12 @@
             "label": "Edition PDFs",
             "inline_text": null,
             "content_html": "<ul>\n<li><a href=\"https://archive.org/details/dli.ministry.08828/page/n9/mode/2up\">1897 Band X on Archive (DLI &amp; public.resource.org)</a></li>\n<li>1893 Band X, No. 1 (improved by V. Gostishchev) on Archive, to be uploaded soon...</li>\n</ul>\n"
+        },
+        {
+            "type": "field",
+            "label": "PDF Page Offset",
+            "inline_text": null,
+            "content_html": "<ul>\n<li>1 → 19</li>\n</ul>\n"
         },
         {
             "type": "field",
@@ -118,6 +469,12 @@
         },
         {
             "type": "field",
+            "label": "Additional Files",
+            "inline_text": null,
+            "content_html": "<ul>\n<li><a href=\"/static/data/miscellaneous/zukasaptati_s_translation_bibliography.doc\">Bibliography</a>: Overview of translations by V. Gostishchev </li>\n</ul>\n"
+        },
+        {
+            "type": "field",
             "label": "Additional Notes",
             "inline_text": null,
             "content_html": "<ul>\n<li>Indian editions (e.g. Ramakant Tripathi, Vārāṇasī, 1966, basis of the GRETIL text) are based on this <em>Simplicior</em> text by Schmidt.</li>\n<li>V. Gostishchev's original version of the file contains added <em>chāyās</em> from the Indian editions and other useful notes.</li>\n<li>On the construction of the text, see the editor's 1890 PhD dissertation “Vier Erzählungen aus der Çukasaptati”, <a href=\"https://books.google.fr/books?id=iq5LAQAAMAAJ\">on Google Books</a></li>\n<li>See also the editor's: “Anmerkungen zu dem Textus simplicior der Śukasaptati”, ZDMG 48, 1894, 580-628.</li>\n</ul>\n"
@@ -137,11 +494,23 @@
         {
             "type": "field",
             "label": "Metadata Last Updated",
-            "inline_text": "2025-10-22",
+            "inline_text": "2026-02-03",
             "content_html": ""
         }
     ],
-    "verse_only": false,
-    "includes_plain_variant": true,
-    "no_line_numbers": false
+    "has_verses": true,
+    "has_editorial_coords": true,
+    "has_line_breaks": true,
+    "no_line_numbers": false,
+    "drama": false,
+    "has_chaya": false,
+    "pdf_page_mapping": {
+        "url": "https://archive.org/details/dli.ministry.08828/page/n9/mode/2up",
+        "offsets": [
+            [
+                1,
+                19
+            ]
+        ]
+    }
 }

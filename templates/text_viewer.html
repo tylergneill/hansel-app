@@ -26,10 +26,10 @@
     <div id="toggles-widget" class="toggles-widget-container panel">
         <div id="toggles-widget-close-button">&times;</div>
 
-        {% if context.has_location_markers %}
+        {% if context.has_editorial_coords %}
         <div class="toggle-switch-container">
             <label class="toggle-switch">
-                <input type="checkbox" onchange="toggleLocationMarkers(this)">
+                <input type="checkbox" onchange="toggleEditorialCoords(this)">
                 <span class="toggle-switch-text">Location Info</span>
                 <span class="toggle-switch-handle"></span>
             </label>
@@ -171,7 +171,7 @@
                                             {% if item.verse %}
                                                 <span class="correction-link" data-verse="{{ item.verse }}">v. {{ item.verse }}{{ item.verse_part }}</span>:
                                             {% else %}
-                                                <span class="correction-link" data-page="{{ item.page }}" data-line="{{ item.line }}" data-location-id="{{ item.location_id }}">p. {{ item.page }}, l. {{ item.line }}</span>:
+                                                <span class="correction-link" data-page="{{ item.page }}" data-line="{{ item.line }}" data-coord-id="{{ item.coord_id }}">p. {{ item.page }}, l. {{ item.line }}</span>:
                                             {% endif %}
                                         </td>
                                         <td>

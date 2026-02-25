@@ -124,35 +124,35 @@ def test_toggle_line_breaks_shows_breaks(page, base_url):
 
 
 # --------------------------------------------------------------------------- #
-# Toggle: Location Info (hide-location-markers)
+# Toggle: Location Info (hide-editorial-coords)
 # --------------------------------------------------------------------------- #
 
 @pytest.mark.visual
-def test_toggle_location_markers(page, base_url):
-    """Toggling 'Location Info' shows/hides .location-marker elements.
-    #content starts with hide-location-markers class, so markers are hidden by default."""
+def test_toggle_editorial_coords(page, base_url):
+    """Toggling 'Location Info' shows/hides .editorial-coord elements.
+    #content starts with hide-editorial-coords class, so markers are hidden by default."""
     _open_viewer(page, base_url, STANDARD_TEXT)
 
-    # Default: #content has hide-location-markers, so markers are hidden
-    assert _computed_display(page, ".location-marker") == "none"
+    # Default: #content has hide-editorial-coords, so markers are hidden
+    assert _computed_display(page, ".editorial-coord") == "none"
     has_class = page.evaluate(
-        "document.getElementById('content').classList.contains('hide-location-markers')"
+        "document.getElementById('content').classList.contains('hide-editorial-coords')"
     )
     assert has_class is True
 
-    # Toggle on: removes hide-location-markers, markers become visible
+    # Toggle on: removes hide-editorial-coords, markers become visible
     _open_toggles_panel(page)
-    _click_toggle(page, "toggleLocationMarkers")
+    _click_toggle(page, "toggleEditorialCoords")
 
-    assert _computed_display(page, ".location-marker") != "none"
+    assert _computed_display(page, ".editorial-coord") != "none"
     has_class = page.evaluate(
-        "document.getElementById('content').classList.contains('hide-location-markers')"
+        "document.getElementById('content').classList.contains('hide-editorial-coords')"
     )
     assert has_class is False
 
     # Toggle off: hides them again
-    _click_toggle(page, "toggleLocationMarkers")
-    assert _computed_display(page, ".location-marker") == "none"
+    _click_toggle(page, "toggleEditorialCoords")
+    assert _computed_display(page, ".editorial-coord") == "none"
 
 
 # --------------------------------------------------------------------------- #

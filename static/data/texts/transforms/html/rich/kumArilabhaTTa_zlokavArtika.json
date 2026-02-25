@@ -5,6 +5,126 @@
             "name": "1 pratijñāsūtra PJS",
             "page": "3",
             "id": "1_pratijñāsūtra_PJS"
+        },
+        {
+            "name": "2 codanāsūtra CDS",
+            "page": "34",
+            "id": "2_codanāsūtra_CDS"
+        },
+        {
+            "name": "3 nimittasūtra NMS",
+            "page": "96",
+            "id": "3_nimittasūtra_NMS"
+        },
+        {
+            "name": "4 pratyakṣasūtra PAS",
+            "page": "97",
+            "id": "4_pratyakṣasūtra_PAS"
+        },
+        {
+            "name": "5,1 vṛttikāragrantha VKG",
+            "page": "149",
+            "id": "5,1_vṛttikāragrantha_VKG"
+        },
+        {
+            "name": "5.2",
+            "page": "152",
+            "id": "5.2"
+        },
+        {
+            "name": "5,3 nirālambanavāda NAV",
+            "page": "155",
+            "id": "5,3_nirālambanavāda_NAV"
+        },
+        {
+            "name": "5,4 śunyavāda SNV",
+            "page": "191",
+            "id": "5,4_śunyavāda_SNV"
+        },
+        {
+            "name": "5,5 anumānapariccheda AMP",
+            "page": "246",
+            "id": "5,5_anumānapariccheda_AMP"
+        },
+        {
+            "name": "5,6 śabdapariccheda SBP",
+            "page": "287",
+            "id": "5,6_śabdapariccheda_SBP"
+        },
+        {
+            "name": "5,7 upamānapariccheda UMP",
+            "page": "307",
+            "id": "5,7_upamānapariccheda_UMP"
+        },
+        {
+            "name": "5,8 arthāpattipariccheda AAP",
+            "page": "320",
+            "id": "5,8_arthāpattipariccheda_AAP"
+        },
+        {
+            "name": "5,9 abhāvapariccheda ABH",
+            "page": "335",
+            "id": "5,9_abhāvapariccheda_ABH"
+        },
+        {
+            "name": "5,10 citrākṣepavāda CAV",
+            "page": "349",
+            "id": "5,10_citrākṣepavāda_CAV"
+        },
+        {
+            "name": "5,11 sambandhākṣepavāda SAV",
+            "page": "353",
+            "id": "5,11_sambandhākṣepavāda_SAV"
+        },
+        {
+            "name": "5,12 sphoṭavāda SPH",
+            "page": "361",
+            "id": "5,12_sphoṭavāda_SPH"
+        },
+        {
+            "name": "5,13 ākṛtivāda AKV",
+            "page": "385",
+            "id": "5,13_ākṛtivāda_AKV"
+        },
+        {
+            "name": "5,14 apohavāda APV",
+            "page": "400",
+            "id": "5,14_apohavāda_APV"
+        },
+        {
+            "name": "5,15 vanavāda VAV",
+            "page": "435",
+            "id": "5,15_vanavāda_VAV"
+        },
+        {
+            "name": "5,16 sambandhākṣepaparihāra SAP",
+            "page": "453",
+            "id": "5,16_sambandhākṣepaparihāra_SAP"
+        },
+        {
+            "name": "5,17 citrākṣepaparihāra CAP",
+            "page": "483",
+            "id": "5,17_citrākṣepaparihāra_CAP"
+        },
+        {
+            "name": "5,18 ātmavāda ATV",
+            "page": "488",
+            "id": "5,18_ātmavāda_ATV"
+        },
+        {
+            "name": "6 śabdanityatādhikaraṇa SNA",
+            "page": "515",
+            "id": "6_śabdanityatādhikaraṇa_SNA"
+        },
+        {
+            "name": "7 vākyādhikaraṇa VAA",
+            "page": "598",
+            "id": "7_vākyādhikaraṇa_VAA"
+        },
+        {
+            "name": "8 vedapauruṣeyatādhikaraṇa VPA",
+            "page": "669",
+            "id": "8_vedapauruṣeyatādhikaraṇa_VPA"
         }
     ],
     "metadata_entries": [
@@ -48,7 +168,13 @@
             "type": "field",
             "label": "Edition PDFs",
             "inline_text": null,
-            "content_html": "<ul>\n<li><a href=\"https://archive.org/details/SlokavarttikaNyayaratnakara/mode/2up\">on Archive (missing a few pages)</a></li>\n</ul>\n"
+            "content_html": "<ul>\n<li><a href=\"https://archive.org/details/SlokavarttikaNyayaratnakara/page/n29/mode/2up\">on Archive (missing a few pages)</a></li>\n</ul>\n"
+        },
+        {
+            "type": "field",
+            "label": "PDF Page Offset",
+            "inline_text": null,
+            "content_html": "<ul>\n<li>3 → 29</li>\n<li>232 → 257</li>\n<li>381 → 405</li>\n<li>446 → 468</li>\n<li>495 → 516</li>\n<li>607 → 627</li>\n</ul>\n"
         },
         {
             "type": "field",
@@ -71,7 +197,7 @@
         {
             "type": "field",
             "label": "Work Description",
-            "inline_text": "xyz",
+            "inline_text": "Ślokavārttika is one of the foundational texts of classical Indian philosophy, especially for understanding how Sanskrit intellectuals argued about knowledge, language, and authority. In it, Kumārila argues that Vedic language is a reliable means for knowing what human beings ought to do, not because of the intention of any human or divine author, but because of stable, conventional relations inherent in language itself. Though formally a commentary on parts of Jaimini’s Mīmāṃsāsūtra, the work functions less as explanation than as intertextual polemic, sharpening debates with Buddhists, Naiyāyikas, and rival Mīmāṃsakas in tightly compressed verse. For getting started with this notoriously difficult text, the most reliable English-language resources are the Stanford Encyclopedia of Philosophy articles on Mīmāṃsā and Testimony (śabda), together with John Taber’s essays on Kumārila and svataḥ prāmāṇya.",
             "content_html": ""
         },
         {
@@ -108,7 +234,7 @@
             "type": "field",
             "label": "Digitization Notes",
             "inline_text": null,
-            "content_html": "<ul>\n<li>(Date unknown) H. Krasser: Created.</li>\n<li>(2017–2021) Tyler Neill: Supplied missing <em>Arthāpattipariccheda</em> (5.8), restructured for Pramāṇa NLP collection.</li>\n<li>(2025) Tyler Neill: Added page numbers for HANSEL structure.</li>\n</ul>\n"
+            "content_html": "<ul>\n<li>(Date unknown) H. Krasser: Created.</li>\n<li>(2017–2021) Tyler Neill: Supplied missing <em>Arthāpattipariccheda</em> (5.8), restructured for Pramāṇa NLP collection.</li>\n<li>(2025) Tyler Neill: Added page numbers for HANSEL structure, corrected about 150 unmetrical verses.</li>\n</ul>\n"
         },
         {
             "type": "field",
@@ -125,7 +251,7 @@
         {
             "type": "field",
             "label": "Word Division Style",
-            "inline_text": "Roman-like (ity evam, not ityevam)",
+            "inline_text": "Roman-like (ity evam, not ityevam), but inconsistent",
             "content_html": ""
         },
         {
@@ -137,17 +263,258 @@
         {
             "type": "field",
             "label": "Text Last Updated",
-            "inline_text": "2025-09-29",
+            "inline_text": "2025-12-17",
             "content_html": ""
         },
         {
             "type": "field",
             "label": "Metadata Last Updated",
-            "inline_text": "2025-10-22",
+            "inline_text": "2025-12-17",
             "content_html": ""
+        },
+        {
+            "type": "corrections",
+            "count": 29,
+            "rows": [
+                {
+                    "sic": "",
+                    "corr": "d a",
+                    "verse": "1.27",
+                    "verse_part": "cd",
+                    "coord_id": "v1-27"
+                },
+                {
+                    "sic": "da",
+                    "corr": "",
+                    "verse": "1.40",
+                    "verse_part": "cd",
+                    "coord_id": "v1-40"
+                },
+                {
+                    "sic": "ṃ",
+                    "corr": "",
+                    "verse": "4.239",
+                    "verse_part": "ab",
+                    "coord_id": "v4-239"
+                },
+                {
+                    "sic": "",
+                    "corr": ",",
+                    "verse": "5,4.53",
+                    "verse_part": "cd",
+                    "coord_id": "v5,4-53"
+                },
+                {
+                    "sic": "",
+                    "corr": "ta",
+                    "verse": "5,4.159",
+                    "verse_part": "cd",
+                    "coord_id": "v5,4-159"
+                },
+                {
+                    "sic": "mū",
+                    "corr": "m",
+                    "verse": "5,6.3",
+                    "verse_part": "ab",
+                    "coord_id": "v5,6-3"
+                },
+                {
+                    "sic": "ṇā",
+                    "corr": "ṇa",
+                    "verse": "5,11.41",
+                    "verse_part": "ab",
+                    "coord_id": "v5,11-41"
+                },
+                {
+                    "sic": "ra",
+                    "corr": "rā",
+                    "verse": "5,12.21",
+                    "verse_part": "ab",
+                    "coord_id": "v5,12-21"
+                },
+                {
+                    "sic": "ptā",
+                    "corr": "tā",
+                    "verse": "5,12.45",
+                    "verse_part": "ab",
+                    "coord_id": "v5,12-45"
+                },
+                {
+                    "sic": "śrī",
+                    "corr": "dhī",
+                    "verse": "5,12.92",
+                    "verse_part": "cd",
+                    "coord_id": "v5,12-92"
+                },
+                {
+                    "sic": "",
+                    "corr": "m ā",
+                    "verse": "5,14.37",
+                    "verse_part": "ab",
+                    "coord_id": "v5,14-37"
+                },
+                {
+                    "sic": "nai",
+                    "corr": "rnai",
+                    "verse": "5,18.45",
+                    "verse_part": "cd",
+                    "coord_id": "v5,18-45"
+                },
+                {
+                    "sic": "",
+                    "corr": "r ",
+                    "verse": "5,18.130",
+                    "verse_part": "ab",
+                    "coord_id": "v5,18-130"
+                },
+                {
+                    "sic": "",
+                    "corr": "na",
+                    "verse": "5,18.137",
+                    "verse_part": "cd",
+                    "coord_id": "v5,18-137"
+                },
+                {
+                    "sic": "",
+                    "corr": "ṃ",
+                    "verse": "6.92",
+                    "verse_part": "ab",
+                    "coord_id": "v6-92"
+                },
+                {
+                    "sic": "bhibhaṃ",
+                    "corr": "bhir bha",
+                    "verse": "6.96",
+                    "verse_part": "cd",
+                    "coord_id": "v6-96"
+                },
+                {
+                    "sic": "ghri",
+                    "corr": "dhri",
+                    "verse": "6.142",
+                    "verse_part": "ab",
+                    "coord_id": "v6-142"
+                },
+                {
+                    "sic": "sa",
+                    "corr": "",
+                    "verse": "6.143",
+                    "verse_part": "ab",
+                    "coord_id": "v6-143"
+                },
+                {
+                    "sic": "ṃ",
+                    "corr": "",
+                    "verse": "6.147",
+                    "verse_part": "cd",
+                    "coord_id": "v6-147"
+                },
+                {
+                    "sic": "ta",
+                    "corr": "te",
+                    "verse": "6.164",
+                    "verse_part": "ab",
+                    "coord_id": "v6-164"
+                },
+                {
+                    "sic": "ṃ ",
+                    "corr": "",
+                    "verse": "6.167",
+                    "verse_part": "ab",
+                    "coord_id": "v6-167"
+                },
+                {
+                    "sic": "ṃ",
+                    "corr": "",
+                    "verse": "7.62",
+                    "verse_part": "ab",
+                    "coord_id": "v7-62"
+                },
+                {
+                    "sic": "ca ",
+                    "corr": "",
+                    "verse": "7.65",
+                    "verse_part": "ab",
+                    "coord_id": "v7-65"
+                },
+                {
+                    "sic": "ddha",
+                    "corr": "",
+                    "verse": "7.182",
+                    "verse_part": "cd",
+                    "coord_id": "v7-182"
+                },
+                {
+                    "sic": " ",
+                    "corr": "",
+                    "verse": "7.214",
+                    "verse_part": "cd",
+                    "coord_id": "v7-214"
+                },
+                {
+                    "sic": "",
+                    "corr": "ṃ",
+                    "verse": "7.282",
+                    "verse_part": "ab",
+                    "coord_id": "v7-282"
+                },
+                {
+                    "sic": "",
+                    "corr": "'va",
+                    "verse": "7.315",
+                    "verse_part": "ab",
+                    "coord_id": "v7-315"
+                },
+                {
+                    "sic": "tm",
+                    "corr": "tvam",
+                    "verse": "7.341",
+                    "verse_part": "ab",
+                    "coord_id": "v7-341"
+                },
+                {
+                    "sic": "va",
+                    "corr": "",
+                    "verse": "7.354",
+                    "verse_part": "ab",
+                    "coord_id": "v7-354"
+                }
+            ]
         }
     ],
-    "verse_only": true,
-    "includes_plain_variant": false,
-    "no_line_numbers": true
+    "has_verses": true,
+    "has_editorial_coords": false,
+    "has_line_breaks": false,
+    "no_line_numbers": true,
+    "drama": false,
+    "has_chaya": false,
+    "pdf_page_mapping": {
+        "url": "https://archive.org/details/SlokavarttikaNyayaratnakara/page/n29/mode/2up",
+        "offsets": [
+            [
+                3,
+                29
+            ],
+            [
+                232,
+                257
+            ],
+            [
+                381,
+                405
+            ],
+            [
+                446,
+                468
+            ],
+            [
+                495,
+                516
+            ],
+            [
+                607,
+                627
+            ]
+        ]
+    }
 }
