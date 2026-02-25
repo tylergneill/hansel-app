@@ -133,6 +133,7 @@ def view_text(filename):
         "has_corrections": False,
         "has_verses": False,
         "has_location_markers": False,
+        "has_line_breaks": False,
         "no_line_numbers": False,
         "drama": False,
         "has_chaya": False,
