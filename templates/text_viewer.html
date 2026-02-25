@@ -52,6 +52,7 @@
             </label>
         </div>
 
+        {% if context.has_corrections %}
         <div class="toggle-switch-container rich-text-toggle">
             <label class="toggle-switch">
                 <input type="checkbox" onchange="toggleCorrections(this)">
@@ -63,6 +64,7 @@
                  src="{{ url_for('static', filename='web/imgs/info.png') }}"
                  title="Toggles display of corrections, listed at the bottom of the metadata panel.">
         </div>
+        {% endif %}
 
         {% if context.has_chaya %}
         <div class="toggle-switch-container rich-text-toggle">
