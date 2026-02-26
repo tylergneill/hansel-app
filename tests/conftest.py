@@ -38,7 +38,16 @@ MATRIX = [
     # Mobile — Chrome on iPhone (WebKit under the hood on iOS)
     ("webkit", "chrome-ios", "iPhone 13"),
     # Mobile — Firefox on Android (Gecko engine)
-    ("firefox", "firefox-android", "Pixel 5"),
+    # Note: Firefox doesn't support isMobile, so we use a plain viewport dict
+    # instead of the "Pixel 5" device preset.
+    ("firefox", "firefox-android", {
+        "user_agent": (
+            "Mozilla/5.0 (Linux; Android 12; Pixel 5) "
+            "AppleWebKit/537.36 (KHTML, like Gecko) "
+            "Chrome/120.0.0.0 Mobile Safari/537.36"
+        ),
+        "viewport": {"width": 393, "height": 851},
+    }),
 ]
 
 
@@ -140,6 +149,10 @@ def page(request, _matrix_entry, _browsers_headless, _browsers_headed, playwrigh
     browser = browsers[engine]
     context = browser.new_context(**ctx_kwargs)
     pg = context.new_page()
+    # WebKit mobile emulation is slower; give it more time for navigation.
+    if engine == "webkit" and ctx_kwargs.get("is_mobile"):
+        pg.set_default_navigation_timeout(60_000)
+        pg.set_default_timeout(60_000)
     yield pg
     pg.close()
     context.close()
