@@ -407,3 +407,131 @@ def test_corrections_info_icon_opens_metadata(page, base_url):
     corrections_table = page.locator("#corrections-list-container table")
     if corrections_table.count() > 0:
         assert corrections_table.evaluate("el => el.style.display") == "table"
+
+
+# --------------------------------------------------------------------------- #
+# Helper for toggle conditional visibility tests
+# --------------------------------------------------------------------------- #
+
+def _toggle_exists(page, onchange_fn):
+    """Return True if a toggle checkbox with the given onchange handler exists."""
+    return page.evaluate(
+        f'!!document.querySelector(\'input[onchange="{onchange_fn}(this)"]\')'
+    )
+
+
+# --------------------------------------------------------------------------- #
+# Toggle conditional visibility — present when feature exists
+# --------------------------------------------------------------------------- #
+
+# śukasaptati_s is used for "absent" tests because it lacks corrections.
+# ślokavārttika is used because it lacks editorial coords and line breaks.
+SPARSE_TEXT = "kumArilabhaTTa_zlokavArtika"
+NO_CORRECTIONS_TEXT = "zukasaptati_s"
+
+
+@pytest.mark.visual
+def test_location_info_toggle_present(page, base_url):
+    """bANa has has_editorial_coords=true → Location Info toggle exists."""
+    _open_viewer(page, base_url, STANDARD_TEXT)
+    _open_toggles_panel(page)
+    assert _toggle_exists(page, "toggleEditorialCoords")
+
+
+@pytest.mark.visual
+def test_line_breaks_toggle_present(page, base_url):
+    """bANa has has_line_breaks=true → Line-by-line/Paragraphs toggle exists."""
+    _open_viewer(page, base_url, STANDARD_TEXT)
+    _open_toggles_panel(page)
+    assert _toggle_exists(page, "toggleLineBreaks")
+
+
+@pytest.mark.visual
+def test_corrections_toggle_present(page, base_url):
+    """bANa has corrections → Corrections toggle exists."""
+    _open_viewer(page, base_url, STANDARD_TEXT)
+    _open_toggles_panel(page)
+    assert _toggle_exists(page, "toggleCorrections")
+
+
+@pytest.mark.visual
+def test_break_info_label_with_line_breaks(page, base_url):
+    """bANa has line breaks → break-info label says 'Page- & Line-break Info'."""
+    _open_viewer(page, base_url, STANDARD_TEXT)
+    _open_toggles_panel(page)
+    label = page.evaluate("""(() => {
+        const cb = document.querySelector('input[onchange="toggleBreaks(this)"]');
+        return cb.closest('.toggle-switch-container').textContent.trim();
+    })()""")
+    assert "Line-break" in label
+
+
+# --------------------------------------------------------------------------- #
+# Toggle conditional visibility — absent when feature missing
+# --------------------------------------------------------------------------- #
+
+@pytest.mark.visual
+def test_location_info_toggle_absent(page, base_url):
+    """ślokavārttika has has_editorial_coords=false → no Location Info toggle."""
+    _open_viewer(page, base_url, SPARSE_TEXT)
+    _open_toggles_panel(page)
+    assert not _toggle_exists(page, "toggleEditorialCoords")
+
+
+@pytest.mark.visual
+def test_line_breaks_toggle_absent(page, base_url):
+    """ślokavārttika has has_line_breaks=false → no Line-by-line toggle."""
+    _open_viewer(page, base_url, SPARSE_TEXT)
+    _open_toggles_panel(page)
+    assert not _toggle_exists(page, "toggleLineBreaks")
+
+
+@pytest.mark.visual
+def test_corrections_toggle_absent(page, base_url):
+    """śukasaptati_s has no corrections → no Corrections toggle."""
+    _open_viewer(page, base_url, NO_CORRECTIONS_TEXT)
+    _open_toggles_panel(page)
+    assert not _toggle_exists(page, "toggleCorrections")
+
+
+@pytest.mark.visual
+def test_corrections_info_icon_absent(page, base_url):
+    """śukasaptati_s has no corrections → no corrections info icon."""
+    _open_viewer(page, base_url, NO_CORRECTIONS_TEXT)
+    _open_toggles_panel(page)
+    assert page.locator("#corrections-info-icon").count() == 0
+
+
+@pytest.mark.visual
+def test_break_info_label_without_line_breaks(page, base_url):
+    """ślokavārttika has no line breaks → label says 'Page-break Info' (no 'Line-break')."""
+    _open_viewer(page, base_url, SPARSE_TEXT)
+    _open_toggles_panel(page)
+    label = page.evaluate("""(() => {
+        const cb = document.querySelector('input[onchange="toggleBreaks(this)"]');
+        return cb.closest('.toggle-switch-container').textContent.trim();
+    })()""")
+    assert "Line-break" not in label
+    assert "Page-break" in label
+
+
+# --------------------------------------------------------------------------- #
+# Always-present toggles on feature-sparse text
+# --------------------------------------------------------------------------- #
+
+@pytest.mark.visual
+def test_always_present_toggles_on_sparse_text(page, base_url):
+    """ślokavārttika (no editorial coords, no line breaks) still has the
+    always-present toggles: Page-break Info, Search-friendly, Font Size,
+    Transliteration."""
+    _open_viewer(page, base_url, SPARSE_TEXT)
+    _open_toggles_panel(page)
+
+    # Page-break Info toggle (always present)
+    assert _toggle_exists(page, "toggleBreaks")
+    # Search-friendly toggle (always present)
+    assert _toggle_exists(page, "toggleViewMode")
+    # Font size controls (always present)
+    assert page.locator("#font-size-increase").count() > 0
+    # Transliteration select (always present)
+    assert page.locator("#transliteration-scheme").count() > 0
