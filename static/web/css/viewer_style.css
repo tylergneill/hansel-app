@@ -131,6 +131,15 @@ body {
     margin-bottom: 10px;
 }
 
+#metadata-list table {
+    border-collapse: collapse;
+}
+#metadata-list th, #metadata-list td {
+    border: 1px solid #ccc;
+    padding: 0.3em 0.8em;
+    text-align: left;
+}
+
 #corrections-container {
     border: 3px solid rgb(231, 159, 58);
     padding: 10px;
