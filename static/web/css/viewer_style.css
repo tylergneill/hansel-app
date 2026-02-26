@@ -139,6 +139,10 @@ body {
     padding: 0.3em 0.8em;
     text-align: left;
 }
+#metadata-list code {
+    background-color: #f4f4f4;
+    padding: 0.2em 0.4em;
+}
 
 #corrections-container {
     border: 3px solid rgb(231, 159, 58);
