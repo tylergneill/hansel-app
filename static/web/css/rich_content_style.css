@@ -43,7 +43,11 @@ h1, h2, h3, h4, h5, h6 {
 .speaker { font-weight: bold; display: block; margin-top: 0.8em; }
 .speaker::after { content: " \2014"; } /* em-dash */
 .stage-direction { font-style: italic; }
-.chaya { display: block; font-style: italic; }
-.chaya::before { content: "("; }
-.chaya::after { content: ")"; }
+.chaya {
+    display: block;
+    border-left: 5px solid hsl(35 55% 65%);
+    padding-left: 0.6em;
+    margin: 0.15em 0 0.15em 0.5em;
+}
+.chaya > span { display: block; }
 .hide-chaya .chaya { display: none; }
