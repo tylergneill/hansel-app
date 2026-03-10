@@ -31,3 +31,6 @@ run-official-stg:
 	  -p 5031:5031 \
 	  -v $(LOCAL_DATA_PATH):/app/static/data \
 	  tylergneill/hansel-app:$(VERSION)
+
+ngrok:
+	ngrok http 5031
