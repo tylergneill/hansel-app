@@ -132,9 +132,11 @@
             <button id="metadata-button">Metadata</button>
         </div>
 
+        {% if context.has_toc %}
         <div id="toc-widget-container">
             <button id="toc-button">Table of Contents</button>
         </div>
+        {% endif %}
     </div>
 
     <div id="metadata-panel" class="panel">
@@ -200,6 +202,7 @@
         </ul>
     </div>
 
+    {% if context.has_toc %}
     <div id="toc-panel" class="panel">
         <ul id="toc-list">
             {% for item in context.toc %}
@@ -209,6 +212,7 @@
             {% endfor %}
         </ul>
     </div>
+    {% endif %}
 
     {{ content_html | safe }}
 
