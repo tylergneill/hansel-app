@@ -6,6 +6,8 @@ import zipfile
 import pytest
 from playwright.sync_api import expect
 
+pytestmark = pytest.mark.chrome_only
+
 
 def _post_download(page, base_url, payload):
     """POST to /download via fetch() and return response info."""

@@ -70,7 +70,7 @@ HEADED=1 pytest tests/ -v -m visual -k "chrome-macos"
 HEADED=1 SLOW_MO=1500 pytest tests/ -v -m visual -k "chrome-macos"
 
 # Run the full suite — visual tests headed, everything else headless
-HEADED=1 pytest tests/ -v -k "chrome-macos"
+HEADED=1 SLOW_MO=750 pytest tests/ -v -k "chrome-macos"
 ```
 
 ### Custom server URL

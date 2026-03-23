@@ -32,5 +32,12 @@ run-official-stg:
 	  -v $(LOCAL_DATA_PATH):/app/static/data \
 	  tylergneill/hansel-app:$(VERSION)
 
+test:
+	pytest tests/ -v -m "not visual" -k "chrome-macos"
+	HEADED=1 SLOW_MO=750 pytest tests/ -v -m visual -k "chrome-macos"
+
+test-all-platforms:
+	pytest tests/ -v
+
 ngrok:
 	ngrok http 5031

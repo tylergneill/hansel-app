@@ -62,6 +62,15 @@ def _server_is_reachable():
 def pytest_configure(config):
     config.addinivalue_line("markers", "browser_context_args: internal marker for browser matrix")
     config.addinivalue_line("markers", "visual: tests that benefit from headed/slow-mo mode")
+    config.addinivalue_line("markers", "chrome_only: skip on non-chrome-macos platforms (server-behavior tests)")
+
+
+def pytest_runtest_setup(item):
+    """Skip chrome_only tests on all platforms except chrome-macos."""
+    if item.get_closest_marker("chrome_only"):
+        matrix_entry = item.callspec.params.get("_matrix_entry") if hasattr(item, "callspec") else None
+        if matrix_entry is not None and matrix_entry[1] != "chrome-macos":
+            pytest.skip("chrome_only: skipped on non-chrome-macos platforms")
 
 
 @pytest.fixture(scope="session", autouse=True)

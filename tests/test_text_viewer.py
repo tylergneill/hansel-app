@@ -58,6 +58,7 @@ def _computed_display(page, selector):
 # Page load
 # --------------------------------------------------------------------------- #
 
+@pytest.mark.chrome_only
 @pytest.mark.parametrize("stem", DUMMY_TEXTS)
 def test_rich_html_loads(page, base_url, stem):
     response = page.goto(f"{base_url}/texts/transforms/html/rich/{stem}.html")
@@ -65,6 +66,7 @@ def test_rich_html_loads(page, base_url, stem):
     assert page.title().startswith("HANSEL")
 
 
+@pytest.mark.chrome_only
 @pytest.mark.parametrize("stem", DUMMY_TEXTS)
 def test_content_div_has_text(page, base_url, stem):
     """The #content div should contain actual text content, not be empty."""
@@ -377,6 +379,7 @@ def test_transliteration_changes_content(page, base_url):
 # Home button
 # --------------------------------------------------------------------------- #
 
+@pytest.mark.chrome_only
 def test_home_button_navigates_home(page, base_url):
     _open_viewer(page, base_url, STANDARD_TEXT)
     page.locator("#home-button").click()
@@ -430,7 +433,7 @@ SPARSE_TEXT = "kumArilabhaTTa_zlokavArtika"
 NO_CORRECTIONS_TEXT = "zukasaptati_s"
 
 
-@pytest.mark.visual
+@pytest.mark.chrome_only
 def test_location_info_toggle_present(page, base_url):
     """bANa has has_editorial_coords=true → Location Info toggle exists."""
     _open_viewer(page, base_url, STANDARD_TEXT)
@@ -438,7 +441,7 @@ def test_location_info_toggle_present(page, base_url):
     assert _toggle_exists(page, "toggleEditorialCoords")
 
 
-@pytest.mark.visual
+@pytest.mark.chrome_only
 def test_line_breaks_toggle_present(page, base_url):
     """bANa has has_line_breaks=true → Line-by-line/Paragraphs toggle exists."""
     _open_viewer(page, base_url, STANDARD_TEXT)
@@ -446,7 +449,7 @@ def test_line_breaks_toggle_present(page, base_url):
     assert _toggle_exists(page, "toggleLineBreaks")
 
 
-@pytest.mark.visual
+@pytest.mark.chrome_only
 def test_corrections_toggle_present(page, base_url):
     """bANa has corrections → Corrections toggle exists."""
     _open_viewer(page, base_url, STANDARD_TEXT)
@@ -454,7 +457,7 @@ def test_corrections_toggle_present(page, base_url):
     assert _toggle_exists(page, "toggleCorrections")
 
 
-@pytest.mark.visual
+@pytest.mark.chrome_only
 def test_break_info_label_with_line_breaks(page, base_url):
     """bANa has line breaks → break-info label says 'Page- & Line-break Info'."""
     _open_viewer(page, base_url, STANDARD_TEXT)
@@ -470,7 +473,7 @@ def test_break_info_label_with_line_breaks(page, base_url):
 # Toggle conditional visibility — absent when feature missing
 # --------------------------------------------------------------------------- #
 
-@pytest.mark.visual
+@pytest.mark.chrome_only
 def test_location_info_toggle_absent(page, base_url):
     """ślokavārttika has has_editorial_coords=false → no Location Info toggle."""
     _open_viewer(page, base_url, SPARSE_TEXT)
@@ -478,7 +481,7 @@ def test_location_info_toggle_absent(page, base_url):
     assert not _toggle_exists(page, "toggleEditorialCoords")
 
 
-@pytest.mark.visual
+@pytest.mark.chrome_only
 def test_line_breaks_toggle_absent(page, base_url):
     """ślokavārttika has has_line_breaks=false → no Line-by-line toggle."""
     _open_viewer(page, base_url, SPARSE_TEXT)
@@ -486,7 +489,7 @@ def test_line_breaks_toggle_absent(page, base_url):
     assert not _toggle_exists(page, "toggleLineBreaks")
 
 
-@pytest.mark.visual
+@pytest.mark.chrome_only
 def test_corrections_toggle_absent(page, base_url):
     """śukasaptati_s has no corrections → no Corrections toggle."""
     _open_viewer(page, base_url, NO_CORRECTIONS_TEXT)
@@ -494,7 +497,7 @@ def test_corrections_toggle_absent(page, base_url):
     assert not _toggle_exists(page, "toggleCorrections")
 
 
-@pytest.mark.visual
+@pytest.mark.chrome_only
 def test_corrections_info_icon_absent(page, base_url):
     """śukasaptati_s has no corrections → no corrections info icon."""
     _open_viewer(page, base_url, NO_CORRECTIONS_TEXT)
@@ -502,7 +505,7 @@ def test_corrections_info_icon_absent(page, base_url):
     assert page.locator("#corrections-info-icon").count() == 0
 
 
-@pytest.mark.visual
+@pytest.mark.chrome_only
 def test_break_info_label_without_line_breaks(page, base_url):
     """ślokavārttika has no line breaks → label says 'Page-break Info' (no 'Line-break')."""
     _open_viewer(page, base_url, SPARSE_TEXT)
@@ -519,7 +522,7 @@ def test_break_info_label_without_line_breaks(page, base_url):
 # Always-present toggles on feature-sparse text
 # --------------------------------------------------------------------------- #
 
-@pytest.mark.visual
+@pytest.mark.chrome_only
 def test_always_present_toggles_on_sparse_text(page, base_url):
     """ślokavārttika (no editorial coords, no line breaks) still has the
     always-present toggles: Page-break Info, Search-friendly, Font Size,

@@ -4,6 +4,8 @@ import pytest
 
 from tests.conftest import DUMMY_TEXTS
 
+pytestmark = pytest.mark.chrome_only
+
 
 @pytest.mark.parametrize("stem", DUMMY_TEXTS)
 def test_metadata_page_loads(page, base_url, stem):
