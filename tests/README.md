@@ -70,7 +70,7 @@ HEADED=1 pytest tests/ -v -m visual -k "chrome-macos"
 HEADED=1 SLOW_MO=1500 pytest tests/ -v -m visual -k "chrome-macos"
 
 # Run the full suite — visual tests headed, everything else headless
-HEADED=1 pytest tests/ -v -k "chrome-macos"
+HEADED=1 SLOW_MO=750 pytest tests/ -v -k "chrome-macos"
 ```
 
 ### Custom server URL
@@ -101,7 +101,7 @@ Each toggle is tested for actual DOM/CSS side effects, not just clickability:
 |------|----------|
 | toggle_breaks | `.pb-label`/`.lb-label` visibility toggles (`none` ↔ `inline`) |
 | toggle_line_breaks | `.lb-br` visibility toggles (`none` ↔ `block`) |
-| toggle_location_markers | `hide-location-markers` class on `#content`; `.location-marker` visibility |
+| toggle_editorial_coords | `hide-editorial-coords` class on `#content`; `.editorial-coord` visibility |
 | toggle_corrections | `.ante-correction`/`.post-correction` display swaps |
 | toggle_search_friendly | `p.rich-text`/`p.plain-text` visibility swaps; TOC/Metadata buttons hidden |
 | toggle_verse_styling | `simple-verse-style` class on `body`; width slider visibility |

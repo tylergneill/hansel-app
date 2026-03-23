@@ -58,6 +58,7 @@ def _computed_display(page, selector):
 # Page load
 # --------------------------------------------------------------------------- #
 
+@pytest.mark.chrome_only
 @pytest.mark.parametrize("stem", DUMMY_TEXTS)
 def test_rich_html_loads(page, base_url, stem):
     response = page.goto(f"{base_url}/texts/transforms/html/rich/{stem}.html")
@@ -65,6 +66,7 @@ def test_rich_html_loads(page, base_url, stem):
     assert page.title().startswith("HANSEL")
 
 
+@pytest.mark.chrome_only
 @pytest.mark.parametrize("stem", DUMMY_TEXTS)
 def test_content_div_has_text(page, base_url, stem):
     """The #content div should contain actual text content, not be empty."""
@@ -74,12 +76,12 @@ def test_content_div_has_text(page, base_url, stem):
 
 
 # --------------------------------------------------------------------------- #
-# Toggle: Line/Page-break Info (show-breaks)
+# Toggle: Page- & Line-break Info (show-breaks)
 # --------------------------------------------------------------------------- #
 
 @pytest.mark.visual
 def test_toggle_breaks_shows_labels(page, base_url):
-    """Toggling 'Line/Page-break Info' makes .pb-label and .lb-label visible."""
+    """Toggling 'Page- & Line-break Info' makes .pb-label and .lb-label visible."""
     _open_viewer(page, base_url, STANDARD_TEXT)
 
     # Before toggle: break labels are hidden
@@ -124,35 +126,35 @@ def test_toggle_line_breaks_shows_breaks(page, base_url):
 
 
 # --------------------------------------------------------------------------- #
-# Toggle: Location Info (hide-location-markers)
+# Toggle: Location Info (hide-editorial-coords)
 # --------------------------------------------------------------------------- #
 
 @pytest.mark.visual
-def test_toggle_location_markers(page, base_url):
-    """Toggling 'Location Info' shows/hides .location-marker elements.
-    #content starts with hide-location-markers class, so markers are hidden by default."""
+def test_toggle_editorial_coords(page, base_url):
+    """Toggling 'Location Info' shows/hides .editorial-coord elements.
+    #content starts with hide-editorial-coords class, so markers are hidden by default."""
     _open_viewer(page, base_url, STANDARD_TEXT)
 
-    # Default: #content has hide-location-markers, so markers are hidden
-    assert _computed_display(page, ".location-marker") == "none"
+    # Default: #content has hide-editorial-coords, so markers are hidden
+    assert _computed_display(page, ".editorial-coord") == "none"
     has_class = page.evaluate(
-        "document.getElementById('content').classList.contains('hide-location-markers')"
+        "document.getElementById('content').classList.contains('hide-editorial-coords')"
     )
     assert has_class is True
 
-    # Toggle on: removes hide-location-markers, markers become visible
+    # Toggle on: removes hide-editorial-coords, markers become visible
     _open_toggles_panel(page)
-    _click_toggle(page, "toggleLocationMarkers")
+    _click_toggle(page, "toggleEditorialCoords")
 
-    assert _computed_display(page, ".location-marker") != "none"
+    assert _computed_display(page, ".editorial-coord") != "none"
     has_class = page.evaluate(
-        "document.getElementById('content').classList.contains('hide-location-markers')"
+        "document.getElementById('content').classList.contains('hide-editorial-coords')"
     )
     assert has_class is False
 
     # Toggle off: hides them again
-    _click_toggle(page, "toggleLocationMarkers")
-    assert _computed_display(page, ".location-marker") == "none"
+    _click_toggle(page, "toggleEditorialCoords")
+    assert _computed_display(page, ".editorial-coord") == "none"
 
 
 # --------------------------------------------------------------------------- #
@@ -377,6 +379,7 @@ def test_transliteration_changes_content(page, base_url):
 # Home button
 # --------------------------------------------------------------------------- #
 
+@pytest.mark.chrome_only
 def test_home_button_navigates_home(page, base_url):
     _open_viewer(page, base_url, STANDARD_TEXT)
     page.locator("#home-button").click()
@@ -407,3 +410,131 @@ def test_corrections_info_icon_opens_metadata(page, base_url):
     corrections_table = page.locator("#corrections-list-container table")
     if corrections_table.count() > 0:
         assert corrections_table.evaluate("el => el.style.display") == "table"
+
+
+# --------------------------------------------------------------------------- #
+# Helper for toggle conditional visibility tests
+# --------------------------------------------------------------------------- #
+
+def _toggle_exists(page, onchange_fn):
+    """Return True if a toggle checkbox with the given onchange handler exists."""
+    return page.evaluate(
+        f'!!document.querySelector(\'input[onchange="{onchange_fn}(this)"]\')'
+    )
+
+
+# --------------------------------------------------------------------------- #
+# Toggle conditional visibility — present when feature exists
+# --------------------------------------------------------------------------- #
+
+# śukasaptati_s is used for "absent" tests because it lacks corrections.
+# ślokavārttika is used because it lacks editorial coords and line breaks.
+SPARSE_TEXT = "kumArilabhaTTa_zlokavArtika"
+NO_CORRECTIONS_TEXT = "zukasaptati_s"
+
+
+@pytest.mark.chrome_only
+def test_location_info_toggle_present(page, base_url):
+    """bANa has has_editorial_coords=true → Location Info toggle exists."""
+    _open_viewer(page, base_url, STANDARD_TEXT)
+    _open_toggles_panel(page)
+    assert _toggle_exists(page, "toggleEditorialCoords")
+
+
+@pytest.mark.chrome_only
+def test_line_breaks_toggle_present(page, base_url):
+    """bANa has has_line_breaks=true → Line-by-line/Paragraphs toggle exists."""
+    _open_viewer(page, base_url, STANDARD_TEXT)
+    _open_toggles_panel(page)
+    assert _toggle_exists(page, "toggleLineBreaks")
+
+
+@pytest.mark.chrome_only
+def test_corrections_toggle_present(page, base_url):
+    """bANa has corrections → Corrections toggle exists."""
+    _open_viewer(page, base_url, STANDARD_TEXT)
+    _open_toggles_panel(page)
+    assert _toggle_exists(page, "toggleCorrections")
+
+
+@pytest.mark.chrome_only
+def test_break_info_label_with_line_breaks(page, base_url):
+    """bANa has line breaks → break-info label says 'Page- & Line-break Info'."""
+    _open_viewer(page, base_url, STANDARD_TEXT)
+    _open_toggles_panel(page)
+    label = page.evaluate("""(() => {
+        const cb = document.querySelector('input[onchange="toggleBreaks(this)"]');
+        return cb.closest('.toggle-switch-container').textContent.trim();
+    })()""")
+    assert "Line-break" in label
+
+
+# --------------------------------------------------------------------------- #
+# Toggle conditional visibility — absent when feature missing
+# --------------------------------------------------------------------------- #
+
+@pytest.mark.chrome_only
+def test_location_info_toggle_absent(page, base_url):
+    """ślokavārttika has has_editorial_coords=false → no Location Info toggle."""
+    _open_viewer(page, base_url, SPARSE_TEXT)
+    _open_toggles_panel(page)
+    assert not _toggle_exists(page, "toggleEditorialCoords")
+
+
+@pytest.mark.chrome_only
+def test_line_breaks_toggle_absent(page, base_url):
+    """ślokavārttika has has_line_breaks=false → no Line-by-line toggle."""
+    _open_viewer(page, base_url, SPARSE_TEXT)
+    _open_toggles_panel(page)
+    assert not _toggle_exists(page, "toggleLineBreaks")
+
+
+@pytest.mark.chrome_only
+def test_corrections_toggle_absent(page, base_url):
+    """śukasaptati_s has no corrections → no Corrections toggle."""
+    _open_viewer(page, base_url, NO_CORRECTIONS_TEXT)
+    _open_toggles_panel(page)
+    assert not _toggle_exists(page, "toggleCorrections")
+
+
+@pytest.mark.chrome_only
+def test_corrections_info_icon_absent(page, base_url):
+    """śukasaptati_s has no corrections → no corrections info icon."""
+    _open_viewer(page, base_url, NO_CORRECTIONS_TEXT)
+    _open_toggles_panel(page)
+    assert page.locator("#corrections-info-icon").count() == 0
+
+
+@pytest.mark.chrome_only
+def test_break_info_label_without_line_breaks(page, base_url):
+    """ślokavārttika has no line breaks → label says 'Page-break Info' (no 'Line-break')."""
+    _open_viewer(page, base_url, SPARSE_TEXT)
+    _open_toggles_panel(page)
+    label = page.evaluate("""(() => {
+        const cb = document.querySelector('input[onchange="toggleBreaks(this)"]');
+        return cb.closest('.toggle-switch-container').textContent.trim();
+    })()""")
+    assert "Line-break" not in label
+    assert "Page-break" in label
+
+
+# --------------------------------------------------------------------------- #
+# Always-present toggles on feature-sparse text
+# --------------------------------------------------------------------------- #
+
+@pytest.mark.chrome_only
+def test_always_present_toggles_on_sparse_text(page, base_url):
+    """ślokavārttika (no editorial coords, no line breaks) still has the
+    always-present toggles: Page-break Info, Search-friendly, Font Size,
+    Transliteration."""
+    _open_viewer(page, base_url, SPARSE_TEXT)
+    _open_toggles_panel(page)
+
+    # Page-break Info toggle (always present)
+    assert _toggle_exists(page, "toggleBreaks")
+    # Search-friendly toggle (always present)
+    assert _toggle_exists(page, "toggleViewMode")
+    # Font size controls (always present)
+    assert page.locator("#font-size-increase").count() > 0
+    # Transliteration select (always present)
+    assert page.locator("#transliteration-scheme").count() > 0

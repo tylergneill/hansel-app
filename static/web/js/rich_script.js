@@ -152,12 +152,15 @@ function toggleLineBreaks(checkbox) {
 }
 window.toggleLineBreaks = toggleLineBreaks;
 
-function toggleLocationMarkers() {
+function toggleEditorialCoords(checkbox) {
     withScrollPreservation(() => {
-        document.getElementById("content").classList.toggle("hide-location-markers");
+        document.getElementById("content").classList.toggle("hide-editorial-coords", !checkbox.checked);
     });
 }
-window.toggleLocationMarkers = toggleLocationMarkers;
+window.toggleEditorialCoords = toggleEditorialCoords;
+
+function toggleChaya(checkbox) { document.getElementById("content").classList.toggle("hide-chaya", !checkbox.checked); }
+window.toggleChaya = toggleChaya;
 
 function alignAndToggleTocPanel() {
     const tocButton = document.getElementById('toc-button');
@@ -376,7 +379,7 @@ document.addEventListener('DOMContentLoaded', () => {
             const parent = node.parentElement;
             if (parent.classList.contains('lb-label') || 
                 parent.classList.contains('pb-label') || 
-                parent.classList.contains('location-marker')) {
+                parent.classList.contains('editorial-coord')) {
                 continue;
             }
 

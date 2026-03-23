@@ -28,6 +28,6 @@ h1, h2, h3, h4, h5, h6 {
 .show-line-breaks .hyphen { display: inline; }
 .show-line-breaks .lb-br, .show-line-breaks .pb-br { display: block; }
 
-#content.hide-location-markers .location-marker {
+#content.hide-editorial-coords .editorial-coord {
     display: none;
 }

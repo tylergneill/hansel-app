@@ -1,3 +1,8 @@
+html {
+    overflow: hidden;
+    height: 100%;
+}
+
 body {
     font-family: sans-serif;
     margin: 0;
@@ -5,6 +10,11 @@ body {
     padding-left: 50px;
     padding-right: 30px;
     position: relative;
+    box-sizing: border-box;
+    width: 100%;
+    height: 100%;
+    overflow-x: auto;
+    overflow-y: auto;
     -webkit-text-size-adjust: 100%; /* Prevent iOS text inflation on rotation */
     text-size-adjust: 100%;
 }
@@ -40,7 +50,7 @@ body {
 
 #toggles-widget {
     top: 40px;
-    right: 5%;
+    right: 10px;
     min-width: 220px;
     padding-top: 40px;
 }
@@ -131,6 +141,19 @@ body {
     margin-bottom: 10px;
 }
 
+#metadata-list table {
+    border-collapse: collapse;
+}
+#metadata-list th, #metadata-list td {
+    border: 1px solid #ccc;
+    padding: 0.3em 0.8em;
+    text-align: left;
+}
+#metadata-list code {
+    background-color: #f4f4f4;
+    padding: 0.2em 0.4em;
+}
+
 #corrections-container {
     border: 3px solid rgb(231, 159, 58);
     padding: 10px;
@@ -186,6 +209,8 @@ body {
     background-color: rgba(255, 255, 255);
     min-width: 200px;
     display: none;
+    transform: translateZ(0); /* GPU layer prevents iOS scroll jank */
+    -webkit-transform: translateZ(0);
 }
 
 .toggles-widget-container button {
@@ -265,7 +290,7 @@ body {
 #toggles-widget-icon {
     position: fixed;
     top: 40px;
-    right: 5%;
+    right: 10px;
     cursor: pointer;
     z-index: 1001;
     background-color: white;
@@ -291,9 +316,9 @@ body {
 }
 
 #toggles-widget-close-button {
-    position: fixed;
-    top: 35px; /* Almost match the icon */
-    right: 5%; /* Match the icon */
+    position: absolute;
+    top: -8px; /* 5px above panel outer top, minus 3px top border */
+    right: -3px; /* Align with panel outer right edge, past 3px right border */
     width: 49px; /* Match the icon's total width (33 + 5*2 + 3*2) */
     height: 49px; /* Match the icon's total height */
     font-size: 2.5em;
@@ -313,10 +338,10 @@ body {
         flex-direction: column;
     }
     #toggles-widget-icon {
-        right: 15%;
+        right: 10px;
     }
-    #toggles-widget-close-button {
-        right: 15%; /* Match the icon in media query */
+    #toggles-widget {
+        right: 10px; /* Match the icon; close button follows automatically (position: absolute) */
     }
     #metadata, #toc {
         width: 75%;
