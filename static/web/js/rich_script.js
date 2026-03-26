@@ -173,6 +173,145 @@ function alignAndToggleTocPanel() {
     togglePanel('toc-panel');
 }
 
+// --- Transliteration state (module-level so pageshow can re-apply settings) ---
+
+const allSchemes = {
+    "Roman": ["hk", "iast", "iso", "itrans", "slp1", "velthuis", "wx"],
+    "Brahmic": ["bengali", "devanagari", "gujarati", "kannada", "malayalam", "oriya", "sinhala", "tamil"]
+};
+const defaultSchemes = ["iast", "devanagari", "hk", "iso", "itrans"];
+const schemeDisplayNames = {
+    "iast": "IAST",
+    "hk": "HK",
+    "itrans": "ITRANS",
+    "slp1": "SLP1",
+    "velthuis": "Velthuis",
+    "iso": "ISO 15919",
+    "wx": "WX"
+};
+
+let _spacedContent = null;         // captured once from DOM on first load
+let _originalContent = null;       // active base: either spaced or unspaced
+let _transliteratedContent = {};   // cache, keyed by scheme
+
+function populateSchemesDropdown(showAll) {
+    const select = document.getElementById('transliteration-scheme');
+    if (!select) return;
+    select.innerHTML = '';
+    if (showAll) {
+        for (const group in allSchemes) {
+            const optgroup = document.createElement('optgroup');
+            optgroup.label = group;
+            allSchemes[group].forEach(scheme => {
+                const option = document.createElement('option');
+                option.value = scheme;
+                option.innerText = schemeDisplayNames[scheme] || scheme.replace(/_/g, ' ').replace(/\b\w/g, l => l.toUpperCase());
+                optgroup.appendChild(option);
+            });
+            select.appendChild(optgroup);
+        }
+    } else {
+        defaultSchemes.forEach(scheme => {
+            const option = document.createElement('option');
+            option.value = scheme;
+            option.innerText = schemeDisplayNames[scheme] || scheme.replace(/_/g, ' ').replace(/\b\w/g, l => l.toUpperCase());
+            select.appendChild(option);
+        });
+    }
+}
+
+function transliterate(targetScheme) {
+    const contentDiv = document.getElementById('content');
+    if (!contentDiv || _originalContent === null) return;
+
+    const reapplyCorrections = () => {
+        const correctionsToggle = document.querySelector('input[onchange="toggleCorrections(this)"]');
+        if (correctionsToggle) toggleCorrections(correctionsToggle);
+    };
+
+    if (targetScheme === 'iast') {
+        contentDiv.innerHTML = _originalContent;
+        reapplyCorrections();
+        return;
+    }
+
+    if (_transliteratedContent[targetScheme]) {
+        contentDiv.innerHTML = _transliteratedContent[targetScheme];
+        reapplyCorrections();
+        return;
+    }
+
+    const tempDiv = document.createElement('div');
+    tempDiv.innerHTML = _originalContent;
+
+    const walker = document.createTreeWalker(tempDiv, NodeFilter.SHOW_TEXT, null, false);
+    let node;
+    while ((node = walker.nextNode())) {
+        const parent = node.parentElement;
+        if (parent.classList.contains('lb-label') ||
+            parent.classList.contains('pb-label') ||
+            parent.classList.contains('editorial-coord')) {
+            continue;
+        }
+        if (node.nodeValue && node.nodeValue.trim().length > 0) {
+            node.nodeValue = Sanscript.t(node.nodeValue, 'iast', targetScheme);
+        }
+    }
+
+    _transliteratedContent[targetScheme] = tempDiv.innerHTML;
+    contentDiv.innerHTML = tempDiv.innerHTML;
+    reapplyCorrections();
+}
+
+function applyViewerSettings() {
+    const contentDiv = document.getElementById('content');
+    const select = document.getElementById('transliteration-scheme');
+    if (!contentDiv || !select) return;
+
+    const savedScheme = localStorage.getItem('selectedTransliterationScheme') || 'iast';
+    const savedShowAll = localStorage.getItem('showAllTransliterationSchemes') === 'true';
+    const savedUnspaced = localStorage.getItem('unspacedText') === 'true';
+
+    const viewerConfig = document.getElementById('viewer-config');
+    const unspacedHtmlUrl = viewerConfig ? viewerConfig.dataset.unspacedHtmlUrl : '';
+
+    // Reset cached transliterations — source content may be changing
+    _transliteratedContent = {};
+
+    populateSchemesDropdown(savedShowAll);
+    select.value = savedScheme;
+
+    function applyScheme() {
+        if (savedScheme !== 'iast') {
+            transliterate(savedScheme);
+        }
+    }
+
+    if (_spacedContent === null) {
+        _spacedContent = contentDiv.innerHTML;
+    }
+
+    if (savedUnspaced && unspacedHtmlUrl) {
+        fetch(unspacedHtmlUrl)
+            .then(r => r.text())
+            .then(html => {
+                contentDiv.innerHTML = html;
+                _originalContent = html;
+                applyScheme();
+            });
+    } else {
+        contentDiv.innerHTML = _spacedContent;
+        _originalContent = _spacedContent;
+        applyScheme();
+    }
+}
+
+window.addEventListener('pageshow', (e) => {
+    if (e.persisted) {
+        applyViewerSettings();
+    }
+});
+
 document.addEventListener('DOMContentLoaded', () => {
     const tocButton = document.getElementById('toc-button');
     if (tocButton) {
@@ -300,97 +439,12 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // Transliteration logic
+    // Transliteration logic — event listener wiring (runs once on DOMContentLoaded)
     const transliterationSchemeSelect = document.getElementById('transliteration-scheme');
-    const showAllSchemesCheckbox = document.getElementById('show-all-schemes-checkbox');
     const contentDiv = document.getElementById('content');
 
     if (!contentDiv || !transliterationSchemeSelect) {
         return;
-    }
-
-    const originalContent = contentDiv.innerHTML;
-    const transliteratedContent = {};
-
-    const allSchemes = {
-        "Roman": ["hk", "iast", "iso", "itrans", "slp1", "velthuis", "wx"],
-        "Brahmic": ["bengali", "devanagari", "gujarati", "kannada", "malayalam", "oriya", "sinhala", "tamil"]
-    };
-    const defaultSchemes = ["iast", "devanagari", "hk", "iso", "itrans"];
-    const schemeDisplayNames = {
-        "iast": "IAST",
-        "hk": "HK",
-        "itrans": "ITRANS",
-        "slp1": "SLP1",
-        "velthuis": "Velthuis",
-        "iso": "ISO 15919",
-        "wx": "WX"
-    };
-
-    function populateSchemesDropdown(showAll) {
-        transliterationSchemeSelect.innerHTML = ''; 
-
-        if (showAll) {
-            for (const group in allSchemes) {
-                const optgroup = document.createElement('optgroup');
-                optgroup.label = group;
-                allSchemes[group].forEach(scheme => {
-                    const option = document.createElement('option');
-                    option.value = scheme;
-                    option.innerText = schemeDisplayNames[scheme] || scheme.replace(/_/g, ' ').replace(/\b\w/g, l => l.toUpperCase());
-                    optgroup.appendChild(option);
-                });
-                transliterationSchemeSelect.appendChild(optgroup);
-            }
-        } else {
-            defaultSchemes.forEach(scheme => {
-                const option = document.createElement('option');
-                option.value = scheme;
-                option.innerText = schemeDisplayNames[scheme] || scheme.replace(/_/g, ' ').replace(/\b\w/g, l => l.toUpperCase());
-                transliterationSchemeSelect.appendChild(option);
-            });
-        }
-    }
-
-    function transliterate(targetScheme) {
-        const reapplyCorrections = () => {
-            const correctionsToggle = document.querySelector('input[onchange="toggleCorrections(this)"]');
-            if (correctionsToggle) toggleCorrections(correctionsToggle);
-        };
-
-        if (targetScheme === 'iast') {
-            contentDiv.innerHTML = originalContent;
-            reapplyCorrections();
-            return;
-        }
-
-        if (transliteratedContent[targetScheme]) {
-            contentDiv.innerHTML = transliteratedContent[targetScheme];
-            reapplyCorrections();
-            return;
-        }
-
-        const tempDiv = document.createElement('div');
-        tempDiv.innerHTML = originalContent;
-
-        const walker = document.createTreeWalker(tempDiv, NodeFilter.SHOW_TEXT, null, false);
-        let node;
-        while ((node = walker.nextNode())) {
-            const parent = node.parentElement;
-            if (parent.classList.contains('lb-label') || 
-                parent.classList.contains('pb-label') || 
-                parent.classList.contains('editorial-coord')) {
-                continue;
-            }
-
-            if (node.nodeValue && node.nodeValue.trim().length > 0) {
-                node.nodeValue = Sanscript.t(node.nodeValue, 'iast', targetScheme);
-            }
-        }
-        
-        transliteratedContent[targetScheme] = tempDiv.innerHTML;
-        contentDiv.innerHTML = tempDiv.innerHTML;
-        reapplyCorrections();
     }
 
     transliterationSchemeSelect.addEventListener('change', (e) => {
@@ -399,25 +453,7 @@ document.addEventListener('DOMContentLoaded', () => {
         transliterate(selectedScheme);
     });
 
-    showAllSchemesCheckbox.addEventListener('change', (e) => {
-        const showAll = e.target.checked;
-        localStorage.setItem('showAllTransliterationSchemes', showAll);
-        const currentSelection = transliterationSchemeSelect.value;
-        populateSchemesDropdown(showAll);
-        transliterationSchemeSelect.value = currentSelection;
-    });
-
-    const savedScheme = localStorage.getItem('selectedTransliterationScheme') || 'iast';
-    const savedShowAll = localStorage.getItem('showAllTransliterationSchemes') === 'true';
-
-    showAllSchemesCheckbox.checked = savedShowAll;
-    populateSchemesDropdown(savedShowAll);
-    
-    transliterationSchemeSelect.value = savedScheme;
-    
-    if (savedScheme !== 'iast') {
-        transliterate(savedScheme);
-    }
+    applyViewerSettings();
 
     // Font size controls
     const FONT_SIZE_STEP = 2;
