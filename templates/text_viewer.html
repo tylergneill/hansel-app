@@ -117,10 +117,7 @@
                 <span class="toggle-switch-text">ā→आ</span>
                 <div id="transliteration-controls">
                     <select id="transliteration-scheme"></select>
-                    <label id="toggle-switch-text">
-                        <input type="checkbox" id="show-all-schemes-checkbox">
-                        <span class="toggle-switch-text"> more</span>
-                    </label>
+                    <a href="/settings" id="viewer-settings-link">settings</a>
                 </div>
             </div>
         </div>
@@ -213,6 +210,10 @@
         </ul>
     </div>
     {% endif %}
+
+    <div id="viewer-config"
+         data-unspaced-html-url="{{ unspaced_html_url or '' }}"
+         style="display:none"></div>
 
     {{ content_html | safe }}
 

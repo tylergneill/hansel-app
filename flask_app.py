@@ -24,6 +24,8 @@ FILE_TYPE_PATHS = {
     'xml': DATA_PATH / 'texts' / 'project_editions' / 'xml',
     'html_plain': DATA_PATH / 'texts' / 'transforms' / 'html' / 'plain',
     'html_rich': DATA_PATH / 'texts' / 'transforms' / 'html' / 'rich',
+    'html_unspaced_plain': DATA_PATH / 'texts' / 'transforms' / 'html' / 'unspaced' / 'plain',
+    'html_unspaced_rich': DATA_PATH / 'texts' / 'transforms' / 'html' / 'unspaced' / 'rich',
     'original': DATA_PATH / 'texts' / 'original_submissions',
     'md': DATA_PATH / 'metadata' / 'markdown',
     'html': DATA_PATH / 'metadata' / 'transforms' / 'html',
@@ -143,6 +145,12 @@ def view_text(filename):
 
     context_json = json.dumps(context, ensure_ascii=False)
 
+    unspaced_html_path = FILE_TYPE_PATHS['html_unspaced_rich'] / f"{base_name}.html"
+    unspaced_html_url = (
+        f"/{STATIC_FILES_PATH}/data/texts/transforms/html/unspaced/rich/{base_name}.html"
+        if unspaced_html_path.is_file() else None
+    )
+
     return render_template(
         "text_viewer.html",
         content_html=content_html,
@@ -150,6 +158,7 @@ def view_text(filename):
         context_json=context_json,
         static_files_path=STATIC_FILES_PATH,
         filename=filename,
+        unspaced_html_url=unspaced_html_url,
     )
 
 @app.route('/view_metadata/<filename>')
@@ -292,6 +301,11 @@ def download_bundle():
         download_name=user_facing_filename,
         mimetype='application/zip'
     )
+
+
+@app.route("/settings")
+def settings():
+    return render_template("settings.html")
 
 
 @app.route("/")

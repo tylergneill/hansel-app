@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {% include 'components/head_shared.html' %}
+    <title>HANSEL - Settings</title>
+</head>
+<body>
+<div id="content">
+    {% from 'components/sidenav.html' import sidenav %}
+    {% set nav_links = [
+        {'url': '/', 'text': 'Back Home'}
+    ] %}
+    {{ sidenav(nav_links) }}
+
+    <div class="main">
+        <div id="settings">
+
+            <h1>Settings</h1>
+            <p>These preferences are saved in your browser and apply across all texts.</p>
+
+            <h2>Transliteration</h2>
+
+            <div class="settings-row">
+                <label class="settings-label" for="show-all-schemes-setting">Show all transliteration schemes</label>
+                <label class="toggle-switch">
+                    <input type="checkbox" id="show-all-schemes-setting">
+                    <span class="toggle-switch-handle"></span>
+                </label>
+                <p class="settings-description">
+                    By default, five common schemes are shown (IAST, Devanagari, HK, ISO, ITRANS).
+                    Enable this to show all fifteen available schemes, including additional Brahmic scripts.
+                </p>
+            </div>
+
+            <div class="settings-row">
+                <label class="settings-label" for="unspaced-text-setting">Unspaced text</label>
+                <label class="toggle-switch">
+                    <input type="checkbox" id="unspaced-text-setting">
+                    <span class="toggle-switch-handle"></span>
+                </label>
+                <p class="settings-description">
+                    By default, texts are displayed with editorial word spaces inserted at word boundaries.
+                    Enable this to display texts without inter-word spaces, as they appear in manuscripts
+                    and Indic script traditions.
+                </p>
+            </div>
+
+        </div>
+    </div>
+</div>
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+    const showAllEl = document.getElementById('show-all-schemes-setting');
+    const unspacedEl = document.getElementById('unspaced-text-setting');
+
+    showAllEl.checked = localStorage.getItem('showAllTransliterationSchemes') === 'true';
+    unspacedEl.checked = localStorage.getItem('unspacedText') === 'true';
+
+    showAllEl.addEventListener('change', () => {
+        localStorage.setItem('showAllTransliterationSchemes', showAllEl.checked);
+    });
+
+    unspacedEl.addEventListener('change', () => {
+        localStorage.setItem('unspacedText', unspacedEl.checked);
+    });
+});
+</script>
+</body>
+</html>
