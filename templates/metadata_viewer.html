@@ -16,5 +16,23 @@
 
     {{ content_html | safe }}
 
+    <script>
+    document.querySelectorAll('a[href^="http"]').forEach(function(a) {
+        a.target = '_blank';
+        var svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+        svg.setAttribute('class', 'ext-link-icon');
+        svg.setAttribute('viewBox', '0 0 10 10');
+        svg.setAttribute('aria-hidden', 'true');
+        var path = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+        path.setAttribute('d', 'M1 9 L9 1 M5 1 L9 1 L9 5');
+        path.setAttribute('stroke', 'currentColor');
+        path.setAttribute('stroke-width', '1.5');
+        path.setAttribute('fill', 'none');
+        path.setAttribute('stroke-linecap', 'round');
+        path.setAttribute('stroke-linejoin', 'round');
+        svg.appendChild(path);
+        a.appendChild(svg);
+    });
+    </script>
 </body>
 </html>

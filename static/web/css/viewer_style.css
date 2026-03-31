@@ -499,3 +499,13 @@ body {
     outline: 2px solid #ffd600;
     transition: background-color 2s, outline 2s;
 }
+
+.ext-link-icon {
+    display: inline-block;
+    width: 0.7em;
+    height: 0.7em;
+    margin-left: 0.2em;
+    vertical-align: middle;
+    position: relative;
+    top: -0.1em;
+}
