@@ -26,6 +26,16 @@ h1, h2, h3, h4, h5, h6 {
     cursor: pointer;
     color: blue;
 }
+
+.show-breaks .pb-label .ext-link-icon {
+    display: inline-block;
+    width: 0.65em;
+    height: 0.65em;
+    margin-left: 0.15em;
+    vertical-align: middle;
+    position: relative;
+    top: -0.1em;
+}
 .lg > span { display: block; }
 .lg { padding-left: 2em; }
 
