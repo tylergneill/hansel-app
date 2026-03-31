@@ -1,3 +1,4 @@
+{% from 'macros.html' import ext_link_icon %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -30,10 +31,12 @@
                 <img src="/static/web/imgs/team_photos/tyler.jpg" class="team-member-photo" alt="Tyler Neill">
                 <p>
                     I am an independent Sanskrit scholar and programmer living in Brooklyn, NY.
-                    Website & blog @ <a href="https://www.tylerneill.info" target="_blank">tylerneill.info</a>.
-                    Also on <a href="https://upenn.academia.edu/TylerNeill" target="_blank">Academia.edu</a>,
-                    <a href="https://www.linkedin.com/in/tyler-g-neill/" target="_blank">LinkedIn</a>, and
-                    <a href="https://github.com/tylergneill" target="_blank">GitHub</a>.
+                    <br>
+                    Website and blog: <a href="https://www.tylerneill.info" target="_blank">tylerneill.info{{ ext_link_icon() }}</a>.
+                    Also on
+                    <a href="https://github.com/tylergneill" target="_blank">GitHub{{ ext_link_icon() }}</a>,
+                    <a href="https://upenn.academia.edu/TylerNeill" target="_blank">Academia.edu{{ ext_link_icon() }}</a>, and
+                    <a href="https://www.linkedin.com/in/tyler-g-neill/" target="_blank">LinkedIn{{ ext_link_icon() }}</a>.
                 </p>
             </div>
 
