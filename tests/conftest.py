@@ -5,7 +5,7 @@ import urllib.error
 import pytest
 from playwright.sync_api import sync_playwright, Playwright
 
-BASE_URL = os.environ.get("HANSEL_TEST_URL", "http://localhost:5031")
+BASE_URL = os.environ.get("HANSEL_TEST_URL", "http://localhost:5051")
 HEADED = os.environ.get("HEADED", "").lower() in ("1", "true", "yes")
 SLOW_MO = int(os.environ.get("SLOW_MO", "0"))  # milliseconds between actions
 
