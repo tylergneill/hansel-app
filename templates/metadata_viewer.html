@@ -1,3 +1,4 @@
+{% from 'macros.html' import ext_link_icon_tmpl, dl_icon_tmpl %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -14,24 +15,19 @@
         <img src="{{ url_for('static', filename='web/imgs/logo.png') }}" alt="Home">
     </a>
 
+    {{ ext_link_icon_tmpl() }}
+    {{ dl_icon_tmpl() }}
     {{ content_html | safe }}
 
     <script>
+    var extTmpl = document.getElementById('ext-link-icon-tmpl');
     document.querySelectorAll('a[href^="http"]').forEach(function(a) {
         a.target = '_blank';
-        var svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
-        svg.setAttribute('class', 'ext-link-icon');
-        svg.setAttribute('viewBox', '0 0 10 10');
-        svg.setAttribute('aria-hidden', 'true');
-        var path = document.createElementNS('http://www.w3.org/2000/svg', 'path');
-        path.setAttribute('d', 'M1 9 L9 1 M5 1 L9 1 L9 5');
-        path.setAttribute('stroke', 'currentColor');
-        path.setAttribute('stroke-width', '1.5');
-        path.setAttribute('fill', 'none');
-        path.setAttribute('stroke-linecap', 'round');
-        path.setAttribute('stroke-linejoin', 'round');
-        svg.appendChild(path);
-        a.appendChild(svg);
+        a.appendChild(extTmpl.content.cloneNode(true));
+    });
+    var dlTmpl = document.getElementById('dl-icon-tmpl');
+    document.querySelectorAll('a[href$=".doc"], a[href$=".docx"], a[href$=".pdf"]').forEach(function(a) {
+        a.appendChild(dlTmpl.content.cloneNode(true));
     });
     </script>
 </body>

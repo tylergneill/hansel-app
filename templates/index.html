@@ -1,4 +1,4 @@
-{% from 'macros.html' import ext_link_icon %}
+{% from 'macros.html' import ext_link_icon, dl_icon %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -104,7 +104,7 @@
                                         {% set ext = original_submission_filename_ext[1:] %}
                                         {% set icon = ext if ext in ['doc', 'xml', 'txt'] else 'dl' %}
                                         <img src="{{ static_files_path }}/web/imgs/{{ icon }}.png" alt="{{ 'download' if icon == 'dl' else icon }}" style="height: 20px; margin-left: -6px; margin-right: 8px;">
-                                        Original Submission – {{ readable_ext }}
+                                        Original Submission – {{ readable_ext }}{% if original_submission_filename_ext in ['.doc', '.docx', '.pdf'] %}{{ dl_icon() }}{% endif %}
                                     </a>
                                 </li>
                                 <li>
@@ -143,7 +143,7 @@
                                             {% set icon = ext if ext in ['doc', 'xml', 'txt'] else 'dl' %}
                                             <img src="{{ static_files_path }}/web/imgs/{{ icon }}.png" alt="{{ icon }}" style="height: 20px; margin-left: -6px; margin-right: 8px;">
                                             {{ file['text'] }}
-                                            {% if file['description'] %} - {{ file['description'] }}{% endif %}
+                                            {% if file['description'] %} - {{ file['description'] }}{% endif %}{% if file['filetype'] in ['.doc', '.docx', '.pdf'] %}{{ dl_icon() }}{% endif %}
                                         </a>
                                     </li>
                                     {% endfor %}
