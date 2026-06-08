@@ -29,7 +29,7 @@ In a separate terminal:
 
 ```bash
 cd hansel-app
-make run          # Staging image on port 5031 with hansel-data mounted
+make run          # Staging image on port 5051 with hansel-data mounted
 ```
 
 ## Running Tests
@@ -75,17 +75,17 @@ HEADED=1 SLOW_MO=750 pytest tests/ -v -k "chrome-macos"
 
 ### Custom server URL
 
-By default tests hit `http://localhost:5031`. Override with:
+By default tests hit `http://localhost:5051`. Override with:
 
 ```bash
-HANSEL_TEST_URL=http://localhost:5030 pytest tests/ -v
+HANSEL_TEST_URL=http://localhost:5050 pytest tests/ -v
 ```
 
 ## Environment Variables
 
 | Variable           | Default                   | Description                                      |
 |--------------------|---------------------------|--------------------------------------------------|
-| `HANSEL_TEST_URL`  | `http://localhost:5031`   | Base URL of the running app                      |
+| `HANSEL_TEST_URL`  | `http://localhost:5051`   | Base URL of the running app                      |
 | `HEADED`           | (unset = headless)        | Set to `1` to open a visible browser for `@pytest.mark.visual` tests |
 | `SLOW_MO`          | `0`                       | Milliseconds to wait between each Playwright action (headed only) |
 

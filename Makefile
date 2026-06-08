@@ -7,7 +7,7 @@ run:
 	docker run \
 	  --rm \
 	  -it \
-	  -p 5031:5031 \
+	  -p 5051:5051 \
 	  -v $(LOCAL_DATA_PATH):/app/static/data \
 	  --name hansel-dev \
 	  hansel-dev:debug
@@ -19,7 +19,7 @@ run-official:
 	docker run \
 	  --rm \
 	  -it \
-	  -p 5030:5030 \
+	  -p 5050:5050 \
 	  -v $(LOCAL_DATA_PATH):/app/static/data \
 	  tylergneill/hansel-app:$(VERSION)
 
@@ -28,7 +28,7 @@ run-official-stg:
 	docker run \
 	  --rm \
 	  -it \
-	  -p 5031:5031 \
+	  -p 5051:5051 \
 	  -v $(LOCAL_DATA_PATH):/app/static/data \
 	  tylergneill/hansel-app:$(VERSION)
 
@@ -40,4 +40,4 @@ test-all-platforms:
 	pytest tests/ -v
 
 ngrok:
-	ngrok http 5031
+	ngrok http 5051

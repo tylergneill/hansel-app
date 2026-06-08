@@ -55,7 +55,7 @@ This uses the app repo's dummy data.
     ```bash
     ./launch.sh
     ```
-2.  Open your browser and navigate to `http://localhost:5030`.
+2.  Open your browser and navigate to `http://localhost:5050`.
 
 #### With Docker
 
@@ -75,7 +75,7 @@ This uses the complete data in the data repo.
     ```bash
     make run
     ```
-5.  Open browser and navigate to `http://localhost:5030`.
+5.  Open browser and navigate to `http://localhost:5050`.
 
 
 ## Project Structure
