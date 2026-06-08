@@ -214,7 +214,8 @@ a.icon-link:hover {
     background-color: transparent;
 }
 
-.ext-link-icon {
+.ext-link-icon,
+.dl-icon {
     display: inline-block;
     width: 0.7em;
     height: 0.7em;

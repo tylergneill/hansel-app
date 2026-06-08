@@ -500,7 +500,8 @@ body {
     transition: background-color 2s, outline 2s;
 }
 
-.ext-link-icon {
+.ext-link-icon,
+.dl-icon {
     display: inline-block;
     width: 0.7em;
     height: 0.7em;
