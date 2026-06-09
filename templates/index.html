@@ -132,7 +132,7 @@
                                     {% set md_filename = item['Filename Base'] ~ '.md' %}
                                     <a href="{{ static_files_path }}/data/metadata/markdown/{{ md_filename }}">
                                         <img src="{{ static_files_path }}/web/imgs/info.png" alt="metadata" style="height: 20px; margin-left: -6px; margin-right: 8px;">
-                                        Full Metadata - Markdown
+                                        Full Metadata - Markdown{{ dl_icon() }}
                                     </a>
                                 </li>
                                 {% if item['Additional Files'] %}
