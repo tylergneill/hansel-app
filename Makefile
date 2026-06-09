@@ -41,3 +41,6 @@ test-all-platforms:
 
 ngrok:
 	ngrok http 5051
+
+# Cancels the built-in shell script rule
+%: %.sh
