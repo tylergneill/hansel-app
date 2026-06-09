@@ -264,6 +264,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
         const staticFilesPath = "{{ static_files_path }}";
         const readerUrlTemplate = "{{ url_for('view_text', filename='__FILENAME__') }}";
+        const metadataUrlTemplate = "{{ url_for('view_metadata', filename='__FILENAME__') }}";
         const tableData = {{ rows | tojson | safe }};   // full list of dicts
         const extMap = {{ ext_map | tojson | safe }};
 
@@ -311,7 +312,7 @@ document.addEventListener('DOMContentLoaded', function() {
               data: 'Filename Base',
               render: function(data, type, row) {
                 if (type !== 'display') return data;
-                const href = `${staticFilesPath}/data/metadata/transforms/html/${row['Filename Base']}.html`;
+                const href = metadataUrlTemplate.replace('__FILENAME__', `${row['Filename Base']}.html`);
                 imgSrc = `${staticFilesPath}/web/imgs/info.png`;
                 return (
                   `<a href="${href}" title="Full Metadata" class="icon-link">` +
