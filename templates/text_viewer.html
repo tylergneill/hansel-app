@@ -176,7 +176,7 @@
                                             {% if item.verse %}
                                                 <span class="correction-link" data-verse="{{ item.verse }}">v. {{ item.verse }}{{ item.verse_part }}</span>:
                                             {% else %}
-                                                <span class="correction-link" data-page="{{ item.page }}" data-line="{{ item.line }}" data-coord-id="{{ item.coord_id }}">{{ context.page_label }}. {{ item.page }}, {{ context.line_label }}. {{ item.line }}</span>:
+                                                <span class="correction-link" data-page="{{ item.page }}" data-line="{{ item.line }}" data-location-id="{{ item.coord_id }}">{{ context.page_label }}. {{ item.page }}, {{ context.line_label }}. {{ item.line }}</span>:
                                             {% endif %}
                                         </td>
                                         <td>
