@@ -85,7 +85,7 @@
                             <li>
                                 <a href="{{ item['Panditya URL'] }}" target="_blank" class="icon-link">
                                     <img src="{{ static_files_path }}/web/imgs/panditya.png" alt="Panditya" style="height: 20px; margin-left: -6px; margin-right: 9px;">
-                                    View Network on Pāṇḍitya
+                                    View Network on Pāṇḍitya{{ ext_link_icon() }}
                                 </a>
                             </li>
                             {% endif %}
@@ -132,7 +132,7 @@
                                     {% set md_filename = item['Filename Base'] ~ '.md' %}
                                     <a href="{{ static_files_path }}/data/metadata/markdown/{{ md_filename }}">
                                         <img src="{{ static_files_path }}/web/imgs/info.png" alt="metadata" style="height: 20px; margin-left: -6px; margin-right: 8px;">
-                                        Full Metadata - Markdown
+                                        Full Metadata - Markdown{{ dl_icon() }}
                                     </a>
                                 </li>
                                 {% if item['Additional Files'] %}
@@ -264,6 +264,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
         const staticFilesPath = "{{ static_files_path }}";
         const readerUrlTemplate = "{{ url_for('view_text', filename='__FILENAME__') }}";
+        const metadataUrlTemplate = "{{ url_for('view_metadata', filename='__FILENAME__') }}";
         const tableData = {{ rows | tojson | safe }};   // full list of dicts
         const extMap = {{ ext_map | tojson | safe }};
 
@@ -311,7 +312,7 @@ document.addEventListener('DOMContentLoaded', function() {
               data: 'Filename Base',
               render: function(data, type, row) {
                 if (type !== 'display') return data;
-                const href = `${staticFilesPath}/data/metadata/transforms/html/${row['Filename Base']}.html`;
+                const href = metadataUrlTemplate.replace('__FILENAME__', `${row['Filename Base']}.html`);
                 imgSrc = `${staticFilesPath}/web/imgs/info.png`;
                 return (
                   `<a href="${href}" title="Full Metadata" class="icon-link">` +
