@@ -1,5 +1,49 @@
 /* global Sanscript */
 
+function applyPdfHrefs() {
+    const mapping = window.HANSEL_PDF_MAPPING;
+    if (!mapping || !mapping.url || !mapping.offsets) return;
+
+    const url = mapping.url;
+    const offsets = mapping.offsets.slice().sort((a, b) => a[0] - b[0]);
+
+    let pageNumberRegex;
+    const archiveOrgRegex = /(.*\/page\/n)(\d+)(\/mode\/.*)/;
+    const googleBooksRegex = /(.*&pg=GBS\.PP)(\d+)(.*)/;
+    const hathiTrustRegex = /(.*&seq=)(\d+)(.*)/;
+
+    if (archiveOrgRegex.test(url)) {
+        pageNumberRegex = archiveOrgRegex;
+    } else if (googleBooksRegex.test(url)) {
+        pageNumberRegex = googleBooksRegex;
+    } else if (hathiTrustRegex.test(url)) {
+        pageNumberRegex = hathiTrustRegex;
+    } else if (/[?&]page=\d+/.test(url)) {
+        pageNumberRegex = /(.*[?&]page=)(\d+)(.*)/;
+    } else if (/\/page\/\d+/.test(url)) {
+        pageNumberRegex = /(.*\/page\/)(\d+)(.*)/;
+    } else if (/\d+$/.test(url)) {
+        pageNumberRegex = /^(.*?)(\d+)$/;
+    }
+
+    document.querySelectorAll('a.pb-label').forEach(label => {
+        const editionPage = parseInt(label.dataset.page, 10);
+        if (isNaN(editionPage)) return;
+
+        let applicableOffset = [0, 0];
+        for (const offset of offsets) {
+            if (offset[0] <= editionPage) {
+                applicableOffset = offset;
+            } else {
+                break;
+            }
+        }
+
+        const pdfPage = editionPage + (applicableOffset[1] - applicableOffset[0]);
+        label.href = pageNumberRegex ? url.replace(pageNumberRegex, `$1${pdfPage}$3`) : url;
+    });
+}
+
 /**
  * Preserve scroll position across a toggle action.
  * Finds a visible reference element, records its viewport offset,
@@ -174,6 +218,8 @@ function alignAndToggleTocPanel() {
 }
 
 document.addEventListener('DOMContentLoaded', () => {
+    applyPdfHrefs();
+
     const tocButton = document.getElementById('toc-button');
     if (tocButton) {
         tocButton.addEventListener('click', alignAndToggleTocPanel);
@@ -361,12 +407,14 @@ document.addEventListener('DOMContentLoaded', () => {
         if (targetScheme === 'iast') {
             contentDiv.innerHTML = originalContent;
             reapplyCorrections();
+            applyPdfHrefs();
             return;
         }
 
         if (transliteratedContent[targetScheme]) {
             contentDiv.innerHTML = transliteratedContent[targetScheme];
             reapplyCorrections();
+            applyPdfHrefs();
             return;
         }
 
@@ -377,8 +425,8 @@ document.addEventListener('DOMContentLoaded', () => {
         let node;
         while ((node = walker.nextNode())) {
             const parent = node.parentElement;
-            if (parent.classList.contains('lb-label') || 
-                parent.classList.contains('pb-label') || 
+            if (parent.classList.contains('lb-label') ||
+                parent.classList.contains('pb-label') ||
                 parent.classList.contains('editorial-coord')) {
                 continue;
             }
@@ -387,10 +435,11 @@ document.addEventListener('DOMContentLoaded', () => {
                 node.nodeValue = Sanscript.t(node.nodeValue, 'iast', targetScheme);
             }
         }
-        
+
         transliteratedContent[targetScheme] = tempDiv.innerHTML;
         contentDiv.innerHTML = tempDiv.innerHTML;
         reapplyCorrections();
+        applyPdfHrefs();
     }
 
     transliterationSchemeSelect.addEventListener('change', (e) => {
