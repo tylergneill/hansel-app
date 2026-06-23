@@ -93,7 +93,7 @@ def get_filename_info(record):
     if 'Filename' not in record:
         raise(f"Filename missing for {record}")
     filename_base = record['Filename']
-    original_submission_filename_extension = record['Original Submission Filetype']
+    original_submission_filename_extension = record.get('Original Submission Filetype')
     return filename_base, original_submission_filename_extension
 
 
