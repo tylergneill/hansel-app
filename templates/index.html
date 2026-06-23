@@ -96,6 +96,7 @@
                                 </div>
                             </li>
                             <ul style="padding-left: 24px; margin-top: 5px;">
+                                {% if item['Original Submission Filename Extension'] %}
                                 <li>
                                     {% set original_submission_filename_ext = item['Original Submission Filename Extension'] %}
                                     {% set readable_ext = ext_map.get(original_submission_filename_ext, original_submission_filename_ext) %}
@@ -107,6 +108,7 @@
                                         Original Submission – {{ readable_ext }}{% if original_submission_filename_ext in ['.doc', '.docx', '.pdf'] %}{{ dl_icon() }}{% endif %}
                                     </a>
                                 </li>
+                                {% endif %}
                                 <li>
                                     {% set txt_filename = item['Filename Base'] ~ '.txt' %}
                                     <a href="{{ static_files_path }}/data/texts/project_editions/txt/{{ txt_filename }}" class="main-link">
@@ -370,7 +372,7 @@ document.addEventListener('DOMContentLoaded', function() {
                             alt="Downloads" style="height: 20px;">
                         </button>
                         <div class="dl-dropdown-menu">
-                            <a href="${original_submission_href}">original submission (${readableExt})</a>
+                            ${original_submission_ext ? `<a href="${original_submission_href}">original submission (${readableExt})</a>` : ''}
                             <a href="${txt_href}">processed .txt</a>
                             <a href="${xml_href}">.xml transform </a>
                             <a href="${html_href}">plain .html transform </a>
