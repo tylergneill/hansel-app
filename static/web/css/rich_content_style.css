@@ -20,9 +20,9 @@ h1, h2, h3, h4, h5, h6 {
     cursor: default;
 }
 
-/* Override for page-start labels to be blue and clickable */
-.show-breaks .pb-label,
-.show-breaks .lb-label[data-line="1"] {
+/* Override for page-start labels to be blue and clickable, only when linked */
+.show-breaks .pb-label[href],
+.show-breaks .lb-label[data-line="1"][href] {
     cursor: pointer;
     color: blue;
 }
