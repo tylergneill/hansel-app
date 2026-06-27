@@ -1,3 +1,7 @@
+#content {
+    font-family: 'Tiro Sanskrit', serif;
+}
+
 .plain-text { display: none; }
 .rich-text { display: block; }
 body.simple-view .plain-text { display: block; }
