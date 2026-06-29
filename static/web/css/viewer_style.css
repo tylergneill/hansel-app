@@ -335,6 +335,32 @@ body {
     display: block;
 }
 
+@media print {
+    html {
+        overflow: visible;
+        height: auto;
+    }
+    body {
+        height: auto;
+        overflow: visible;
+        padding-top: 10px;
+        padding-left: 20px;
+        padding-right: 20px;
+    }
+    #border-top,
+    #border-left,
+    #home-button,
+    #toggles-widget-icon,
+    #toggles-widget,
+    #border-widgets,
+    #metadata-widget-container,
+    #toc-widget-container,
+    #metadata-panel,
+    #toc-panel {
+        display: none !important;
+    }
+}
+
 @media (max-width: 950px) {
     #top-widgets {
         flex-direction: column;
