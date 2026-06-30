@@ -470,16 +470,21 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Font family controls
     const fontFamilySelect = document.getElementById('font-family-select');
+    const fontFamilyMap = {
+        'tiro': "'Tiro Sanskrit', serif",
+        'sans': "sans-serif",
+    };
     if (fontFamilySelect) {
-        const savedFontFamily = localStorage.getItem('hanselFontFamily');
-        if (savedFontFamily) {
-            fontFamilySelect.value = savedFontFamily;
-            contentDiv.style.fontFamily = savedFontFamily;
+        const savedFont = localStorage.getItem('hanselFontFamily');
+        if (savedFont && fontFamilyMap[savedFont]) {
+            fontFamilySelect.value = savedFont;
+            contentDiv.style.fontFamily = fontFamilyMap[savedFont];
         }
         fontFamilySelect.addEventListener('change', (e) => {
-            const family = e.target.value;
+            const key = e.target.value;
+            const family = fontFamilyMap[key] || '';
             contentDiv.style.fontFamily = family;
-            localStorage.setItem('hanselFontFamily', family);
+            localStorage.setItem('hanselFontFamily', key);
         });
     }
 
