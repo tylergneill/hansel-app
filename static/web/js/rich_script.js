@@ -471,8 +471,9 @@ document.addEventListener('DOMContentLoaded', () => {
     // Font family controls
     const fontFamilySelect = document.getElementById('font-family-select');
     const fontFamilyMap = {
-        'tiro': "'Tiro Sanskrit', serif",
+        'tiro': "'Tiro Sanskrit', 'Tiro Devanagari Sanskrit', serif",
         'sans': "sans-serif",
+        'noto': "'Noto Sans', 'Noto Sans Devanagari', sans-serif",
     };
     if (fontFamilySelect) {
         const savedFont = localStorage.getItem('hanselFontFamily');
