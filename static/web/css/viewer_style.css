@@ -209,7 +209,7 @@ body {
     padding: 10px;
     border-radius: 5px;
     background-color: rgba(255, 255, 255);
-    min-width: 200px;
+    width: 240px;
     display: none;
     transform: translateZ(0); /* GPU layer prevents iOS scroll jank */
     -webkit-transform: translateZ(0);
@@ -446,7 +446,7 @@ body {
 #font-row,
 #print-row {
     display: grid;
-    grid-template-columns: 35px 1fr 90px;
+    grid-template-columns: 35px 1fr 80px;
     align-items: center;
     column-gap: 8px;
 }
