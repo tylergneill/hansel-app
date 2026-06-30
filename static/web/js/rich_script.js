@@ -468,6 +468,21 @@ document.addEventListener('DOMContentLoaded', () => {
         transliterate(savedScheme);
     }
 
+    // Font family controls
+    const fontFamilySelect = document.getElementById('font-family-select');
+    if (fontFamilySelect) {
+        const savedFontFamily = localStorage.getItem('hanselFontFamily');
+        if (savedFontFamily) {
+            fontFamilySelect.value = savedFontFamily;
+            contentDiv.style.fontFamily = savedFontFamily;
+        }
+        fontFamilySelect.addEventListener('change', (e) => {
+            const family = e.target.value;
+            contentDiv.style.fontFamily = family;
+            localStorage.setItem('hanselFontFamily', family);
+        });
+    }
+
     // Font size controls
     const FONT_SIZE_STEP = 2;
     const FONT_SIZE_MIN = 10;
