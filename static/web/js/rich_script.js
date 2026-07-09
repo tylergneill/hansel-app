@@ -360,7 +360,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const allSchemes = {
         "Roman": ["hk", "iast", "iso", "itrans", "slp1", "velthuis", "wx"],
-        "Brahmic": ["bengali", "devanagari", "grantha", "gujarati", "kannada", "malayalam", "oriya", "telegu"]
+        "Brahmic": ["bengali", "devanagari", "grantha", "gujarati", "kannada", "malayalam", "oriya", "telugu"]
     };
     const defaultSchemes = ["iast", "devanagari", "hk", "iso", "itrans"];
     const schemeDisplayNames = {
@@ -398,11 +398,46 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
+    // Tiro fonts are script-specific (Google Fonts has no single "Sanskrit" font
+    // covering every Brahmic script). Map each transliteration scheme to its Tiro
+    // font's display name, or omit it if no Tiro font exists for that script.
+    const tiroFontLabels = {
+        'iast': 'Tiro Devanagari Sanskrit',
+        'devanagari': 'Tiro Devanagari Sanskrit',
+        'bengali': 'Tiro Bangla',
+        'kannada': 'Tiro Kannada',
+        'telugu': 'Tiro Telugu',
+        // grantha, gujarati, malayalam, oriya: no Tiro font available
+    };
+
+    function updateFontOptionForScript(targetScheme) {
+        const fontFamilySelect = document.getElementById('font-family-select');
+        if (!fontFamilySelect) return;
+        const tiroOption = fontFamilySelect.querySelector('option[value="tiro"]');
+        if (!tiroOption) return;
+
+        const label = tiroFontLabels[targetScheme];
+        if (label) {
+            tiroOption.disabled = false;
+            tiroOption.textContent = label;
+        } else {
+            tiroOption.disabled = true;
+            tiroOption.textContent = 'Tiro (unavailable)';
+            if (fontFamilySelect.value === 'tiro') {
+                fontFamilySelect.value = 'sans';
+                fontFamilySelect.dispatchEvent(new Event('change'));
+            }
+        }
+    }
+
     function transliterate(targetScheme) {
         const reapplyCorrections = () => {
             const correctionsToggle = document.querySelector('input[onchange="toggleCorrections(this)"]');
             if (correctionsToggle) toggleCorrections(correctionsToggle);
         };
+
+        contentDiv.dataset.script = targetScheme;
+        updateFontOptionForScript(targetScheme);
 
         if (targetScheme === 'iast') {
             contentDiv.innerHTML = originalContent;
@@ -470,14 +505,16 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Font family controls
     const fontFamilySelect = document.getElementById('font-family-select');
+    // 'tiro' maps to '' (no inline override) so the CSS in rich_content_style.css
+    // can pick the Tiro font that matches the active transliteration script.
     const fontFamilyMap = {
-        'tiro': "'Tiro Sanskrit', 'Tiro Devanagari Sanskrit', serif",
+        'tiro': "",
         'sans': "sans-serif",
         'noto': "'Noto Sans', 'Noto Sans Devanagari', sans-serif",
     };
     if (fontFamilySelect) {
         const savedFont = localStorage.getItem('hanselFontFamily');
-        if (savedFont && fontFamilyMap[savedFont]) {
+        if (savedFont && Object.prototype.hasOwnProperty.call(fontFamilyMap, savedFont)) {
             fontFamilySelect.value = savedFont;
             contentDiv.style.fontFamily = fontFamilyMap[savedFont];
         }
@@ -487,6 +524,10 @@ document.addEventListener('DOMContentLoaded', () => {
             contentDiv.style.fontFamily = family;
             localStorage.setItem('hanselFontFamily', key);
         });
+
+        // Re-sync now that the select and its saved value both exist, in case the
+        // saved font was 'tiro' but the saved script has no Tiro font available.
+        updateFontOptionForScript(contentDiv.dataset.script || 'iast');
     }
 
     // Font size controls

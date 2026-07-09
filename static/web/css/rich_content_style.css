@@ -1,5 +1,17 @@
 #content {
-    font-family: 'Tiro Sanskrit', 'Tiro Devanagari Sanskrit', serif;
+    font-family: 'Tiro Devanagari Sanskrit', serif;
+}
+
+/* Per-script Tiro font overrides. Grantha, Gujarati, Malayalam, and Oriya
+   have no Tiro font on Google Fonts, so they fall back to the base serif above. */
+#content[data-script="bengali"] {
+    font-family: 'Tiro Bangla', serif;
+}
+#content[data-script="kannada"] {
+    font-family: 'Tiro Kannada', serif;
+}
+#content[data-script="telugu"] {
+    font-family: 'Tiro Telugu', serif;
 }
 
 .plain-text { display: none; }
