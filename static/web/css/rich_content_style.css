@@ -94,7 +94,7 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 /* Drama elements */
-.speaker { font-weight: bold; display: block; margin-top: 0.8em; }
+.speaker { font-weight: bold; display: block; margin-top: 0.8em; margin-bottom: 0.5em; }
 .speaker::after { content: " \2014"; } /* em-dash */
 
 /* .speaker bold, per font option:
