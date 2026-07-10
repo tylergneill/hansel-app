@@ -505,23 +505,29 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Font family controls
     const fontFamilySelect = document.getElementById('font-family-select');
-    // 'tiro' maps to '' (no inline override) so the CSS in rich_content_style.css
-    // can pick the Tiro font that matches the active transliteration script.
+    // 'tiro' and 'noto' map to '' (no inline override) so the CSS in
+    // rich_content_style.css can pick the Tiro/Noto font that matches the
+    // active transliteration script via the #content.font-noto[data-script] rules.
     const fontFamilyMap = {
         'tiro': "",
         'sans': "sans-serif",
-        'noto': "'Noto Sans', 'Noto Sans Devanagari', sans-serif",
+        'noto': "",
     };
+    function applyFontFamilyKey(key) {
+        const family = fontFamilyMap[key] || '';
+        contentDiv.style.fontFamily = family;
+        contentDiv.classList.toggle('font-noto', key === 'noto');
+        contentDiv.classList.toggle('font-sans', key === 'sans');
+    }
     if (fontFamilySelect) {
         const savedFont = localStorage.getItem('hanselFontFamily');
         if (savedFont && Object.prototype.hasOwnProperty.call(fontFamilyMap, savedFont)) {
             fontFamilySelect.value = savedFont;
-            contentDiv.style.fontFamily = fontFamilyMap[savedFont];
+            applyFontFamilyKey(savedFont);
         }
         fontFamilySelect.addEventListener('change', (e) => {
             const key = e.target.value;
-            const family = fontFamilyMap[key] || '';
-            contentDiv.style.fontFamily = family;
+            applyFontFamilyKey(key);
             localStorage.setItem('hanselFontFamily', key);
         });
 
