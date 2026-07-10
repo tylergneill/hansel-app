@@ -1,4 +1,4 @@
-/* global Sanscript */
+/* global Sanscript, Skrutable */
 
 function applyPdfHrefs() {
     const mapping = window.HANSEL_PDF_MAPPING;
@@ -430,6 +430,29 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
+    // Sanscript's IAST scheme has no notion of Prakrit's diaeresis vowels
+    // (ï, ü), which mark two short vowels in hiatus rather than the ai/au
+    // diphthongs they'd otherwise be read as. skrutable-js does distinguish
+    // them, so for Prakrit spans we pivot IAST->Devanagari through skrutable
+    // first, then hand that Devanagari to Sanscript for the final script.
+    const skrutableTransliterators = {};
+    function getSkrutableTransliterator(fromScheme, toScheme) {
+        const key = fromScheme + '->' + toScheme;
+        if (!skrutableTransliterators[key]) {
+            skrutableTransliterators[key] = new Skrutable.Transliterator(fromScheme, toScheme);
+        }
+        return skrutableTransliterators[key];
+    }
+
+    function transliterateNode(text, targetScheme, isPrakrit) {
+        if (isPrakrit) {
+            const devanagari = getSkrutableTransliterator('IAST', 'DEV').transliterate(text);
+            if (targetScheme === 'devanagari') return devanagari;
+            return Sanscript.t(devanagari, 'devanagari', targetScheme);
+        }
+        return Sanscript.t(text, 'iast', targetScheme);
+    }
+
     function transliterate(targetScheme) {
         const reapplyCorrections = () => {
             const correctionsToggle = document.querySelector('input[onchange="toggleCorrections(this)"]');
@@ -467,7 +490,8 @@ document.addEventListener('DOMContentLoaded', () => {
             }
 
             if (node.nodeValue && node.nodeValue.trim().length > 0) {
-                node.nodeValue = Sanscript.t(node.nodeValue, 'iast', targetScheme);
+                const isPrakrit = !!parent.closest('.prakrit');
+                node.nodeValue = transliterateNode(node.nodeValue, targetScheme, isPrakrit);
             }
         }
 
