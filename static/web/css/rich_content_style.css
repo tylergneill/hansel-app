@@ -14,32 +14,32 @@
     font-family: 'Tiro Telugu', serif;
 }
 
-/* Per-script Noto Sans overrides, selected when the "Noto Sans" font option is
-   active. Noto Sans Devanagari covers iast/devanagari; Grantha has no bold
+/* Per-script Noto Serif overrides, selected when the "Noto Serif" font option is
+   active. Noto Serif Devanagari covers iast/devanagari; Grantha has no bold
    face on Google Fonts (see .speaker text-shadow reinforcement below). */
 #content.font-noto {
-    font-family: 'Noto Sans', 'Noto Sans Devanagari', sans-serif;
+    font-family: 'Noto Serif', 'Noto Serif Devanagari', serif;
 }
 #content.font-noto[data-script="bengali"] {
-    font-family: 'Noto Sans Bengali', sans-serif;
+    font-family: 'Noto Serif Bengali', serif;
 }
 #content.font-noto[data-script="kannada"] {
-    font-family: 'Noto Sans Kannada', sans-serif;
+    font-family: 'Noto Serif Kannada', serif;
 }
 #content.font-noto[data-script="telugu"] {
-    font-family: 'Noto Sans Telugu', sans-serif;
+    font-family: 'Noto Serif Telugu', serif;
 }
 #content.font-noto[data-script="gujarati"] {
-    font-family: 'Noto Sans Gujarati', sans-serif;
+    font-family: 'Noto Serif Gujarati', serif;
 }
 #content.font-noto[data-script="malayalam"] {
-    font-family: 'Noto Sans Malayalam', sans-serif;
+    font-family: 'Noto Serif Malayalam', serif;
 }
 #content.font-noto[data-script="oriya"] {
-    font-family: 'Noto Sans Oriya', sans-serif;
+    font-family: 'Noto Serif Oriya', serif;
 }
 #content.font-noto[data-script="grantha"] {
-    font-family: 'Noto Sans Grantha', sans-serif;
+    font-family: 'Noto Serif Grantha', serif;
 }
 
 .plain-text { display: none; }
@@ -103,8 +103,8 @@ h1, h2, h3, h4, h5, h6 {
      text-shadow reinforcement below to stay legible.
    - Sans-serif (.font-sans): OS default sans-serif has a real bold face.
      No shadow needed.
-   - Noto Sans (.font-noto): each per-script Noto Sans family loaded in
-     viewer_style.css has a real bold face, EXCEPT Noto Sans Grantha, which
+   - Noto Serif (.font-noto): each per-script Noto Serif family loaded in
+     viewer_style.css has a real bold face, EXCEPT Noto Serif Grantha, which
      is single-weight like Tiro and needs the same shadow reinforcement.
    Stacking the shadow on top of a real bold face over-thickens it, so it's
    scoped to only the two no-true-bold cases. */
