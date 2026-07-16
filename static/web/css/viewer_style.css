@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Tiro+Devanagari+Sanskrit&family=Tiro+Bangla&family=Tiro+Kannada&family=Tiro+Telugu&family=Noto+Serif:wght@400;700&family=Noto+Serif+Devanagari:wght@400;700&family=Noto+Serif+Bengali:wght@400;700&family=Noto+Serif+Kannada:wght@400;700&family=Noto+Serif+Telugu:wght@400;700&family=Noto+Serif+Gujarati:wght@400;700&family=Noto+Serif+Malayalam:wght@400;700&family=Noto+Serif+Oriya:wght@400;700&family=Noto+Serif+Grantha&display=swap');
+
 html {
     overflow: hidden;
     height: 100%;
@@ -207,13 +209,13 @@ body {
     padding: 10px;
     border-radius: 5px;
     background-color: rgba(255, 255, 255);
-    min-width: 200px;
+    width: 240px;
     display: none;
     transform: translateZ(0); /* GPU layer prevents iOS scroll jank */
     -webkit-transform: translateZ(0);
 }
 
-.toggles-widget-container button {
+.toggles-widget-container button:not(#print-button):not(#font-size-decrease):not(#font-size-reset):not(#font-size-increase) {
     display: block;
     margin-bottom: 5px;
     background-color: #113121;
@@ -333,6 +335,32 @@ body {
     display: block;
 }
 
+@media print {
+    html {
+        overflow: visible;
+        height: auto;
+    }
+    body {
+        height: auto;
+        overflow: visible;
+        padding-top: 10px;
+        padding-left: 20px;
+        padding-right: 20px;
+    }
+    #border-top,
+    #border-left,
+    #home-button,
+    #toggles-widget-icon,
+    #toggles-widget,
+    #border-widgets,
+    #metadata-widget-container,
+    #toc-widget-container,
+    #metadata-panel,
+    #toc-panel {
+        display: none !important;
+    }
+}
+
 @media (max-width: 950px) {
     #top-widgets {
         flex-direction: column;
@@ -413,26 +441,72 @@ body {
     vertical-align: middle;
 }
 
-#font-size-controls {
+/* Three-column grid: [label 35px] [dropdown 1fr] [extras 90px] */
+#transliteration-row,
+#font-row,
+#print-row {
+    display: grid;
+    grid-template-columns: 35px 1fr 80px;
+    align-items: center;
+    column-gap: 8px;
+}
+
+.row-label {
+    grid-column: 1;
+    font-size: 12px;
+    color: #333;
+}
+
+#transliteration-controls,
+#font-controls,
+#print-controls {
+    grid-column: 2;
+    min-width: 0;
+    width: 100%;
+    box-sizing: border-box;
+    overflow: hidden;
+}
+
+#print-controls {
+    display: flex;
+}
+
+#toggle-switch-text,
+#font-size-buttons {
+    grid-column: 3;
+}
+
+/* Transliteration */
+#transliteration-scheme {
+    width: 100%;
+    box-sizing: border-box;
+}
+
+#toggle-switch-text {
     display: flex;
     align-items: center;
+    white-space: nowrap;
+}
+
+/* Font */
+#font-family-select {
     width: 100%;
+    box-sizing: border-box;
 }
 
 #font-size-buttons {
     display: flex;
-    margin-left: auto;
-    gap: 4px;
+    gap: 2px;
 }
 
 #font-size-buttons button {
-    width: 30px;
-    height: 30px;
+    width: 26px;
+    height: 26px;
     border: 1px solid #ccc;
     border-radius: 4px;
     background-color: #f5f5f5;
     cursor: pointer;
-    font-size: 16px;
+    font-size: 14px;
     font-weight: bold;
     color: #333;
     display: flex;
@@ -447,28 +521,34 @@ body {
 }
 
 #font-size-reset {
-    font-size: 13px !important;
+    font-size: 11px !important;
 }
 
-#transliteration-controls-container {
+/* Print */
+#print-button {
     display: flex;
     align-items: center;
+    justify-content: center;
+    background-color: #113121;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    height: 26px;
+    padding: 4px;
     width: 100%;
+    margin: 0;
 }
 
-#transliteration-controls {
-    display: flex;
-    align-items: center;
-    margin-left: 20px; /* Changed from auto */
+#print-button:hover {
+    background-color: #22553B;
 }
 
-#toggle-switch-text {
-    display: flex;
-    align-items: center;
-}
-
-#transliteration-scheme {
-    margin-right: 15px;
+#print-button svg {
+    width: 16px;
+    height: 16px;
+    stroke: white;
 }
 
 #home-button {

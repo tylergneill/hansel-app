@@ -1,4 +1,4 @@
-/* global Sanscript */
+/* global Sanscript, Skrutable */
 
 function applyPdfHrefs() {
     const mapping = window.HANSEL_PDF_MAPPING;
@@ -360,7 +360,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const allSchemes = {
         "Roman": ["hk", "iast", "iso", "itrans", "slp1", "velthuis", "wx"],
-        "Brahmic": ["bengali", "devanagari", "gujarati", "kannada", "malayalam", "oriya", "sinhala", "tamil"]
+        "Brahmic": ["bengali", "devanagari", "grantha", "gujarati", "kannada", "malayalam", "oriya", "telugu"]
     };
     const defaultSchemes = ["iast", "devanagari", "hk", "iso", "itrans"];
     const schemeDisplayNames = {
@@ -398,11 +398,69 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
+    // Tiro fonts are script-specific (Google Fonts has no single "Sanskrit" font
+    // covering every Brahmic script). Map each transliteration scheme to its Tiro
+    // font's display name, or omit it if no Tiro font exists for that script.
+    const tiroFontLabels = {
+        'iast': 'Tiro Devanagari Sanskrit',
+        'devanagari': 'Tiro Devanagari Sanskrit',
+        'bengali': 'Tiro Bangla',
+        'kannada': 'Tiro Kannada',
+        'telugu': 'Tiro Telugu',
+        // grantha, gujarati, malayalam, oriya: no Tiro font available
+    };
+
+    function updateFontOptionForScript(targetScheme) {
+        const fontFamilySelect = document.getElementById('font-family-select');
+        if (!fontFamilySelect) return;
+        const tiroOption = fontFamilySelect.querySelector('option[value="tiro"]');
+        if (!tiroOption) return;
+
+        const label = tiroFontLabels[targetScheme];
+        if (label) {
+            tiroOption.disabled = false;
+            tiroOption.textContent = label;
+        } else {
+            tiroOption.disabled = true;
+            tiroOption.textContent = 'Tiro (unavailable)';
+            if (fontFamilySelect.value === 'tiro') {
+                fontFamilySelect.value = 'sans';
+                fontFamilySelect.dispatchEvent(new Event('change'));
+            }
+        }
+    }
+
+    // Sanscript's IAST scheme has no notion of Prakrit's diaeresis vowels
+    // (ï, ü), which mark two short vowels in hiatus rather than the ai/au
+    // diphthongs they'd otherwise be read as. skrutable-js does distinguish
+    // them, so for Prakrit spans we pivot IAST->Devanagari through skrutable
+    // first, then hand that Devanagari to Sanscript for the final script.
+    const skrutableTransliterators = {};
+    function getSkrutableTransliterator(fromScheme, toScheme) {
+        const key = fromScheme + '->' + toScheme;
+        if (!skrutableTransliterators[key]) {
+            skrutableTransliterators[key] = new Skrutable.Transliterator(fromScheme, toScheme);
+        }
+        return skrutableTransliterators[key];
+    }
+
+    function transliterateNode(text, targetScheme, isPrakrit) {
+        if (isPrakrit) {
+            const devanagari = getSkrutableTransliterator('IAST', 'DEV').transliterate(text);
+            if (targetScheme === 'devanagari') return devanagari;
+            return Sanscript.t(devanagari, 'devanagari', targetScheme);
+        }
+        return Sanscript.t(text, 'iast', targetScheme);
+    }
+
     function transliterate(targetScheme) {
         const reapplyCorrections = () => {
             const correctionsToggle = document.querySelector('input[onchange="toggleCorrections(this)"]');
             if (correctionsToggle) toggleCorrections(correctionsToggle);
         };
+
+        contentDiv.dataset.script = targetScheme;
+        updateFontOptionForScript(targetScheme);
 
         if (targetScheme === 'iast') {
             contentDiv.innerHTML = originalContent;
@@ -432,7 +490,8 @@ document.addEventListener('DOMContentLoaded', () => {
             }
 
             if (node.nodeValue && node.nodeValue.trim().length > 0) {
-                node.nodeValue = Sanscript.t(node.nodeValue, 'iast', targetScheme);
+                const isPrakrit = !!parent.closest('.prakrit');
+                node.nodeValue = transliterateNode(node.nodeValue, targetScheme, isPrakrit);
             }
         }
 
@@ -466,6 +525,39 @@ document.addEventListener('DOMContentLoaded', () => {
     
     if (savedScheme !== 'iast') {
         transliterate(savedScheme);
+    }
+
+    // Font family controls
+    const fontFamilySelect = document.getElementById('font-family-select');
+    // 'tiro' and 'noto' map to '' (no inline override) so the CSS in
+    // rich_content_style.css can pick the Tiro/Noto font that matches the
+    // active transliteration script via the #content.font-noto[data-script] rules.
+    const fontFamilyMap = {
+        'tiro': "",
+        'sans': "sans-serif",
+        'noto': "",
+    };
+    function applyFontFamilyKey(key) {
+        const family = fontFamilyMap[key] || '';
+        contentDiv.style.fontFamily = family;
+        contentDiv.classList.toggle('font-noto', key === 'noto');
+        contentDiv.classList.toggle('font-sans', key === 'sans');
+    }
+    if (fontFamilySelect) {
+        const savedFont = localStorage.getItem('hanselFontFamily');
+        if (savedFont && Object.prototype.hasOwnProperty.call(fontFamilyMap, savedFont)) {
+            fontFamilySelect.value = savedFont;
+            applyFontFamilyKey(savedFont);
+        }
+        fontFamilySelect.addEventListener('change', (e) => {
+            const key = e.target.value;
+            applyFontFamilyKey(key);
+            localStorage.setItem('hanselFontFamily', key);
+        });
+
+        // Re-sync now that the select and its saved value both exist, in case the
+        // saved font was 'tiro' but the saved script has no Tiro font available.
+        updateFontOptionForScript(contentDiv.dataset.script || 'iast');
     }
 
     // Font size controls

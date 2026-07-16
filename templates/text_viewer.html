@@ -104,27 +104,39 @@
         </div>
         {% endif %}
 
-        <div class="toggle-switch-container">
-            <div id="font-size-controls">
-                <span class="toggle-switch-text">Font Size</span>
-                <div id="font-size-buttons">
-                    <button id="font-size-decrease" title="Decrease font size">&minus;</button>
-                    <button id="font-size-reset" title="Reset font size">A</button>
-                    <button id="font-size-increase" title="Increase font size">+</button>
-                </div>
+        <div class="toggle-switch-container" id="transliteration-row">
+            <span class="row-label">ā→आ</span>
+            <div id="transliteration-controls">
+                <select id="transliteration-scheme"></select>
+            </div>
+            <label id="toggle-switch-text">
+                <input type="checkbox" id="show-all-schemes-checkbox">
+                <span class="toggle-switch-text"> more</span>
+            </label>
+        </div>
+
+        <div class="toggle-switch-container" id="font-row">
+            <span class="row-label">Font</span>
+            <div id="font-controls">
+                <select id="font-family-select">
+                    <option value="tiro">Tiro Devanagari Sanskrit</option>
+                    <option value="sans">Sans-serif</option>
+                    <option value="noto">Noto Serif</option>
+                </select>
+            </div>
+            <div id="font-size-buttons">
+                <button id="font-size-decrease" title="Decrease font size">&minus;</button>
+                <button id="font-size-reset" title="Reset font size">A</button>
+                <button id="font-size-increase" title="Increase font size">+</button>
             </div>
         </div>
 
-        <div class="toggle-switch-container">
-            <div id="transliteration-controls-container">
-                <span class="toggle-switch-text">ā→आ</span>
-                <div id="transliteration-controls">
-                    <select id="transliteration-scheme"></select>
-                    <label id="toggle-switch-text">
-                        <input type="checkbox" id="show-all-schemes-checkbox">
-                        <span class="toggle-switch-text"> more</span>
-                    </label>
-                </div>
+        <div class="toggle-switch-container" id="print-row">
+            <span class="row-label">Print</span>
+            <div id="print-controls">
+                <button id="print-button" onclick="window.print()" title="Print / Save as PDF">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9V2h12v7"/><rect x="6" y="14" width="12" height="8"/><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><circle cx="18" cy="11.5" r="0.5" fill="currentColor"/></svg>
+                </button>
             </div>
         </div>
 
@@ -225,6 +237,7 @@
     </script>
     {% endif %}
     <script src="https://cdn.jsdelivr.net/npm/@indic-transliteration/sanscript/sanscript.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/skrutable-js@2.1.4/dist/skrutable.bundle.js"></script>
     <script src="{{ url_for('static', filename='web/js/rich_script.js') }}"></script>
     {% if context.has_verses %}
     <script src="{{ url_for('static', filename='web/js/rich_verse_script.js') }}"></script>
