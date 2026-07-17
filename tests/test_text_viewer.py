@@ -4,7 +4,7 @@ Each toggle test verifies that the DOM actually changes in the expected way,
 not just that elements exist or are clickable.
 
 bANa_kAdambarI is the primary test text because it has location markers,
-line breaks, corrections, and verses — exercising every toggle.
+line breaks, improvements, and verses — exercising every toggle.
 kumArilabhaTTa_zlokavArtika is used for verse-specific tests (condensed-verse-format).
 """
 
@@ -12,7 +12,7 @@ import pytest
 
 from tests.conftest import DUMMY_TEXTS, SLOW_MO
 
-# bANa has: location markers, line breaks, corrections, verses, TOC
+# bANa has: location markers, line breaks, improvements, verses, TOC
 STANDARD_TEXT = "bANa_kAdambarI"
 # ślokavārttika has: verses (condensed-verse-format), no location markers
 VERSE_TEXT = "kumArilabhaTTa_zlokavArtika"
@@ -158,12 +158,12 @@ def test_toggle_editorial_coords(page, base_url):
 
 
 # --------------------------------------------------------------------------- #
-# Toggle: Corrections
+# Toggle: Improvements
 # --------------------------------------------------------------------------- #
 
 @pytest.mark.visual
-def test_toggle_corrections(page, base_url):
-    """Toggling corrections swaps post-correction (default, visible) → ante-correction (visible)."""
+def test_toggle_improvements(page, base_url):
+    """Toggling improvements swaps post-correction (default, visible) → ante-correction (visible)."""
     _open_viewer(page, base_url, STANDARD_TEXT)
 
     # Default state: corrections on — post-correction visible, ante-correction hidden
@@ -172,13 +172,13 @@ def test_toggle_corrections(page, base_url):
 
     # Toggle off: show original (ante) text
     _open_toggles_panel(page)
-    _click_toggle(page, "toggleCorrections")
+    _click_toggle(page, "toggleImprovements")
 
     assert _computed_display(page, ".ante-correction") == "inline"
     assert _computed_display(page, ".post-correction") == "none"
 
     # Toggle back on: back to default
-    _click_toggle(page, "toggleCorrections")
+    _click_toggle(page, "toggleImprovements")
     assert _computed_display(page, ".ante-correction") == "none"
     assert _computed_display(page, ".post-correction") == "inline"
 
@@ -387,16 +387,16 @@ def test_home_button_navigates_home(page, base_url):
 
 
 # --------------------------------------------------------------------------- #
-# Corrections info icon → metadata panel
+# Improvements info icon → metadata panel
 # --------------------------------------------------------------------------- #
 
 @pytest.mark.visual
-def test_corrections_info_icon_opens_metadata(page, base_url):
-    """The corrections info icon opens the metadata panel and expands the corrections list."""
+def test_improvements_info_icon_opens_metadata(page, base_url):
+    """The improvements info icon opens the metadata panel and expands the improvements list."""
     _open_viewer(page, base_url, STANDARD_TEXT)
     _open_toggles_panel(page)
 
-    info_icon = page.locator("#corrections-info-icon")
+    info_icon = page.locator("#improvements-info-icon")
     assert info_icon.is_visible()
 
     info_icon.click()
@@ -405,10 +405,10 @@ def test_corrections_info_icon_opens_metadata(page, base_url):
     # Metadata panel should be open
     assert _computed_display(page, "#metadata-panel") == "block"
 
-    # Corrections table inside the panel should be visible (expanded)
-    corrections_table = page.locator("#corrections-list-container table")
-    if corrections_table.count() > 0:
-        assert corrections_table.evaluate("el => el.style.display") == "table"
+    # Improvements table inside the panel should be visible (expanded)
+    improvements_table = page.locator("#improvements-list-container table")
+    if improvements_table.count() > 0:
+        assert improvements_table.evaluate("el => el.style.display") == "table"
 
 
 # --------------------------------------------------------------------------- #
@@ -426,10 +426,10 @@ def _toggle_exists(page, onchange_fn):
 # Toggle conditional visibility — present when feature exists
 # --------------------------------------------------------------------------- #
 
-# śukasaptati_s is used for "absent" tests because it lacks corrections.
+# śukasaptati_s is used for "absent" tests because it lacks improvements.
 # ślokavārttika is used because it lacks editorial coords and line breaks.
 SPARSE_TEXT = "kumArilabhaTTa_zlokavArtika"
-NO_CORRECTIONS_TEXT = "zukasaptati_s"
+NO_IMPROVEMENTS_TEXT = "zukasaptati_s"
 
 
 @pytest.mark.chrome_only
@@ -449,11 +449,11 @@ def test_line_breaks_toggle_present(page, base_url):
 
 
 @pytest.mark.chrome_only
-def test_corrections_toggle_present(page, base_url):
-    """bANa has corrections → Corrections toggle exists."""
+def test_improvements_toggle_present(page, base_url):
+    """bANa has improvements → Improvements toggle exists."""
     _open_viewer(page, base_url, STANDARD_TEXT)
     _open_toggles_panel(page)
-    assert _toggle_exists(page, "toggleCorrections")
+    assert _toggle_exists(page, "toggleImprovements")
 
 
 @pytest.mark.chrome_only
@@ -489,19 +489,19 @@ def test_line_breaks_toggle_absent(page, base_url):
 
 
 @pytest.mark.chrome_only
-def test_corrections_toggle_absent(page, base_url):
-    """śukasaptati_s has no corrections → no Corrections toggle."""
-    _open_viewer(page, base_url, NO_CORRECTIONS_TEXT)
+def test_improvements_toggle_absent(page, base_url):
+    """śukasaptati_s has no improvements → no Improvements toggle."""
+    _open_viewer(page, base_url, NO_IMPROVEMENTS_TEXT)
     _open_toggles_panel(page)
-    assert not _toggle_exists(page, "toggleCorrections")
+    assert not _toggle_exists(page, "toggleImprovements")
 
 
 @pytest.mark.chrome_only
-def test_corrections_info_icon_absent(page, base_url):
-    """śukasaptati_s has no corrections → no corrections info icon."""
-    _open_viewer(page, base_url, NO_CORRECTIONS_TEXT)
+def test_improvements_info_icon_absent(page, base_url):
+    """śukasaptati_s has no improvements → no improvements info icon."""
+    _open_viewer(page, base_url, NO_IMPROVEMENTS_TEXT)
     _open_toggles_panel(page)
-    assert page.locator("#corrections-info-icon").count() == 0
+    assert page.locator("#improvements-info-icon").count() == 0
 
 
 @pytest.mark.chrome_only

@@ -170,7 +170,7 @@ function toggleViewMode(checkbox) {
 }
 window.toggleViewMode = toggleViewMode;
 
-function toggleCorrections(checkbox) {
+function toggleImprovements(checkbox) {
     withScrollPreservation(() => {
         const content = document.getElementById('content');
         if (!content) return;
@@ -178,16 +178,16 @@ function toggleCorrections(checkbox) {
         const anteCorrectionElements = content.querySelectorAll('.ante-correction');
         const postCorrectionElements = content.querySelectorAll('.post-correction');
 
-        if (checkbox.checked) { // Show post-correction
+        if (checkbox.checked) { // Show post-correction (improved text, default)
             anteCorrectionElements.forEach(el => el.style.display = 'none');
             postCorrectionElements.forEach(el => el.style.display = 'inline');
-        } else { // Show ante-correction (default)
+        } else { // Show ante-correction (original text)
             anteCorrectionElements.forEach(el => el.style.display = 'inline');
             postCorrectionElements.forEach(el => el.style.display = 'none');
         }
     });
 }
-window.toggleCorrections = toggleCorrections;
+window.toggleImprovements = toggleImprovements;
 
 function toggleLineBreaks(checkbox) {
     withScrollPreservation(() => {
@@ -262,15 +262,15 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // The generated HTML ships with ante-correction visible; sync it with the
     // toggle's initial state (checked = corrected text shown by default).
-    const correctionsToggle = document.querySelector('input[onchange="toggleCorrections(this)"]');
-    if (correctionsToggle) toggleCorrections(correctionsToggle);
+    const improvementsToggle = document.querySelector('input[onchange="toggleImprovements(this)"]');
+    if (improvementsToggle) toggleImprovements(improvementsToggle);
 
-    const correctionsListItem = document.getElementById('corrections-list-container');
-    if (correctionsListItem) {
-        const title = correctionsListItem.querySelector('b');
+    const improvementsListItem = document.getElementById('improvements-list-container');
+    if (improvementsListItem) {
+        const title = improvementsListItem.querySelector('b');
         title.style.cursor = 'pointer';
         title.addEventListener('click', () => {
-            const table = correctionsListItem.querySelector('table');
+            const table = improvementsListItem.querySelector('table');
             const caret = title.querySelector('.caret');
             const isHidden = table.style.display === 'none';
             table.style.display = isHidden ? 'table' : 'none';
@@ -278,41 +278,41 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    const infoIcon = document.getElementById('corrections-info-icon');
+    const infoIcon = document.getElementById('improvements-info-icon');
     if (infoIcon) {
         infoIcon.addEventListener('click', () => {
             const metadataPanel = document.getElementById('metadata-panel');
-            const correctionsListContainer = document.getElementById('corrections-list-container');
+            const improvementsListContainer = document.getElementById('improvements-list-container');
 
             if (metadataPanel) {
                 togglePanel('metadata-panel');
             }
 
-            if (correctionsListContainer) {
-                const title = correctionsListContainer.querySelector('b');
-                const table = correctionsListContainer.querySelector('table');
+            if (improvementsListContainer) {
+                const title = improvementsListContainer.querySelector('b');
+                const table = improvementsListContainer.querySelector('table');
                 const caret = title.querySelector('.caret');
                 
-                // Expand the corrections list
+                // Expand the improvements list
                 table.style.display = 'table';
                 caret.classList.remove('collapsed');
 
                 // Wait for animations to finish before scrolling
                 setTimeout(() => {
-                    correctionsListContainer.scrollIntoView({ behavior: 'smooth' });
+                    improvementsListContainer.scrollIntoView({ behavior: 'smooth' });
                 }, 500); // Match the CSS transition duration
             }
         });
     }
 
-    // Navigation for correction entries
-    if (correctionsListItem) {
-        correctionsListItem.addEventListener('click', (e) => {
-            const link = e.target.closest('.correction-link');
+    // Navigation for improvement entries
+    if (improvementsListItem) {
+        improvementsListItem.addEventListener('click', (e) => {
+            const link = e.target.closest('.improvement-link');
             if (link) {
                 let target = null;
                 
-                console.log('Correction click:', link.dataset);
+                console.log('Improvement click:', link.dataset);
 
                 if (link.dataset.verse) {
                     const targetId = 'v' + link.dataset.verse.replace(/\./g, '-');
@@ -338,8 +338,8 @@ document.addEventListener('DOMContentLoaded', () => {
                     }
 
                     target.scrollIntoView({ behavior: 'smooth', block: 'center' });
-                    target.classList.add('highlight-correction');
-                    setTimeout(() => target.classList.remove('highlight-correction'), 2000);
+                    target.classList.add('highlight-improvement');
+                    setTimeout(() => target.classList.remove('highlight-improvement'), 2000);
                     
                     // Close metadata panel if open
                     const metadataPanel = document.getElementById('metadata-panel');
@@ -459,9 +459,9 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     function transliterate(targetScheme) {
-        const reapplyCorrections = () => {
-            const correctionsToggle = document.querySelector('input[onchange="toggleCorrections(this)"]');
-            if (correctionsToggle) toggleCorrections(correctionsToggle);
+        const reapplyImprovements = () => {
+            const improvementsToggle = document.querySelector('input[onchange="toggleImprovements(this)"]');
+            if (improvementsToggle) toggleImprovements(improvementsToggle);
         };
 
         contentDiv.dataset.script = targetScheme;
@@ -469,14 +469,14 @@ document.addEventListener('DOMContentLoaded', () => {
 
         if (targetScheme === 'iast') {
             contentDiv.innerHTML = originalContent;
-            reapplyCorrections();
+            reapplyImprovements();
             applyPdfHrefs();
             return;
         }
 
         if (transliteratedContent[targetScheme]) {
             contentDiv.innerHTML = transliteratedContent[targetScheme];
-            reapplyCorrections();
+            reapplyImprovements();
             applyPdfHrefs();
             return;
         }
@@ -502,7 +502,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         transliteratedContent[targetScheme] = tempDiv.innerHTML;
         contentDiv.innerHTML = tempDiv.innerHTML;
-        reapplyCorrections();
+        reapplyImprovements();
         applyPdfHrefs();
     }
 
