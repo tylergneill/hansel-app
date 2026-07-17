@@ -119,6 +119,22 @@ h1, h2, h3, h4, h5, h6 {
     text-shadow: 0.03em 0 currentColor, -0.03em 0 currentColor;
 }
 .stage-direction { font-style: italic; }
+
+/* Improvements: the generated HTML wraps ante-/post-correction text in <i>
+   tags, but italics render as a meaningless synthetic slant in indic scripts.
+   Neutralize the italic and mark improvements with a wavy underline instead —
+   the same convention in roman and indic text alike. The offset drops the
+   line below devanagari u/ū vowel signs; skip-ink breaks it around any
+   descenders it still meets. */
+.ante-correction,
+.post-correction {
+    font-style: normal;
+    text-decoration-line: underline;
+    text-decoration-style: wavy;
+    text-decoration-color: var(--chaya-accent, #e79f3a);
+    text-underline-offset: 0.2em;
+    text-decoration-skip-ink: auto;
+}
 .chaya {
     display: block;
     border-left: 5px solid var(--chaya-accent, #e79f3a);
