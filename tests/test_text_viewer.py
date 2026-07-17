@@ -163,25 +163,24 @@ def test_toggle_editorial_coords(page, base_url):
 
 @pytest.mark.visual
 def test_toggle_corrections(page, base_url):
-    """Toggling corrections swaps ante-correction (visible) → post-correction (visible)."""
+    """Toggling corrections swaps post-correction (default, visible) → ante-correction (visible)."""
     _open_viewer(page, base_url, STANDARD_TEXT)
 
-    # Default state: ante-correction visible, post-correction hidden
-    assert _computed_display(page, ".ante-correction") == "inline"
-    assert _computed_display(page, ".post-correction") == "none"
-
-    # Toggle on
-    _open_toggles_panel(page)
-    _click_toggle(page, "toggleCorrections")
-
-    # After: ante hidden, post visible
+    # Default state: corrections on — post-correction visible, ante-correction hidden
     assert _computed_display(page, ".ante-correction") == "none"
     assert _computed_display(page, ".post-correction") == "inline"
 
-    # Toggle off: back to default
+    # Toggle off: show original (ante) text
+    _open_toggles_panel(page)
     _click_toggle(page, "toggleCorrections")
+
     assert _computed_display(page, ".ante-correction") == "inline"
     assert _computed_display(page, ".post-correction") == "none"
+
+    # Toggle back on: back to default
+    _click_toggle(page, "toggleCorrections")
+    assert _computed_display(page, ".ante-correction") == "none"
+    assert _computed_display(page, ".post-correction") == "inline"
 
 
 # --------------------------------------------------------------------------- #

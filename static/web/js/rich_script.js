@@ -260,6 +260,11 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
+    // The generated HTML ships with ante-correction visible; sync it with the
+    // toggle's initial state (checked = corrected text shown by default).
+    const correctionsToggle = document.querySelector('input[onchange="toggleCorrections(this)"]');
+    if (correctionsToggle) toggleCorrections(correctionsToggle);
+
     const correctionsListItem = document.getElementById('corrections-list-container');
     if (correctionsListItem) {
         const title = correctionsListItem.querySelector('b');
