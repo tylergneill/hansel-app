@@ -123,17 +123,50 @@ h1, h2, h3, h4, h5, h6 {
 /* Improvements: the generated HTML wraps ante-/post-correction text in <i>
    tags, but italics render as a meaningless synthetic slant in indic scripts.
    Neutralize the italic and mark improvements with a wavy underline instead —
-   the same convention in roman and indic text alike. The offset drops the
-   line below devanagari u/ū vowel signs; skip-ink breaks it around any
-   descenders it still meets. */
+   the same convention in roman and indic text alike.
+   The wave is an absolutely-positioned overlay rather than a text-decoration
+   because decorations always paint beneath glyphs: an overlay stays visible
+   across low-hanging conjuncts and vowel signs, and can hang lower than
+   text-underline-offset allows. The SVG stroke color duplicates
+   --chaya-accent (#e79f3a), which can't be referenced inside a data URI. */
 .ante-correction,
 .post-correction {
     font-style: normal;
-    text-decoration-line: underline;
-    text-decoration-style: wavy;
-    text-decoration-color: var(--chaya-accent, #e79f3a);
-    text-underline-offset: 0.2em;
-    text-decoration-skip-ink: auto;
+    position: relative;
+}
+.ante-correction::after,
+.post-correction::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: -0.22em;
+    height: 0.25em;
+    pointer-events: none;
+    background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="8" height="4"><path d="M0 2.8 Q2 0.8 4 2.8 T8 2.8" fill="none" stroke="%23e79f3a" stroke-width="1.2"/></svg>');
+    background-repeat: repeat-x;
+    background-position: left bottom;
+    background-size: 0.5em 0.25em;
+    /* backgrounds are skipped in print by default; keep the wave in PDFs */
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+}
+
+/* Absence: an empty side of an improvement (empty ante = text supplied by the
+   editors, empty post = text deleted) is marked with an upward caret hanging
+   below the junction, after the manuscript "crow's foot" (kākapada) insertion
+   sign. Absolutely positioned so it takes no horizontal space — the
+   surrounding aksharas flow (and join their toplines) uninterrupted. */
+.ante-correction:empty::after,
+.post-correction:empty::after {
+    background: none;
+    right: auto;
+    bottom: -0.34em;
+    width: 0.28em;
+    height: 0.28em;
+    border-top: 0.09em solid var(--chaya-accent, #e79f3a);
+    border-left: 0.09em solid var(--chaya-accent, #e79f3a);
+    transform: translateX(-50%) rotate(45deg);
 }
 .chaya {
     display: block;
