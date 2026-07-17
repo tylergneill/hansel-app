@@ -153,6 +153,20 @@ summary {
     border-left-color: #FFA500;
 }
 
+.contributors-line {
+    font-style: italic;
+    color: #666;
+}
+
+.contributors-line-inner {
+    display: inline-flex;
+    align-items: center;
+    max-width: fit-content;
+    padding: 2px 6px;
+    white-space: nowrap;
+    border-left: 4px solid transparent;
+}
+
 .custom-bundle-link {
     font-weight: bold;
     cursor: pointer;
