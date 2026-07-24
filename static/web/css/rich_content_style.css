@@ -93,6 +93,62 @@ h1, h2, h3, h4, h5, h6 {
 .padas > li { text-indent: var(--stagger-para, 0); }
 .show-line-breaks .padas > li { text-indent: var(--stagger-lines, 0); }
 
+/* Fixed left gutter for (p.N, l.N) labels, staggered verse only.
+
+   In a staggered block the label must stay pinned at the far left instead of
+   riding the stagger rightward with its text.
+
+   The gutter is folded into text-indent rather than added as padding-left.
+   Padding would move the li's whole content box, which stacks the gutter on top
+   of the stagger (text ends up at gutter + offset) and pushes post-<br>
+   continuation rows away from the left margin too. Rolling it into the indent
+   keeps the stagger measured *from* the gutter, and — because text-indent
+   applies to the first row only — lets continuation rows fall back to x=0,
+   flush left, which is exactly where their inline labels belong.
+
+   Scoped via :has() to blocks containing at least one staggered fragment, then
+   applied to every li in that block, including the first (offset 0 — the
+   offsets are only emitted when nonzero, so the leading fragment carries no
+   --stagger-* property of its own). Non-staggered verse is untouched.
+
+   The :has() test is per-mode, matching the property that mode actually reads:
+   a block staggered in paragraph mode may be unstaggered in line mode (each
+   fragment starting its own physical print line), and must then get no gutter
+   at all — otherwise its labels would be pinned out to a gutter that nothing
+   in that mode justifies, while structurally identical unstaggered verse
+   elsewhere stays flush. */
+.show-breaks .padas:has(> li[style*="--stagger"]) {
+    --lb-gutter: 11ch;
+}
+.show-breaks:not(.show-line-breaks) .padas:has(> li[style*="--stagger-para"]) > li {
+    position: relative;
+    text-indent: calc(var(--lb-gutter) + var(--stagger-para, 0ch));
+}
+.show-breaks.show-line-breaks .padas:has(> li[style*="--stagger-lines"]) > li {
+    position: relative;
+    text-indent: calc(var(--lb-gutter) + var(--stagger-lines, 0ch));
+}
+
+/* The leading label is taken out of flow so the indent — which shifts the whole
+   first row, label included — cannot drag it rightward. Absolute positioning
+   resolves against the li's padding box, pinning the label at the left edge
+   while the text starts one gutter in.
+
+   Nothing is reserved in the flow, so a fragment whose label was emitted
+   elsewhere (e.g. a page break landing outside the indented block) still has
+   its text begin at the same indent — alignment is preserved automatically.
+
+   Scoped to :first-child: a second .lb-label after an internal <br class="lb-br">
+   labels a continuation row, which is not indented, so it stays inline and
+   sits flush at the left of its own row. Mode-scoped to match the gutter rules
+   above, so a label is only pinned when its block actually has a gutter. */
+.show-breaks:not(.show-line-breaks) .padas:has(> li[style*="--stagger-para"]) > li > .lb-label:first-child,
+.show-breaks.show-line-breaks .padas:has(> li[style*="--stagger-lines"]) > li > .lb-label:first-child {
+    position: absolute;
+    left: 0;
+    text-indent: 0;
+}
+
 #content.hide-editorial-coords .editorial-coord,
 #content.hide-editorial-coords .milestone,
 #content.hide-editorial-coords .milestone-verse {
