@@ -143,6 +143,10 @@ def get_pdf_links(record):
     return pdf_links
 
 
+def get_other_contributors(record):
+    return [name for name in record.get('Contributors', []) if name != 'Tyler Neill']
+
+
 def process_metadata(raw_metadata: Dict[str, Dict]) -> List[Dict]:
     """
     :param raw_metadata: mapping with unique id (mostly = catalog num) to full record (~18 fields)
@@ -165,7 +169,8 @@ def process_metadata(raw_metadata: Dict[str, Dict]) -> List[Dict]:
             'PDFLinks': pdf_links,
             'Size (kb)': record['File Size (KB)'],
             'Genre': ', '.join(record['Genres']),
-            'Additional Files': record.get('Additional Files', [])
+            'Additional Files': record.get('Additional Files', []),
+            'Other Contributors': get_other_contributors(record)
         })
     sorted_metadata_subset = sorted(metadata_subset, key=lambda x: custom_sort_key(x['Title']))
     return sorted_metadata_subset

@@ -87,6 +87,68 @@ h1, h2, h3, h4, h5, h6 {
 .show-line-breaks .hyphen { display: inline; }
 .show-line-breaks .lb-br, .show-line-breaks .pb-br { display: block; }
 
+/* Staggered dialogue verse: fragment offsets (set inline as custom properties)
+   differ by display mode — paragraph mode stacks fragments per half-verse,
+   line mode per physical print line. */
+.padas > li { text-indent: var(--stagger-para, 0); }
+.show-line-breaks .padas > li { text-indent: var(--stagger-lines, 0); }
+
+/* Fixed left gutter for (p.N, l.N) labels, staggered verse only.
+
+   In a staggered block the label must stay pinned at the far left instead of
+   riding the stagger rightward with its text.
+
+   The gutter is folded into text-indent rather than added as padding-left.
+   Padding would move the li's whole content box, which stacks the gutter on top
+   of the stagger (text ends up at gutter + offset) and pushes post-<br>
+   continuation rows away from the left margin too. Rolling it into the indent
+   keeps the stagger measured *from* the gutter, and — because text-indent
+   applies to the first row only — lets continuation rows fall back to x=0,
+   flush left, which is exactly where their inline labels belong.
+
+   Scoped via :has() to blocks containing at least one staggered fragment, then
+   applied to every li in that block, including the first (offset 0 — the
+   offsets are only emitted when nonzero, so the leading fragment carries no
+   --stagger-* property of its own). Non-staggered verse is untouched.
+
+   The :has() test is per-mode, matching the property that mode actually reads:
+   a block staggered in paragraph mode may be unstaggered in line mode (each
+   fragment starting its own physical print line), and must then get no gutter
+   at all — otherwise its labels would be pinned out to a gutter that nothing
+   in that mode justifies, while structurally identical unstaggered verse
+   elsewhere stays flush. */
+.show-breaks .padas:has(> li[style*="--stagger"]) {
+    --lb-gutter: 11ch;
+}
+.show-breaks:not(.show-line-breaks) .padas:has(> li[style*="--stagger-para"]) > li {
+    position: relative;
+    text-indent: calc(var(--lb-gutter) + var(--stagger-para, 0ch));
+}
+.show-breaks.show-line-breaks .padas:has(> li[style*="--stagger-lines"]) > li {
+    position: relative;
+    text-indent: calc(var(--lb-gutter) + var(--stagger-lines, 0ch));
+}
+
+/* The leading label is taken out of flow so the indent — which shifts the whole
+   first row, label included — cannot drag it rightward. Absolute positioning
+   resolves against the li's padding box, pinning the label at the left edge
+   while the text starts one gutter in.
+
+   Nothing is reserved in the flow, so a fragment whose label was emitted
+   elsewhere (e.g. a page break landing outside the indented block) still has
+   its text begin at the same indent — alignment is preserved automatically.
+
+   Scoped to :first-child: a second .lb-label after an internal <br class="lb-br">
+   labels a continuation row, which is not indented, so it stays inline and
+   sits flush at the left of its own row. Mode-scoped to match the gutter rules
+   above, so a label is only pinned when its block actually has a gutter. */
+.show-breaks:not(.show-line-breaks) .padas:has(> li[style*="--stagger-para"]) > li > .lb-label:first-child,
+.show-breaks.show-line-breaks .padas:has(> li[style*="--stagger-lines"]) > li > .lb-label:first-child {
+    position: absolute;
+    left: 0;
+    text-indent: 0;
+}
+
 #content.hide-editorial-coords .editorial-coord,
 #content.hide-editorial-coords .milestone,
 #content.hide-editorial-coords .milestone-verse {
@@ -113,6 +175,55 @@ h1, h2, h3, h4, h5, h6 {
     text-shadow: 0.03em 0 currentColor, -0.03em 0 currentColor;
 }
 .stage-direction { font-style: italic; }
+
+/* Improvements: the generated HTML wraps ante-/post-correction text in <i>
+   tags, but italics render as a meaningless synthetic slant in indic scripts.
+   Neutralize the italic and mark improvements with a wavy underline instead —
+   the same convention in roman and indic text alike.
+   The wave is an absolutely-positioned overlay rather than a text-decoration
+   because decorations always paint beneath glyphs: an overlay stays visible
+   across low-hanging conjuncts and vowel signs, and can hang lower than
+   text-underline-offset allows. The SVG stroke color duplicates
+   --chaya-accent (#e79f3a), which can't be referenced inside a data URI. */
+.ante-correction,
+.post-correction {
+    font-style: normal;
+    position: relative;
+}
+.ante-correction::after,
+.post-correction::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: -0.22em;
+    height: 0.25em;
+    pointer-events: none;
+    background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="8" height="4"><path d="M0 2.8 Q2 0.8 4 2.8 T8 2.8" fill="none" stroke="%23e79f3a" stroke-width="1.2"/></svg>');
+    background-repeat: repeat-x;
+    background-position: left bottom;
+    background-size: 0.5em 0.25em;
+    /* backgrounds are skipped in print by default; keep the wave in PDFs */
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+}
+
+/* Absence: an empty side of an improvement (empty ante = text supplied by the
+   editors, empty post = text deleted) is marked with an upward caret hanging
+   below the junction, after the manuscript "crow's foot" (kākapada) insertion
+   sign. Absolutely positioned so it takes no horizontal space — the
+   surrounding aksharas flow (and join their toplines) uninterrupted. */
+.ante-correction:empty::after,
+.post-correction:empty::after {
+    background: none;
+    right: auto;
+    bottom: -0.34em;
+    width: 0.28em;
+    height: 0.28em;
+    border-top: 0.09em solid var(--chaya-accent, #e79f3a);
+    border-left: 0.09em solid var(--chaya-accent, #e79f3a);
+    transform: translateX(-50%) rotate(45deg);
+}
 .chaya {
     display: block;
     border-left: 5px solid var(--chaya-accent, #e79f3a);

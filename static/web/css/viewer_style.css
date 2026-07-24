@@ -139,7 +139,7 @@ body {
 #metadata-list li {
 }
 
-#metadata-list > li:not(#corrections-list-container) {
+#metadata-list > li:not(#improvements-list-container) {
     margin-bottom: 10px;
 }
 
@@ -154,45 +154,6 @@ body {
 #metadata-list code {
     background-color: #f4f4f4;
     padding: 0.2em 0.4em;
-}
-
-#corrections-container {
-    border: 3px solid rgb(231, 159, 58);
-    padding: 10px;
-    box-sizing: border-box;
-    margin-top: 1em;
-    width: 75%;
-}
-
-#corrections-container h2 {
-    margin-top: 0;
-    cursor: pointer;
-    user-select: none;
-}
-
-#corrections-caret {
-    display: inline-block;
-    transition: transform 0.2s;
-    margin-left: 8px;
-}
-
-#corrections-container.expanded #corrections-caret {
-    transform: rotate(90deg);
-}
-
-#corrections-list {
-    list-style-type: none;
-    padding-left: 0;
-    margin-bottom: 0;
-    max-height: 0;
-    overflow: hidden;
-    transition: max-height 0.3s ease-out;
-}
-
-#corrections-container.expanded #corrections-list {
-    max-height: 500px; /* Large enough for content */
-    overflow-y: auto;
-    transition: max-height 0.5s ease-in;
 }
 
 #toc-list li {
@@ -433,7 +394,7 @@ body {
     left: calc(100% - 31px);
 }
 
-#corrections-info-icon {
+#improvements-info-icon {
     cursor: pointer; 
     width: 16px; 
     height: 16px; 
@@ -564,17 +525,17 @@ body {
     border: 3px solid rgb(231, 159, 58);
 }
 
-.correction-link {
+.improvement-link {
     cursor: pointer;
     text-decoration: underline;
     color: #1a73e8;
 }
 
-.correction-link:hover {
+.improvement-link:hover {
     color: #174ea6;
 }
 
-.highlight-correction {
+.highlight-improvement {
     background-color: #fffde7;
     outline: 2px solid #ffd600;
     transition: background-color 2s, outline 2s;
