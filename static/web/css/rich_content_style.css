@@ -149,10 +149,34 @@ h1, h2, h3, h4, h5, h6 {
     text-indent: 0;
 }
 
-#content.hide-editorial-coords .editorial-coord,
-#content.hide-editorial-coords .milestone,
-#content.hide-editorial-coords .milestone-verse {
+#content.hide-editorial-coords .editorial-coord {
     display: none;
+}
+
+/* Structural notes (<...> in the source): title-page attributions, section
+   headings within the text. These are content rather than editorial apparatus,
+   so they are not hidden along with the location coordinates. Texts whose notes
+   are merely running heads repeated from the printed page are suppressed at
+   build time instead, via --hide-milestones in flag_map.py. */
+.milestone, .milestone-verse {
+    --milestone-scale: 1.1;
+    font-style: italic;
+    font-weight: normal;
+    font-size: calc(1em * var(--milestone-scale));
+}
+.milestone {
+    display: block;
+    margin: 0.8em 0;
+}
+/* .milestone-verse is an <li> inside .padas (a milestone falling within a verse),
+   so it carries the .verse block's 2em indent. Pull it back out so the heading
+   aligns with the section headings rather than hanging under the verse text.
+   Divided by --milestone-scale because a bare -2em would resolve against this
+   element's own enlarged size and overshoot the 2em set on the parent .verse. */
+.milestone-verse {
+    list-style: none;
+    margin: 0.8em 0 0.8em calc(-2em / var(--milestone-scale));
+    text-indent: 0;
 }
 
 /* Drama elements */
