@@ -451,7 +451,12 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function transliterateNode(text, targetScheme, isPrakrit) {
         if (isPrakrit) {
-            const devanagari = getSkrutableTransliterator('IAST', 'DEV').transliterate(text);
+            // skrutable-js leaves ASCII pipes alone; for Brahmic targets (and
+            // ISO) turn them into real dandas, as Sanscript does for Sanskrit.
+            let devanagari = getSkrutableTransliterator('IAST', 'DEV').transliterate(text);
+            if (allSchemes.Brahmic.includes(targetScheme) || targetScheme === 'iso') {
+                devanagari = devanagari.replace(/\|\|/g, '॥').replace(/\|/g, '।');
+            }
             if (targetScheme === 'devanagari') return devanagari;
             return Sanscript.t(devanagari, 'devanagari', targetScheme);
         }
