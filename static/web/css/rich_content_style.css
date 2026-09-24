@@ -159,7 +159,7 @@ h1, h2, h3, h4, h5, h6 {
    are merely running heads repeated from the printed page are suppressed at
    build time instead, via --hide-milestones in flag_map.py. */
 .milestone, .milestone-verse {
-    --milestone-scale: 1.1;
+    --milestone-scale: 1.0;
     font-style: italic;
     font-weight: normal;
     font-size: calc(1em * var(--milestone-scale));
