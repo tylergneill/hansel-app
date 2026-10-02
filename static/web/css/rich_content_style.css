@@ -254,5 +254,7 @@ h1, h2, h3, h4, h5, h6 {
     padding-left: 0.6em;
     margin: 0.15em 0 0.15em 0.5em;
 }
-.chaya > span { display: block; }
+/* Verse chāyā (div.chaya) puts one bare <span> per line; prose chāyā (span.chaya)
+   has inline children such as span.correction, which must stay inline. */
+div.chaya > span { display: block; }
 .hide-chaya .chaya { display: none; }
