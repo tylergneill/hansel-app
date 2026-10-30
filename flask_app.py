@@ -12,7 +12,7 @@ from flask import Flask, request, send_file, render_template, abort, send_from_d
 from utils import (
     find_app_version, find_data_version, find_bundle_version,
     get_geolocation, log_download,
-    load_metadata, process_metadata,
+    load_metadata, process_metadata, get_hidden_texts, is_hidden,
     get_normalized_filename, calculate_all_sizes,
 )
 
@@ -30,6 +30,7 @@ FILE_TYPE_PATHS = {
     'json': METADATA_PATH / 'metadata.json'
 }
 RAW_METADATA: Dict = load_metadata(METADATA_PATH)
+HIDDEN_TEXTS = get_hidden_texts(RAW_METADATA)
 CUSTOM_METADATA = process_metadata(RAW_METADATA)
 DISPLAY_TITLES = {
     record['Filename']: record['Title']
@@ -42,7 +43,7 @@ NUM_ITEMS = len(CUSTOM_METADATA)
 APP_VERSION = find_app_version()
 DATA_VERSION = find_data_version()
 BUNDLE_VERSION = find_bundle_version()
-FILE_GROUP_SIZES_MB, TOTAL_CORPUS_SIZE_MB, PLAIN_TEXT_SIZE_MB = calculate_all_sizes(FILE_TYPE_PATHS, DATA_PATH)
+FILE_GROUP_SIZES_MB, TOTAL_CORPUS_SIZE_MB, PLAIN_TEXT_SIZE_MB = calculate_all_sizes(FILE_TYPE_PATHS, DATA_PATH, HIDDEN_TEXTS)
 
 app = Flask(__name__)
 app.cache = {}  # In-memory cache for generated zip files
@@ -53,6 +54,15 @@ logging.basicConfig(
     level=logging.INFO,
     format="%(asctime)s - %(levelname)s - %(message)s"
 )
+
+@app.before_request
+def block_hidden_static_files():
+    """
+    404 direct requests for files of texts marked Hidden. Runs before routing so it
+    also covers Flask's built-in static endpoint, which serves /static/data/... itself.
+    """
+    if request.path.startswith(f"/{STATIC_FILES_PATH}/data/") and is_hidden(request.path, HIDDEN_TEXTS):
+        abort(404)
 
 @app.route('/robots.txt')
 def robots():
@@ -109,7 +119,7 @@ def view_text(filename):
     html_path = FILE_TYPE_PATHS['html_rich'] / f"{base_name}.html"
     json_path = FILE_TYPE_PATHS['html_rich'] / f"{base_name}.json"
 
-    if not html_path.is_file() or not json_path.is_file():
+    if not html_path.is_file() or not json_path.is_file() or base_name in HIDDEN_TEXTS:
         abort(404, description="Text not found")
 
     # Read the HTML content
@@ -158,7 +168,7 @@ def view_text(filename):
 def view_metadata(filename):
     # Construct the path to the HTML file
     file_path = METADATA_PATH / 'html' / filename
-    if not file_path.is_file():
+    if not file_path.is_file() or is_hidden(file_path, HIDDEN_TEXTS):
         return "File not found", 404
 
     with open(file_path, 'r', encoding='utf-8') as f:
@@ -248,7 +258,7 @@ def download_bundle():
             for dir_path, extensions in text_dirs_to_include.items():
                 if dir_path.is_dir():
                     for file_path in dir_path.rglob('*'):
-                        if file_path.is_file():
+                        if file_path.is_file() and not is_hidden(file_path, HIDDEN_TEXTS):
                             if extensions is None or file_path.suffix in extensions:
                                 relative_path = file_path.relative_to(DATA_PATH)
                                 new_arcname = os.path.join(root_folder_name, relative_path)
@@ -258,7 +268,7 @@ def download_bundle():
             meta_dir = DATA_PATH / 'metadata'
             if meta_dir.is_dir():
                 for file_path in meta_dir.rglob('*'):
-                    if file_path.is_file() and file_path.suffix != '.zip':
+                    if file_path.is_file() and file_path.suffix != '.zip' and not is_hidden(file_path, HIDDEN_TEXTS):
                         relative_path = file_path.relative_to(DATA_PATH)
                         new_arcname = os.path.join(root_folder_name, relative_path)
                         zf.write(file_path, arcname=new_arcname)
@@ -268,7 +278,7 @@ def download_bundle():
                 text_path = FILE_TYPE_PATHS[text_format]
                 if text_path.is_dir():
                     for file_path in sorted(text_path.rglob('*')):
-                        if file_path.is_file():
+                        if file_path.is_file() and not is_hidden(file_path, HIDDEN_TEXTS):
                             zf.write(file_path, arcname=f"text/{file_path.name}")
 
             # Add selected metadata format
@@ -278,11 +288,11 @@ def download_bundle():
             elif meta_path.is_dir():
                 if meta_format == 'md':
                     for file_path in sorted(meta_path.glob('*.md')):
-                        if file_path.is_file():
+                        if file_path.is_file() and not is_hidden(file_path, HIDDEN_TEXTS):
                             zf.write(file_path, arcname=f"metadata/{file_path.name}")
                 else:
                     for file_path in sorted(meta_path.rglob('*')):
-                        if file_path.is_file() and file_path.suffix != '.zip':
+                        if file_path.is_file() and file_path.suffix != '.zip' and not is_hidden(file_path, HIDDEN_TEXTS):
                             zf.write(file_path, arcname=f"metadata/{file_path.name}")
 
     app.cache[internal_zip_name] = memory_file.getvalue()

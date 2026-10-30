@@ -50,9 +50,12 @@ body:not(.simple-verse-style) .padas > li {
   margin-bottom: 0.4em;
 }
 
+/* A verse lead-in ("uktaṃ ca |") is spaced like a prose paragraph, so it matches
+   lead-ins encoded as a <p> before the verse (vertical margins collapse with the
+   neighbouring verse/paragraph margins, giving the same 1em gap either way). */
 .lg-head {
   list-style: none;
-  margin: 0 0 0.3em 0;
+  margin: 1em 0;
   padding: 0;
 }
 

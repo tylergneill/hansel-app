@@ -341,9 +341,11 @@ document.addEventListener('DOMContentLoaded', () => {
                     target.classList.add('highlight-improvement');
                     setTimeout(() => target.classList.remove('highlight-improvement'), 2000);
                     
-                    // Close metadata panel if open
+                    // Close metadata panel if open — unless Cmd (Mac) / Ctrl (elsewhere) is held,
+                    // which keeps the list open for stepping through several improvements
+                    const keepPanelOpen = e.metaKey || e.ctrlKey;
                     const metadataPanel = document.getElementById('metadata-panel');
-                    if (metadataPanel && metadataPanel.style.display === 'block') {
+                    if (!keepPanelOpen && metadataPanel && metadataPanel.style.display === 'block') {
                         togglePanel('metadata-panel');
                     }
                 }
@@ -451,7 +453,12 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function transliterateNode(text, targetScheme, isPrakrit) {
         if (isPrakrit) {
-            const devanagari = getSkrutableTransliterator('IAST', 'DEV').transliterate(text);
+            // skrutable-js leaves ASCII pipes alone; for Brahmic targets (and
+            // ISO) turn them into real dandas, as Sanscript does for Sanskrit.
+            let devanagari = getSkrutableTransliterator('IAST', 'DEV').transliterate(text);
+            if (allSchemes.Brahmic.includes(targetScheme) || targetScheme === 'iso') {
+                devanagari = devanagari.replace(/\|\|/g, '॥').replace(/\|/g, '।');
+            }
             if (targetScheme === 'devanagari') return devanagari;
             return Sanscript.t(devanagari, 'devanagari', targetScheme);
         }
