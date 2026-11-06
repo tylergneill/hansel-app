@@ -3,11 +3,11 @@ LOCAL_DATA_PATH = $(shell realpath $(dir $(lastword $(MAKEFILE_LIST)))../hansel-
 
 # for temporary local builds with full data
 run:
-	docker build . -f Dockerfile.stg -t  hansel-dev:debug
+	docker build . -f Dockerfile.dev -t  hansel-dev:debug
 	docker run \
 	  --rm \
 	  -it \
-	  -p 5051:5051 \
+	  -p 5052:5052 \
 	  -v $(LOCAL_DATA_PATH):/app/static/data \
 	  --name hansel-dev \
 	  hansel-dev:debug
