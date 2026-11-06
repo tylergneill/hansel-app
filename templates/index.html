@@ -8,6 +8,7 @@
     <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
     <script src="https://cdn.datatables.net/1.13.8/js/jquery.dataTables.min.js"></script>
     <script src="{{ url_for('static', filename='web/js/sort.js') }}"></script>
+    <script src="{{ url_for('static', filename='web/js/panditya_links.js') }}"></script>
 </head>
 <body>
 <div id="content">
@@ -340,7 +341,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 render: function(data, type, row) {
                     if (type === 'display' && data) {
                         const imgSrc = `${staticFilesPath}/web/imgs/panditya.png`;
-                        return `<a href="${data}" target="_blank" title="View on Pāṇḍitya" class="icon-link"><img src="${imgSrc}" alt="Pāṇḍitya" style="height: 20px;"></a>`;
+                        return `<a href="${localizePandityaUrl(data)}" target="_blank" title="View on Pāṇḍitya" class="icon-link"><img src="${imgSrc}" alt="Pāṇḍitya" style="height: 20px;"></a>`;
                     }
                     return '';
                 },
