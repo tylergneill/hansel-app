@@ -12,7 +12,7 @@ SLOW_MO = int(os.environ.get("SLOW_MO", "0"))  # milliseconds between actions
 # Texts available in dummy data (and in full Docker mount)
 DUMMY_TEXTS = [
     "bANa_kAdambarI",
-    "kumArilabhaTTa_zlokavArtika",
+    "kumArilabhaTTa_zlokavArttika",
     "zukasaptati_o",
     "zukasaptati_s",
 ]

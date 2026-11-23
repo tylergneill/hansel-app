@@ -5,7 +5,7 @@ not just that elements exist or are clickable.
 
 bANa_kAdambarI is the primary test text because it has location markers,
 line breaks, improvements, and verses — exercising every toggle.
-kumArilabhaTTa_zlokavArtika is used for verse-specific tests (condensed-verse-format).
+kumArilabhaTTa_zlokavArttika is used for verse-specific tests (condensed-verse-format).
 """
 
 import pytest
@@ -15,7 +15,7 @@ from tests.conftest import DUMMY_TEXTS, SLOW_MO
 # bANa has: location markers, line breaks, improvements, verses, TOC
 STANDARD_TEXT = "bANa_kAdambarI"
 # ślokavārttika has: verses (condensed-verse-format), no location markers
-VERSE_TEXT = "kumArilabhaTTa_zlokavArtika"
+VERSE_TEXT = "kumArilabhaTTa_zlokavArttika"
 
 # In headed mode, pause long enough to see each state before moving on.
 # In headless mode, just the minimum needed for DOM updates.
@@ -428,7 +428,7 @@ def _toggle_exists(page, onchange_fn):
 
 # śukasaptati_s is used for "absent" tests because it lacks improvements.
 # ślokavārttika is used because it lacks editorial coords and line breaks.
-SPARSE_TEXT = "kumArilabhaTTa_zlokavArtika"
+SPARSE_TEXT = "kumArilabhaTTa_zlokavArttika"
 NO_IMPROVEMENTS_TEXT = "zukasaptati_s"
 
 
