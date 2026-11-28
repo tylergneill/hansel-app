@@ -1,7 +1,7 @@
 /* Try out the Pāṇḍitya widget on HANSEL (branch panditya-widget).
 
-   Loads Pāṇḍitya's embeddable widget (its /widget.js) and has the "View
-   Network on Pāṇḍitya" links open it over the page. Which Pāṇḍitya follows
+   Loads Pāṇḍitya's embeddable widget (its /widget.js), with no button of its
+   own, and has the "View Network on Pāṇḍitya" links open it over the page. Which Pāṇḍitya follows
    panditya_links.js (local HANSEL -> local Pāṇḍitya, staging -> staging,
    production -> production), so load this after that file. */
 
@@ -34,11 +34,13 @@ function pandityaWidgetBase() {
   return DEFAULT_BASE();
 }
 
-/* Load the widget: a Pāṇḍitya button in the corner, and a panel over the page. */
+/* Load the widget. Nothing shows until a Pāṇḍitya link is clicked: then a
+   panel opens over the page (data-launcher="false": no button in the corner). */
 function loadPandityaWidget(base) {
   const script = document.createElement("script");
   script.src = base + "widget.js";
   script.async = true;
+  script.setAttribute("data-launcher", "false");
   document.head.appendChild(script);
 }
 
